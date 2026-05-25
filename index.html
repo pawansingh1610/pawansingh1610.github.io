@@ -549,7 +549,7 @@ footer a{color:#5599cc;text-decoration:none;}
   </div>
   <div class="exp-tabs-wrap"><div class="exp-tabs" id="expTabs"></div></div>
   <div class="exp-content">
-    <div class="upload-hint">💡 <span>To add photos: replace <code>src: null</code> in the <code>photoData</code> object with your image paths, e.g. <code>src: 'photos/img01.jpg'</code>.</span></div>
+
     <div class="exp-section" id="sec-himalaya">
       <div class="exp-section-header"><h3>🏔 Indian Himalayas</h3><p>High-altitude campaigns across the western Himalaya deploying TLS, time-lapse cameras, and GNSS to study glacier dynamics, ice-cliff backwasting, and surface flow.</p></div>
       <div class="sub-exp"><div class="sub-exp-title">2022</div><div class="photo-grid" id="grid-himalaya-2022"></div></div>
@@ -627,13 +627,47 @@ function buildStrip() {
 
 /* ─── PHOTO DATA ─── */
 const photoData = {
-  'grid-himalaya-2022':[{src:null,caption:'Glacier camp setup'},{src:null,caption:'TLS deployment on moraine'},{src:null,caption:'Ice-cliff survey'},{src:null,caption:'Time-lapse camera installation'},{src:null,caption:'Approaching the glacier terminus'},{src:null,caption:'GNSS on debris-covered ice'}],
-  'grid-himalaya-2023':[{src:null,caption:'Drang Drung Glacier approach'},{src:null,caption:'TLS scanning session'},{src:null,caption:'Crevasse zone navigation'},{src:null,caption:'Snowfall at base camp'},{src:null,caption:'Field team at high camp'}],
-  'grid-himalaya-2024':[{src:null,caption:'Machoi Glacier survey'},{src:null,caption:'Ice-cliff backwasting measurements'},{src:null,caption:'Drone survey above glacier'},{src:null,caption:'Supraglacial pond documentation'}],
-  'grid-himalaya-2025':[{src:null,caption:'June campaign'},{src:null,caption:'Laser scanning setup'},{src:null,caption:'Late season survey'},{src:null,caption:'Equipment transport on high trail'}],
-  'grid-landslide':[{src:null,caption:'Slope assessment, Shivalik Range'},{src:null,caption:'Landslide scar mapping'},{src:null,caption:'Field validation of remote sensing data'},{src:null,caption:'Post-monsoon debris flow'},{src:null,caption:'UAV imagery collection'}],
-  'grid-arch-chandigarh':[{src:null,caption:'Punjab and Haryana High Court — UAV survey'},{src:null,caption:'Line-of-sight analysis setup'},{src:null,caption:'3D model from drone imagery'},{src:null,caption:'Heritage site documentation'}],
-  'grid-arch-uttarkashi':[{src:null,caption:'Endangered wooden temple'},{src:null,caption:'LiDAR point cloud acquisition'},{src:null,caption:'Photogrammetric survey'},{src:null,caption:'Community interview'},{src:null,caption:'3D model detail'}],
+  'grid-himalaya-2022':[
+    {src:'photos/campaign1.png',       caption:'Field campaign — glacier approach'},
+    {src:'photos/campaign2.png',       caption:'Setting up at base'},
+    {src:'photos/Campaign3.png',       caption:'On the glacier'},
+    {src:'photos/campaign4.png',       caption:'Moraine traverse'},
+  ],
+  'grid-himalaya-2023':[
+    {src:'photos/campaign5.png',       caption:'High-altitude survey'},
+    {src:'photos/campaign6.png',       caption:'Camp at glacier margin'},
+    {src:'photos/Field1_Group.png',    caption:'Field team — group photo'},
+    {src:'photos/Field2_team.jpeg',    caption:'Team on the ice'},
+  ],
+  'grid-himalaya-2024':[
+    {src:'photos/field_1_1.jpg',       caption:'Glacier surface survey'},
+    {src:'photos/field4_1.jpeg',       caption:'Equipment deployment'},
+    {src:'photos/Field_4.jpeg',        caption:'Scanning session on debris-covered ice'},
+    {src:'photos/Field_6_GNSS.jpeg',   caption:'GNSS measurements'},
+  ],
+  'grid-himalaya-2025':[
+    {src:'photos/Filed3_group_photo.jpeg', caption:'2025 campaign — group photo'},
+    {src:null, caption:'Late season survey'},
+    {src:null, caption:'Equipment transport on high trail'},
+  ],
+  'grid-landslide':[
+    {src:null,caption:'Slope assessment, Shivalik Range'},
+    {src:null,caption:'Landslide scar mapping'},
+    {src:null,caption:'Field validation of remote sensing data'},
+    {src:null,caption:'Post-monsoon debris flow'},
+  ],
+  'grid-arch-chandigarh':[
+    {src:null,caption:'Punjab and Haryana High Court — UAV survey'},
+    {src:null,caption:'Line-of-sight analysis setup'},
+    {src:null,caption:'3D model from drone imagery'},
+    {src:null,caption:'Heritage site documentation'},
+  ],
+  'grid-arch-uttarkashi':[
+    {src:null,caption:'Endangered wooden temple'},
+    {src:null,caption:'LiDAR point cloud acquisition'},
+    {src:null,caption:'Photogrammetric survey'},
+    {src:null,caption:'Community interview'},
+  ],
 };
 
 function buildGrids() {
@@ -747,7 +781,7 @@ function setHeroBg(url) {
   const hero = document.getElementById('hero');
   hero.style.backgroundImage = `url('${url}')`;
 }
-setHeroBg(''); // <-- add your photo path here
+setHeroBg('photos/campaign1.png');
 
 /* ── BACK TO TOP visibility ── */
 const backBtn = document.getElementById('back-top');
