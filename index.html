@@ -4,8 +4,6 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Pawan Singh | Glaciologist & Remote Sensing Researcher</title>
-
-<!-- ── Meta / OG tags ── -->
 <meta name="description" content="Doctoral researcher in Geospatial Engineering at IIT Roorkee studying high-spatiotemporal glacier change in the western Himalaya."/>
 <meta property="og:title" content="Pawan Singh | Glaciologist & Remote Sensing Researcher"/>
 <meta property="og:description" content="PhD researcher at IIT Roorkee — glacier dynamics, TLS, UAV, SAR remote sensing, western Himalaya."/>
@@ -15,12 +13,9 @@
 <meta name="twitter:title" content="Pawan Singh | Glaciologist"/>
 <meta name="twitter:description" content="PhD researcher at IIT Roorkee studying glacier change in the western Himalaya."/>
 <meta name="twitter:image" content="photos/campaign1.png"/>
-
-<!-- ── Favicon (SVG mountain) ── -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏔</text></svg>"/>
-
-<!-- Leaflet loaded on-demand only when map section is visible -->
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
 :root{
   --primary:#1a3c5e;--accent:#3a7ca5;--alight:#d6eaf8;
@@ -44,7 +39,7 @@ body.dark{
 html{scroll-behavior:smooth;}
 body{font-family:'Segoe UI',Arial,sans-serif;color:var(--text);background:var(--bg);transition:background .35s,color .35s;}
 
-/* ── LOADER ── */
+/* LOADER */
 #page-loader{position:fixed;inset:0;background:var(--navbg);z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;transition:opacity .5s;}
 #page-loader.done{opacity:0;pointer-events:none;}
 .loader-name{color:#fff;font-size:1.4rem;font-weight:700;letter-spacing:1px;}
@@ -52,17 +47,17 @@ body{font-family:'Segoe UI',Arial,sans-serif;color:var(--text);background:var(--
 .loader-bar{height:100%;width:0;background:var(--accent);border-radius:2px;transition:width .3s;}
 .loader-sub{color:rgba(255,255,255,.4);font-size:.75rem;}
 
-/* ── THEME STRIP ── */
+/* THEME STRIP */
 #tstrip{position:fixed;top:0;left:0;right:0;height:4px;display:flex;z-index:2000;}
 .ts{flex:1;height:100%;opacity:.85;cursor:pointer;transition:height .2s,opacity .2s;}
 #tstrip:hover .ts{height:8px;opacity:1;}
 .ts:hover{height:12px!important;opacity:1!important;}
 
-/* ── QUOTE BAR ── */
+/* QUOTE BAR */
 #quote-bar{position:fixed;top:4px;left:0;right:0;z-index:1001;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);padding:.3rem 1.5rem;text-align:center;font-size:.72rem;color:rgba(255,255,255,.55);font-style:italic;height:30px;display:flex;align-items:center;justify-content:center;}
 #quote-text{transition:opacity .6s;}
 
-/* ── NAV ── */
+/* NAV */
 nav{position:fixed;top:34px;left:0;right:0;z-index:1000;background:var(--navbg);height:52px;display:flex;justify-content:space-between;align-items:center;padding:0 1.5rem;transition:background .35s;}
 .nav-brand{color:#fff;font-weight:700;font-size:1rem;cursor:pointer;white-space:nowrap;}
 .nav-links{display:flex;gap:1.1rem;list-style:none;}
@@ -70,13 +65,11 @@ nav{position:fixed;top:34px;left:0;right:0;z-index:1000;background:var(--navbg);
 .nav-links a:hover,.nav-links a.active-nav{color:#fff;border-bottom-color:var(--accent);}
 .nav-right{display:flex;align-items:center;gap:.3rem;flex-shrink:0;}
 .nav-social{display:flex;align-items:center;gap:.45rem;margin-left:.6rem;border-left:1px solid rgba(255,255,255,.15);padding-left:.75rem;}
-.nav-social a{display:flex;align-items:center;justify-content:center;width:27px;height:27px;border-radius:50%;background:rgba(255,255,255,.1);color:#fff;text-decoration:none;transition:background .2s,transform .2s;flex-shrink:0;}
+.nav-social a{display:flex;align-items:center;justify-content:center;width:27px;height:27px;border-radius:50%;background:rgba(255,255,255,.1);color:#fff;text-decoration:none;transition:background .2s,transform .2s;}
 .nav-social a:hover{background:rgba(255,255,255,.25);transform:scale(1.1);}
 .nav-social svg{width:13px;height:13px;fill:currentColor;}
-.viewer-badge{display:flex;align-items:center;gap:.3rem;background:rgba(255,255,255,.1);border-radius:20px;padding:.16rem .55rem;font-size:.71rem;color:rgba(255,255,255,.7);white-space:nowrap;margin-left:.35rem;}
-.viewer-badge svg{width:10px;height:10px;fill:rgba(255,255,255,.55);}
-/* dark toggle */
-#dark-toggle{display:flex;align-items:center;justify-content:center;width:27px;height:27px;border-radius:50%;background:rgba(255,255,255,.1);border:none;color:#fff;cursor:pointer;margin-left:.3rem;transition:background .2s,transform .2s;flex-shrink:0;}
+
+#dark-toggle{display:flex;align-items:center;justify-content:center;width:27px;height:27px;border-radius:50%;background:rgba(255,255,255,.1);border:none;color:#fff;cursor:pointer;margin-left:.3rem;transition:background .2s,transform .2s;}
 #dark-toggle:hover{background:rgba(255,255,255,.25);transform:scale(1.1);}
 #dark-toggle svg{width:14px;height:14px;fill:currentColor;}
 .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px;margin-left:.4rem;}
@@ -89,26 +82,41 @@ nav{position:fixed;top:34px;left:0;right:0;z-index:1000;background:var(--navbg);
 .mobile-menu a{display:block;color:rgba(255,255,255,.8);text-decoration:none;padding:.75rem 1.5rem;font-size:.9rem;border-bottom:1px solid rgba(255,255,255,.07);}
 .mobile-menu a:hover{background:rgba(255,255,255,.07);color:#fff;}
 
-/* ── PAGE SYSTEM ── */
+/* PAGE SYSTEM */
 .page{display:none;}
 .page.active{display:block;}
 
-/* ── SCROLL REVEAL ── */
+/* SCROLL REVEAL */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease;}
 .reveal.visible{opacity:1;transform:none;}
 
-/* ── HERO ── */
-#hero{min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;padding:110px 1.5rem 5rem;}
-.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease;z-index:0;}
+/* HERO */
+#hero{
+  min-height:100vh;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:110px 1.5rem 5rem;
+  /* gradient fallback always visible */
+  background:linear-gradient(135deg,var(--hero1),var(--hero2));
+}
+/* each slide is absolute, fills hero, starts invisible */
+.hero-slide{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center center;background-repeat:no-repeat;
+  opacity:0;transition:opacity 1.2s ease;
+  z-index:0;
+  width:100%;height:100%;
+}
 .hero-slide.active{opacity:1;}
-.hero-bg-gradient{position:absolute;inset:0;z-index:0;background:linear-gradient(135deg,var(--hero1),var(--hero2));transition:background .35s;}
-#hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:1;pointer-events:none;}
+/* dark overlay so text is readable */
+.hero-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:1;pointer-events:none;}
+/* all hero content sits above overlay */
 .hero-inner{position:relative;z-index:2;max-width:700px;width:100%;}
 .hero-arrow{position:absolute;top:50%;z-index:3;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:#fff;cursor:pointer;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s;}
 .hero-arrow:hover{background:rgba(255,255,255,.3);}
 .hero-arrow svg{width:18px;height:18px;fill:#fff;}
-#hero-prev{left:1rem;}#hero-next{right:1rem;}
-.hero-dots{position:absolute;bottom:5rem;left:50%;transform:translateX(-50%);z-index:3;display:flex;gap:.45rem;}
+#hero-prev{left:1rem;}
+#hero-next{right:1rem;}
+.hero-dots{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:3;display:flex;gap:.45rem;}
 .hero-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:background .3s,transform .3s;}
 .hero-dot.active{background:#fff;transform:scale(1.3);}
 .avatar{width:96px;height:96px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.35);margin:0 auto 1rem;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:2.4rem;font-weight:700;color:#fff;}
@@ -116,34 +124,21 @@ nav{position:fixed;top:34px;left:0;right:0;z-index:1000;background:var(--navbg);
 #hero h1{color:#fff;font-size:clamp(1.7rem,5vw,2.5rem);margin-bottom:.4rem;}
 #hero .subtitle{color:var(--hsub);font-size:clamp(.85rem,2.5vw,1rem);margin-bottom:.8rem;min-height:1.4em;}
 #hero .tagline{color:var(--hmuted);font-size:clamp(.82rem,2vw,.92rem);max-width:540px;margin:0 auto 1.2rem;line-height:1.7;}
-/* stats strip in hero */
-.hero-stats{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-bottom:1.2rem;}
-.hstat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:.4rem .85rem;text-align:center;}
-.hstat .hn{color:#fff;font-size:1.1rem;font-weight:700;}
-.hstat .hl{color:rgba(255,255,255,.6);font-size:.68rem;text-transform:uppercase;letter-spacing:.6px;}
 .hero-social{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;}
 .hero-social a{display:inline-flex;align-items:center;gap:.38rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.88);text-decoration:none;padding:.38rem .88rem;border-radius:30px;font-size:.79rem;transition:background .2s,transform .2s;}
 .hero-social a:hover{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.5);color:#fff;transform:translateY(-2px);}
 .hero-social svg{width:14px;height:14px;fill:currentColor;}
 
-/* ── SECTIONS ── */
+/* SECTIONS */
 section{padding:clamp(2.5rem,6vw,4.5rem) clamp(1rem,4vw,2rem);transition:background .35s;}
 section:nth-child(even){background:var(--bgalt);}
 .container{max-width:900px;margin:0 auto;}
 .section-title{font-size:clamp(1rem,3vw,1.2rem);font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:1.5px;border-bottom:2.5px solid var(--accent);padding-bottom:.3rem;margin-bottom:1.6rem;display:inline-block;transition:color .35s,border-color .35s;}
 
-/* ── SCHOLAR STATS ── */
-.scholar-strip{display:flex;flex-wrap:wrap;gap:.8rem;margin-bottom:1.8rem;}
-.sstat{background:var(--cardbg);border:1px solid var(--border);border-radius:8px;padding:.7rem 1.2rem;display:flex;align-items:center;gap:.6rem;box-shadow:var(--shadow);transition:background .35s;}
-.sstat .ss-num{font-size:1.4rem;font-weight:700;color:var(--primary);}
-.sstat .ss-label{font-size:.75rem;color:var(--sub);line-height:1.3;}
-.scholar-note{font-size:.75rem;color:var(--sub);margin-top:.4rem;}
-.scholar-note a{color:var(--accent);text-decoration:none;}
-
-/* ── ABOUT ── */
+/* ABOUT */
 .about-text p{line-height:1.82;color:var(--sub);margin-bottom:.9rem;font-size:clamp(.84rem,2.2vw,.95rem);}
 
-/* ── CARDS ── */
+/* CARDS */
 .cards{display:flex;flex-direction:column;gap:1rem;}
 .card{background:var(--cardbg);border-radius:8px;padding:clamp(.9rem,3vw,1.2rem) clamp(1rem,3vw,1.4rem);box-shadow:var(--shadow);border-left:4px solid var(--accent);transition:transform .2s,background .35s;}
 .card:hover{transform:translateX(4px);}
@@ -154,8 +149,8 @@ section:nth-child(even){background:var(--bgalt);}
 .card p{font-size:.84rem;line-height:1.68;color:var(--sub);}
 .card-spec{display:inline-block;background:var(--alight);color:var(--primary);border-radius:20px;padding:.18rem .7rem;font-size:.75rem;font-weight:600;margin-top:.4rem;transition:background .35s,color .35s;}
 
-/* ── NEWS FEED ── */
-.news-feed{position:relative;overflow:hidden;min-height:54px;}
+/* NEWS */
+.news-feed{position:relative;min-height:60px;}
 .news-item{display:none;opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s;}
 .news-item.active{display:flex;opacity:1;transform:none;}
 .news-item.leaving{opacity:0;transform:translateY(-16px);}
@@ -168,12 +163,10 @@ section:nth-child(even){background:var(--bgalt);}
 .news-prev:hover,.news-next:hover{background:var(--alight);color:var(--primary);}
 .news-counter{font-size:.75rem;color:var(--sub);}
 
-/* ── MAP ── */
-#field-map{height:340px;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:var(--bgalt);display:flex;align-items:center;justify-content:center;color:var(--sub);font-size:.85rem;}
-#field-map.ready{display:block;}
-.leaflet-container{height:100%!important;border-radius:10px;}
+/* MAP */
+#field-map{height:340px;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);}
 
-/* ── PUBLICATIONS ── */
+/* PUBLICATIONS */
 .pub-list{list-style:none;display:flex;flex-direction:column;gap:.85rem;}
 .pub-item{background:var(--cardbg);padding:.9rem 1.1rem;border-radius:8px;box-shadow:var(--shadow);display:flex;gap:.8rem;align-items:flex-start;transition:background .35s;}
 .pub-num{min-width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.77rem;font-weight:700;flex-shrink:0;margin-top:2px;}
@@ -183,7 +176,7 @@ section:nth-child(even){background:var(--bgalt);}
 .pub-content a:hover{text-decoration:underline;}
 .pub-subsection{color:var(--primary);margin:1.3rem 0 .8rem;font-size:.88rem;text-transform:uppercase;letter-spacing:1px;font-weight:700;}
 
-/* ── CONFERENCES ── */
+/* CONFERENCES */
 .conf-group{margin-bottom:1.6rem;}
 .conf-group-title{font-size:.87rem;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:1px;margin-bottom:.65rem;}
 .conf-list{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
@@ -192,14 +185,14 @@ section:nth-child(even){background:var(--bgalt);}
 .conf-item a{color:var(--accent);text-decoration:none;font-size:.79rem;}
 .conf-item a:hover{text-decoration:underline;}
 
-/* ── SKILLS ── */
+/* SKILLS */
 .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.9rem;}
 .skill-group{background:var(--cardbg);padding:.9rem;border-radius:8px;box-shadow:var(--shadow);transition:background .35s;}
 .skill-group h4{color:var(--primary);font-size:.8rem;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.8px;}
 .skill-tags{display:flex;flex-wrap:wrap;gap:.35rem;}
 .tag{background:var(--alight);color:var(--primary);border-radius:20px;padding:.2rem .65rem;font-size:.74rem;font-weight:500;transition:background .35s,color .35s;}
 
-/* ── FIELD CARDS ── */
+/* EXPEDITION CARDS */
 .expedition-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;}
 .exp-card{background:var(--primary);border-radius:10px;padding:1.2rem 1.1rem;cursor:pointer;transition:transform .2s,box-shadow .2s,background .35s;text-decoration:none;display:block;}
 .exp-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.22);}
@@ -208,31 +201,31 @@ section:nth-child(even){background:var(--bgalt);}
 .exp-card .exp-sub{color:rgba(255,255,255,.58);font-size:.77rem;line-height:1.45;}
 .exp-card .exp-arrow{color:rgba(255,255,255,.45);font-size:.77rem;margin-top:.65rem;}
 
-/* ── GRANTS ── */
+/* GRANTS */
 .grant-list{list-style:none;display:flex;flex-direction:column;gap:.7rem;}
 .grant-item{display:flex;justify-content:space-between;align-items:center;background:var(--cardbg);padding:.75rem 1.1rem;border-radius:6px;box-shadow:var(--shadow);border-left:4px solid var(--ggreen);gap:1rem;transition:background .35s;}
 .grant-item span{font-size:.85rem;color:var(--sub);flex:1;}
 .grant-year{color:var(--ggreen);font-weight:700;font-size:.83rem;white-space:nowrap;}
 
-/* ── HOBBIES ── */
+/* HOBBIES */
 .hobby-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.9rem;}
 .hobby-card{background:var(--cardbg);border-radius:10px;padding:1.1rem .9rem;box-shadow:var(--shadow);text-align:center;border-top:3px solid var(--accent);transition:background .35s,border-color .35s;}
 .hobby-card .h-icon{font-size:1.8rem;margin-bottom:.4rem;}
 .hobby-card .h-name{font-size:.85rem;font-weight:600;color:var(--text);}
 
-/* ── FOOTER ── */
+/* FOOTER */
 footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0;font-size:.77rem;transition:background .35s;}
 .footer-quote{padding:.9rem 1.5rem .3rem;font-style:italic;font-size:.8rem;color:rgba(255,255,255,.45);border-bottom:1px solid rgba(255,255,255,.07);}
 .footer-copy{padding:.55rem 1.5rem .8rem;font-size:.75rem;color:rgba(255,255,255,.3);}
 .footer-copy a{color:#5599cc;text-decoration:none;}
 
-/* ── BACK TO TOP ── */
+/* BACK TO TOP */
 #back-top{position:fixed;bottom:1.4rem;right:1.4rem;z-index:1500;width:38px;height:38px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .3s,transform .2s,background .35s;}
 #back-top.visible{opacity:1;pointer-events:all;}
 #back-top:hover{transform:translateY(-3px);}
 #back-top svg{width:16px;height:16px;fill:#fff;}
 
-/* ── EXPEDITION PAGE ── */
+/* EXPEDITION PAGE */
 #exp-page{min-height:100vh;background:var(--bgalt);padding-top:86px;transition:background .35s;}
 .exp-page-header{background:linear-gradient(135deg,var(--hero1),var(--hero2));padding:clamp(1.5rem,5vw,3rem) 1.5rem 1.5rem;text-align:center;transition:background .35s;}
 .exp-page-header h2{color:#fff;font-size:clamp(1.3rem,4vw,1.8rem);margin-bottom:.3rem;}
@@ -256,9 +249,7 @@ footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0
 .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.85rem;}
 .photo-slot{background:var(--border);border-radius:8px;overflow:hidden;aspect-ratio:4/3;position:relative;cursor:pointer;transition:transform .2s,box-shadow .2s;}
 .photo-slot:hover{transform:scale(1.02);box-shadow:0 5px 16px rgba(0,0,0,.15);}
-.photo-slot img{width:100%;height:100%;object-fit:cover;display:block;transition:filter .4s;}
-.photo-slot img.blur-up{filter:blur(8px);}
-.photo-slot img.loaded{filter:none;}
+.photo-slot img{width:100%;height:100%;object-fit:cover;display:block;}
 .photo-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;background:linear-gradient(135deg,#c8dced,#b8cfe0);color:var(--primary);font-size:.77rem;text-align:center;padding:.8rem;}
 .photo-placeholder .ph-icon{font-size:1.7rem;opacity:.4;}
 .photo-caption{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.65));color:#fff;font-size:.72rem;padding:.45rem .65rem;}
@@ -270,31 +261,97 @@ footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0
 .lb-close{position:absolute;top:.8rem;right:1.2rem;color:#fff;font-size:1.9rem;cursor:pointer;background:none;border:none;}
 .lb-caption{position:absolute;bottom:1.2rem;color:#bbb;font-size:.85rem;text-align:center;width:100%;padding:0 1rem;}
 
-/* ── RESPONSIVE ── */
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* RESPONSIVE */
 @media(max-width:768px){
   .nav-links{display:none!important;}
   .hamburger{display:flex;}
   .skills-grid,.expedition-grid,.hobby-grid,.photo-grid{grid-template-columns:repeat(2,1fr);}
   .grant-item{flex-wrap:wrap;}
   .hero-arrow{width:30px;height:30px;}
-  .scholar-strip{gap:.5rem;}
 }
 @media(max-width:480px){
   .skills-grid,.photo-grid{grid-template-columns:1fr 1fr;}
   .expedition-grid,.hobby-grid{grid-template-columns:1fr 1fr;}
   .card-header{flex-direction:column;}
   .nav-social,.viewer-badge{display:none;}
-  .hstat{padding:.3rem .6rem;}
+/* BASEMAP SWITCHER */
+.basemap-ctrl {
+  position: relative;
+}
+.bm-select-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,.96);
+  border-radius: 8px;
+  padding: 5px 10px 5px 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.18);
+  cursor: pointer;
+  font-size: .74rem;
+  font-weight: 600;
+  color: var(--primary);
+  white-space: nowrap;
+  border: 1.5px solid transparent;
+  transition: border-color .18s;
+  user-select: none;
+}
+.bm-select-wrap:hover { border-color: var(--accent); }
+.bm-icon { font-size: .95rem; line-height: 1; }
+.bm-chevron { margin-left: 4px; font-size: .65rem; opacity: .5; transition: transform .2s; }
+.bm-select-wrap.open .bm-chevron { transform: rotate(180deg); }
+.bm-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  background: rgba(255,255,255,.98);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.18);
+  overflow: hidden;
+  min-width: 155px;
+  z-index: 9999;
+}
+.bm-dropdown.open { display: block; }
+.bm-group-label {
+  font-size: .65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: #aaa;
+  padding: 7px 11px 3px;
+}
+.bm-option {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 11px;
+  font-size: .78rem;
+  color: #333;
+  cursor: pointer;
+  transition: background .14s;
+}
+.bm-option:hover { background: var(--alight); color: var(--primary); }
+.bm-option.active { background: var(--primary); color: #fff; font-weight: 600; }
+.bm-option .bm-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  flex-shrink: 0;
+}
+body.dark .bm-select-wrap { background: rgba(25,37,52,.96); color: var(--text); }
+body.dark .bm-dropdown { background: rgba(25,37,52,.98); }
+body.dark .bm-option { color: var(--text); }
+body.dark .bm-option:hover { background: var(--border); }
+body.dark .bm-group-label { color: #556; }
 }
 </style>
 </head>
 <body>
 
-<!-- LOADER -->
 <div id="page-loader">
   <div class="loader-name">Pawan Singh</div>
   <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar"></div></div>
-  <div class="loader-sub" id="loader-sub">Loading…</div>
+  <div class="loader-sub">Loading…</div>
 </div>
 
 <div id="tstrip"></div>
@@ -320,8 +377,10 @@ footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0
       <a href="https://twitter.com/" target="_blank" title="Twitter/X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
       <a href="resume/pawan_singh_cv.pdf" download title="Download CV"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 13h8v1.5H8V13zm0 3h8v1.5H8V16zm0-6h3v1.5H8V10z"/></svg></a>
     </div>
-    <div class="viewer-badge"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg><span id="view-count">—</span> visits</div>
-    <button id="dark-toggle" onclick="toggleDark()" title="Toggle dark mode"><svg id="dark-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+
+    <button id="dark-toggle" onclick="toggleDark()" title="Toggle dark mode">
+      <svg id="dark-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+    </button>
     <div class="hamburger" id="ham" onclick="toggleMenu()"><span></span><span></span><span></span></div>
   </div>
 </nav>
@@ -337,27 +396,26 @@ footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0
   <a href="#grants"       onclick="goHome();closeMenu()">Grants</a>
 </div>
 
-<!-- ══════════ MAIN PAGE ══════════ -->
+<!-- MAIN PAGE -->
 <div id="main-page" class="page active">
 
 <section id="hero">
-  <div class="hero-bg-gradient"></div>
-  <button class="hero-arrow" id="hero-prev" onclick="heroStep(-1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
-  <button class="hero-arrow" id="hero-next" onclick="heroStep(1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+  <!-- overlay always present so text is readable even before images load -->
+  <div class="hero-overlay"></div>
+  <!-- arrows and dots -->
+  <button class="hero-arrow" id="hero-prev" onclick="heroStep(-1)">
+    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+  </button>
+  <button class="hero-arrow" id="hero-next" onclick="heroStep(1)">
+    <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+  </button>
   <div class="hero-dots" id="hero-dots"></div>
+  <!-- content -->
   <div class="hero-inner">
     <div class="avatar" id="avatar-wrap">PS</div>
     <h1>Pawan Singh</h1>
-    <p class="subtitle"><span id="typed-text"></span><span id="typed-cursor" style="color:var(--hsub);animation:blink 1s infinite;">|</span></p>
+    <p class="subtitle"><span id="typed-text"></span><span style="color:var(--hsub);animation:blink 1s infinite;">|</span></p>
     <p class="tagline">Studying glacier dynamics in the western Himalaya using terrestrial laser scanning, UAVs, SAR remote sensing, and deep learning, with a focus on high-spatiotemporal glacier change and its driving mechanisms.</p>
-    <!-- stats -->
-    <div class="hero-stats">
-      <div class="hstat"><div class="hn">3</div><div class="hl">Publications</div></div>
-      <div class="hstat"><div class="hn">3</div><div class="hl">Journal Papers</div></div>
-      <div class="hstat"><div class="hn">8+</div><div class="hl">Field Campaigns</div></div>
-      <div class="hstat"><div class="hn">5+</div><div class="hl">Intl. Conferences</div></div>
-
-    </div>
     <div class="hero-social">
       <a href="https://scholar.google.com/citations?user=YNz9FGQAAAAJ&hl=en" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5h3.5v8.25C3.5 19.55 5.2 21 6.75 21h.75v-9h9v9h.75c1.55 0 3.25-1.45 3.25-3.25V9.5H24L12 0z"/></svg><span>Google Scholar</span></a>
       <a href="https://www.linkedin.com/in/pawansingh1610/" target="_blank"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.59 0 4.25 2.36 4.25 5.43l.03 6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"/></svg><span>LinkedIn</span></a>
@@ -368,7 +426,6 @@ footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0
   </div>
 </section>
 
-<!-- NEWS -->
 <section id="news">
   <div class="container reveal">
     <div class="section-title">News &amp; Updates</div>
@@ -392,7 +449,6 @@ footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0
   </div>
 </section>
 
-<!-- FIELD SITES MAP -->
 <section id="map-section">
   <div class="container reveal">
     <div class="section-title">Field Sites</div>
@@ -519,7 +575,7 @@ footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0
 </footer>
 </div><!-- /main-page -->
 
-<!-- ══════════ EXPEDITION PAGE ══════════ -->
+<!-- EXPEDITION PAGE -->
 <div id="exp-page" class="page">
   <div class="exp-page-header">
     <div class="container">
@@ -559,14 +615,119 @@ footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0
   <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
 </button>
 
-
-
-<style>
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-</style>
-
 <script>
-/* ══ THEMES ══ */
+/* ── HERO SLIDESHOW ── */
+const heroPhotos = [
+  'photos/campaign1.png',
+  'photos/campaign2.png',
+  'photos/Campaign3.png',
+  'photos/campaign4.png',
+  'photos/campaign5.png',
+  'photos/campaign6.png',
+  'photos/field_1_1.jpg',
+  'photos/Field1_Group.png',
+  'photos/Field2_team.jpeg',
+  'photos/Field_4.jpeg',
+  'photos/Field_6_GNSS.jpeg'
+];
+
+let slideIdx = 0;
+let slideTimer = null;
+const slides = [];  // plain JS array, no DOM querying
+
+function buildSlides() {
+  const hero = document.getElementById('hero');
+  const dotsEl = document.getElementById('hero-dots');
+  const overlay = hero.querySelector('.hero-overlay');
+
+  heroPhotos.forEach(function(src, i) {
+    // create slide div
+    var div = document.createElement('div');
+    div.className = 'hero-slide';
+    // insert BEFORE the overlay so slides sit under it
+    hero.insertBefore(div, overlay);
+    slides.push(div);
+
+    // create dot
+    var dot = document.createElement('div');
+    dot.className = 'hero-dot';
+    dot.addEventListener('click', (function(idx){ return function(){ goTo(idx); }; })(i));
+    dotsEl.appendChild(dot);
+  });
+
+  // activate dot 0
+  dotsEl.children[0].classList.add('active');
+
+  // load first image
+  loadImg(0, true);
+}
+
+function loadImg(idx, show) {
+  var slide = slides[idx];
+  if (!slide) return;
+  if (slide._loaded) {
+    if (show) activate(idx);
+    return;
+  }
+  var img = new Image();
+  img.onload = function() {
+    slide.style.backgroundImage = 'url("' + heroPhotos[idx] + '")';
+    slide._loaded = true;
+    if (show) activate(idx);
+  };
+  img.onerror = function() {
+    slide._loaded = true;  // mark so we don't retry
+    if (show) activate(idx);  // gradient fallback still shows
+  };
+  img.src = heroPhotos[idx];
+}
+
+function activate(idx) {
+  var dotsEl = document.getElementById('hero-dots');
+  // deactivate old
+  slides[slideIdx].classList.remove('active');
+  dotsEl.children[slideIdx].classList.remove('active');
+  // activate new
+  slideIdx = idx;
+  slides[slideIdx].classList.add('active');
+  dotsEl.children[slideIdx].classList.add('active');
+}
+
+function goTo(idx) {
+  var n = slides.length;
+  var next = (idx + n) % n;
+  loadImg(next, true);
+  resetTimer();
+}
+
+function heroStep(dir) {
+  goTo(slideIdx + dir);
+}
+
+function resetTimer() {
+  clearInterval(slideTimer);
+  slideTimer = setInterval(function(){ heroStep(1); }, 10000);
+}
+
+function initHero() {
+  buildSlides();
+  resetTimer();
+  // preload next 2 quietly after 3s
+  setTimeout(function(){
+    loadImg(1, false);
+    loadImg(2, false);
+  }, 3000);
+  // touch swipe
+  var tx = 0;
+  var hero = document.getElementById('hero');
+  hero.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, {passive:true});
+  hero.addEventListener('touchend',   function(e){
+    var dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 40) heroStep(dx < 0 ? 1 : -1);
+  }, {passive:true});
+}
+
+/* ── THEMES ── */
 const themes=[
   {p:'#1a3c5e',a:'#3a7ca5',al:'#d6eaf8',h1:'#1a3c5e',h2:'#2e6898',bg:'#fff',   bga:'#f4f7fb',t:'#222',   s:'#555',   hs:'#a8d4f0',hm:'#cde4f5',d:'linear-gradient(90deg,#1a3c5e,#3a7ca5)'},
   {p:'#1a3d2b',a:'#3a8a5a',al:'#d0f0e0',h1:'#1a3d2b',h2:'#2e6644',bg:'#fff',   bga:'#f2f9f5',t:'#1a1a1a',s:'#4a5e50',hs:'#9dd9b8',hm:'#c3e8d4',d:'linear-gradient(90deg,#1a3d2b,#3a8a5a)'},
@@ -580,252 +741,303 @@ const themes=[
   {p:'#1a1a1a',a:'#aaaaaa',al:'#eeeeee',h1:'#111',   h2:'#2a2a2a',bg:'#f5f5f5',bga:'#ebebeb',t:'#111',   s:'#444',   hs:'#ccc',   hm:'#aaa',   d:'linear-gradient(90deg,#1a1a1a,#888)'},
 ];
 function applyTheme(t){
-  const r=document.documentElement.style;
+  var r=document.documentElement.style;
   r.setProperty('--primary',t.p);r.setProperty('--accent',t.a);r.setProperty('--alight',t.al);
   r.setProperty('--hero1',t.h1);r.setProperty('--hero2',t.h2);
   r.setProperty('--bg',t.bg);r.setProperty('--bgalt',t.bga);r.setProperty('--cardbg',t.bg);
   r.setProperty('--text',t.t);r.setProperty('--sub',t.s);
   r.setProperty('--navbg',t.p);r.setProperty('--hsub',t.hs);r.setProperty('--hmuted',t.hm);
-  document.querySelector('.hero-bg-gradient').style.background=`linear-gradient(135deg,${t.h1},${t.h2})`;
+  // update hero gradient fallback
+  document.getElementById('hero').style.background = 'linear-gradient(135deg,'+t.h1+','+t.h2+')';
 }
 function buildStrip(){
-  const strip=document.getElementById('tstrip');
-  themes.forEach(t=>{
-    const s=document.createElement('div');s.className='ts';
-    s.style.background=t.d;s.onclick=()=>applyTheme(t);
+  var strip=document.getElementById('tstrip');
+  themes.forEach(function(t){
+    var s=document.createElement('div');s.className='ts';
+    s.style.background=t.d;
+    s.addEventListener('click', function(){ applyTheme(t); });
     strip.appendChild(s);
   });
 }
 
-/* ══ DARK MODE ══ */
-let isDark=false;
+/* ── DARK MODE ── */
+var isDark=false;
 function toggleDark(){
   isDark=!isDark;
   document.body.classList.toggle('dark',isDark);
-  const icon=document.getElementById('dark-icon');
+  var icon=document.getElementById('dark-icon');
   icon.innerHTML=isDark
     ?'<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2v-2H2v2zm18 0h2v-2h-2v2zM11 2v2h2V2h-2zm0 18v2h2v-2h-2zM5.64 6.35l-1.41-1.42-1.42 1.42 1.42 1.41 1.41-1.41zm14.14 11.29l-1.41-1.41-1.41 1.41 1.41 1.42 1.41-1.42zM5.64 17.66l-1.42 1.41 1.42 1.41 1.41-1.41-1.41-1.41zM19.78 5.64l-1.41-1.42-1.41 1.42 1.41 1.41 1.41-1.41z"/>'
     :'<path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>';
 }
 
-
-
-/* ══ NEWS FEED ══ */
+/* ── NEWS ── */
 const newsItems=[
-  {date:'May 2026',   text:'New paper published in Science of Remote Sensing: high-frequency glacier ice velocity observations at Drang Drung Glacier.'},
-  {date:'May 2026',   text:'Attended EGU General Assembly, Vienna — presented results on supraglacial ice-cliff dynamics.'},
-  {date:'Feb 2026',   text:'Field campaign at Uttarkashi for the Endangered Wood Architecture Preservation (EWAP) project.'},
-  {date:'Sep 2025',   text:'Attended National Cryosphere and Polar Science (NCPS) Meeting at NCPOR.'},
-  {date:'Aug 2025',   text:'Completed high-altitude field campaign in the western Himalaya — TLS and time-lapse deployment.'},
-  {date:'May 2025',   text:'Presented at the International Young Glaciologists Programme (IYGP) Conference, Dushanbe, Tajikistan. Received Early Career Travel Grant.'},
-  {date:'Feb 2025',   text:'Attended 2nd Indian Cryosphere Meet at IIT Bombay.'},
-  {date:'Nov 2024',   text:'Attended Debris-Covered Glacier Workshop at ISTA, Austria.'},
-  {date:'Aug 2024',   text:'Field campaign at Machoi Glacier — ice-cliff backwasting and GNSS survey.'},
-  {date:'Jan 2025',   text:'Journal paper accepted in Journal of Glaciology: quantifying backwasting rates at Machoi Glacier.'},
+  {date:'May 2026',text:'New paper published in Science of Remote Sensing: high-frequency glacier ice velocity observations at Drang Drung Glacier.'},
+  {date:'May 2026',text:'Attended EGU General Assembly, Vienna — presented results on supraglacial ice-cliff dynamics.'},
+  {date:'Feb 2026',text:'Field campaign at Uttarkashi for the Endangered Wood Architecture Preservation (EWAP) project.'},
+  {date:'Sep 2025',text:'Attended National Cryosphere and Polar Science (NCPS) Meeting at NCPOR.'},
+  {date:'Aug 2025',text:'Completed high-altitude field campaign in the western Himalaya — TLS and time-lapse deployment.'},
+  {date:'May 2025',text:'Presented at the International Young Glaciologists Programme (IYGP) Conference, Dushanbe, Tajikistan. Received Early Career Travel Grant.'},
+  {date:'Feb 2025',text:'Attended 2nd Indian Cryosphere Meet at IIT Bombay.'},
+  {date:'Nov 2024',text:'Attended Debris-Covered Glacier Workshop at ISTA, Austria.'},
+  {date:'Aug 2024',text:'Field campaign at Machoi Glacier — ice-cliff backwasting and GNSS survey.'},
+  {date:'Jan 2025',text:'Journal paper accepted in Journal of Glaciology: quantifying backwasting rates at Machoi Glacier.'},
 ];
-let newsIdx=0,newsAuto;
+var newsIdx=0, newsAuto;
 function buildNews(){
-  const feed=document.getElementById('news-feed');
-  feed.innerHTML=newsItems.map((n,i)=>`
-    <div class="news-item${i===0?' active':''}" data-i="${i}">
-      <div class="news-dot"></div>
-      <div class="news-content">
-        <div class="news-date">${n.date}</div>
-        <div class="news-text">${n.text}</div>
-      </div>
-    </div>`).join('');
+  var feed=document.getElementById('news-feed');
+  feed.innerHTML=newsItems.map(function(n,i){
+    return '<div class="news-item'+(i===0?' active':'')+'">'
+      +'<div class="news-dot"></div>'
+      +'<div class="news-content">'
+      +'<div class="news-date">'+n.date+'</div>'
+      +'<div class="news-text">'+n.text+'</div>'
+      +'</div></div>';
+  }).join('');
   updateNewsCounter();
-  newsAuto=setInterval(()=>newsStep(1),5000);
+  newsAuto=setInterval(function(){newsStep(1);},5000);
 }
 function newsStep(dir){
-  const items=document.querySelectorAll('.news-item');
+  var items=document.querySelectorAll('.news-item');
   items[newsIdx].classList.add('leaving');
-  setTimeout(()=>{
+  setTimeout(function(){
     items[newsIdx].classList.remove('active','leaving');
     newsIdx=(newsIdx+dir+items.length)%items.length;
     items[newsIdx].classList.add('active');
     updateNewsCounter();
   },400);
   clearInterval(newsAuto);
-  newsAuto=setInterval(()=>newsStep(1),5000);
+  newsAuto=setInterval(function(){newsStep(1);},5000);
 }
 function updateNewsCounter(){
-  document.getElementById('news-counter').textContent=`${newsIdx+1} / ${newsItems.length}`;
+  document.getElementById('news-counter').textContent=(newsIdx+1)+' / '+newsItems.length;
 }
 
-/* ══ LEAFLET MAP — load on demand when section scrolls into view ══ */
-let mapLoaded = false;
+/* ── MAP ── */
 function initMap(){
-  if(mapLoaded || typeof L === 'undefined') return;
-  mapLoaded = true;
-  const el = document.getElementById('field-map');
-  el.classList.add('ready');
-  el.innerHTML = '';
-  const map = L.map(el, {scrollWheelZoom: false}).setView([34.05, 75.9], 9);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© <a href="https://openstreetmap.org">OpenStreetMap</a>',
-    maxZoom: 17
-  }).addTo(map);
-  const sites = [
-    {lat:33.839820, lng:76.366037, name:'Drang Drung Glacier', desc:'Ice velocity monitoring — TLS & time-lapse 2022–2025'},
-    {lat:34.286836, lng:75.526527, name:'Machoi Glacier',      desc:'Ice-cliff backwasting study — Journal of Glaciology 2025'},
-    {lat:34.050800, lng:75.851844, name:'Panikhar',            desc:'Base camp & logistics hub for western Himalaya campaigns'},
+  var el=document.getElementById('field-map');
+  if(!el||!window.L)return;
+
+  var map=L.map(el,{scrollWheelZoom:false});
+
+  var basemaps={
+    'OSM':            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://openstreetmap.org">OpenStreetMap</a>',maxZoom:19}),
+    'Google Roads':   L.tileLayer('https://mt{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{subdomains:['0','1','2','3'],attribution:'© Google',maxZoom:20}),
+    'Google Satellite':L.tileLayer('https://mt{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{subdomains:['0','1','2','3'],attribution:'© Google',maxZoom:20}),
+    'Google Hybrid':  L.tileLayer('https://mt{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',{subdomains:['0','1','2','3'],attribution:'© Google',maxZoom:20}),
+    'Esri Topo':      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',{attribution:'© Esri',maxZoom:18}),
+    'Esri Satellite': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'© Esri',maxZoom:18}),
+  };
+  basemaps['OSM'].addTo(map);
+  var activeBm='OSM';
+
+  // ── INLINE-STYLED DROPDOWN (no CSS variables, works inside Leaflet DOM) ──
+  var bmGroups=[
+    {label:'OpenStreetMap',options:[
+      {name:'OSM Standard', key:'OSM',             icon:'🗺', color:'#3a7ca5'},
+    ]},
+    {label:'Google',options:[
+      {name:'Roads',        key:'Google Roads',     icon:'🛣', color:'#4285f4'},
+      {name:'Satellite',    key:'Google Satellite', icon:'🛰', color:'#34a853'},
+      {name:'Hybrid',       key:'Google Hybrid',    icon:'🌍', color:'#fbbc04'},
+    ]},
+    {label:'Esri',options:[
+      {name:'Topographic',  key:'Esri Topo',        icon:'⛰', color:'#c0623a'},
+      {name:'Satellite',    key:'Esri Satellite',   icon:'📡', color:'#7c5cbf'},
+    ]},
   ];
-  sites.forEach(s => {
-    L.circleMarker([s.lat, s.lng], {radius:9, fillColor:'#3a7ca5', color:'#fff', weight:2, fillOpacity:.9})
-     .addTo(map)
-     .bindPopup(`<strong>${s.name}</strong><br><small>${s.desc}</small>`);
-  });
-}
 
-function loadLeaflet(){
-  if(typeof L !== 'undefined'){ initMap(); return; }
-  // Inject CSS
-  const css = document.createElement('link');
-  css.rel = 'stylesheet';
-  css.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';
-  document.head.appendChild(css);
-  // Inject JS
-  const js = document.createElement('script');
-  js.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
-  js.onload = initMap;
-  document.head.appendChild(js);
-}
+  // Build the dropdown entirely with inline styles so Leaflet sandboxing can't break it
+  var ctrl=L.control({position:'topleft'});
+  ctrl.onAdd=function(){
+    var wrap=L.DomUtil.create('div');
+    wrap.style.cssText='position:relative;font-family:Segoe UI,Arial,sans-serif;';
+    L.DomEvent.disableClickPropagation(wrap);
+    L.DomEvent.disableScrollPropagation(wrap);
 
-// Only load Leaflet when the map section scrolls into view
-function watchMap(){
-  const mapEl = document.getElementById('field-map');
-  mapEl.textContent = 'Loading map…';
-  if(!('IntersectionObserver' in window)){ loadLeaflet(); return; }
-  const obs = new IntersectionObserver(entries => {
-    if(entries[0].isIntersecting){ loadLeaflet(); obs.disconnect(); }
-  }, {rootMargin: '200px'});
-  obs.observe(mapEl);
-}
+    // Trigger button
+    var trigger=L.DomUtil.create('div','',wrap);
+    trigger.style.cssText='display:flex;align-items:center;gap:6px;background:#fff;border:1.5px solid #d0dce8;border-radius:8px;padding:5px 10px;box-shadow:0 2px 8px rgba(0,0,0,.15);cursor:pointer;font-size:13px;font-weight:600;color:#1a3c5e;white-space:nowrap;min-width:130px;user-select:none;';
+    trigger.innerHTML='<span id="bm-trigger-icon">🗺</span><span id="bm-trigger-label" style="flex:1;">OSM Standard</span><span id="bm-chevron" style="font-size:10px;opacity:.5;transition:transform .2s;">▼</span>';
 
-/* ══ TYPED ANIMATION ══ */
-const typedPhrases=['Glaciologist','Remote Sensing Researcher','Field Scientist','IIT Roorkee · PhD Researcher'];
-let tpIdx=0,tpChar=0,tpDeleting=false;
-function typeLoop(){
-  const el=document.getElementById('typed-text');
-  if(!el)return;
-  const phrase=typedPhrases[tpIdx];
-  if(!tpDeleting){
-    el.textContent=phrase.slice(0,++tpChar);
-    if(tpChar===phrase.length){tpDeleting=true;setTimeout(typeLoop,1800);return;}
-  } else {
-    el.textContent=phrase.slice(0,--tpChar);
-    if(tpChar===0){tpDeleting=false;tpIdx=(tpIdx+1)%typedPhrases.length;setTimeout(typeLoop,400);return;}
+    // Dropdown panel
+    var panel=L.DomUtil.create('div','',wrap);
+    panel.style.cssText='display:none;position:absolute;top:calc(100% + 5px);left:0;background:#fff;border:1px solid #d0dce8;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.15);overflow:hidden;min-width:160px;z-index:99999;';
+
+    bmGroups.forEach(function(group){
+      var gl=L.DomUtil.create('div','',panel);
+      gl.style.cssText='font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#aaa;padding:8px 12px 3px;';
+      gl.textContent=group.label;
+
+      group.options.forEach(function(opt){
+        var item=L.DomUtil.create('div','',panel);
+        item.style.cssText='display:flex;align-items:center;gap:8px;padding:7px 12px;font-size:13px;color:#333;cursor:pointer;transition:background .12s;'+(opt.key===activeBm?'background:#1a3c5e;color:#fff;font-weight:600;':'');
+        item.innerHTML='<span style="width:9px;height:9px;border-radius:50%;background:'+opt.color+';flex-shrink:0;display:inline-block;"></span>'
+          +'<span>'+opt.icon+'</span>'
+          +'<span>'+opt.name+'</span>';
+
+        item.addEventListener('mouseenter',function(){
+          if(opt.key!==activeBm) item.style.background='#eaf2fb';
+        });
+        item.addEventListener('mouseleave',function(){
+          if(opt.key!==activeBm) item.style.background='';
+        });
+
+        item.addEventListener('click',function(){
+          if(opt.key===activeBm){panel.style.display='none';trigger.querySelector('#bm-chevron').style.transform='';return;}
+          map.removeLayer(basemaps[activeBm]);
+          basemaps[opt.key].addTo(map);
+          activeBm=opt.key;
+
+          // update trigger
+          trigger.querySelector('#bm-trigger-icon').textContent=opt.icon;
+          trigger.querySelector('#bm-trigger-label').textContent=opt.name;
+
+          // update active highlight on all items
+          panel.querySelectorAll('div[data-bmkey]').forEach(function(el){
+            var isActive=el.dataset.bmkey===opt.key;
+            el.style.background=isActive?'#1a3c5e':'';
+            el.style.color=isActive?'#fff':'#333';
+            el.style.fontWeight=isActive?'600':'400';
+          });
+          panel.style.display='none';
+          trigger.querySelector('#bm-chevron').style.transform='';
+        });
+
+        item.dataset.bmkey=opt.key;
+        panel.appendChild(item);
+      });
+    });
+
+    // Toggle open/close
+    var isOpen=false;
+    trigger.addEventListener('click',function(){
+      isOpen=!isOpen;
+      panel.style.display=isOpen?'block':'none';
+      trigger.querySelector('#bm-chevron').style.transform=isOpen?'rotate(180deg)':'';
+    });
+
+    // Close on outside click
+    document.addEventListener('click',function(e){
+      if(!wrap.contains(e.target)&&isOpen){
+        isOpen=false;
+        panel.style.display='none';
+        trigger.querySelector('#bm-chevron').style.transform='';
+      }
+    });
+
+    return wrap;
+  };
+  ctrl.addTo(map);
+
+  // ── MARKERS ──
+  var cats={
+    glacier:      {color:'#3a7ca5',emoji:'🏔'},
+    landslide:    {color:'#c0623a',emoji:'⛰'},
+    architecture: {color:'#7c5cbf',emoji:'🏛'},
+    dumpsite:     {color:'#2e8a57',emoji:'🗑'},
+  };
+  function makeIcon(cat){
+    var c=cats[cat];
+    return L.divIcon({className:'',html:'<div style="width:30px;height:30px;border-radius:50%;background:'+c.color+';border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;font-size:14px;">'+c.emoji+'</div>',iconSize:[30,30],iconAnchor:[15,15]});
   }
-  setTimeout(typeLoop,tpDeleting?55:90);
+  var sites=[
+    {lat:33.839820,lng:76.366037,cat:'glacier',    name:'Drang Drung Glacier',           desc:'Ice velocity monitoring — TLS & time-lapse 2022–2025'},
+    {lat:34.286836,lng:75.526527,cat:'glacier',    name:'Machoi Glacier',                desc:'Ice-cliff backwasting study — Journal of Glaciology 2025'},
+    {lat:34.050800,lng:75.851844,cat:'glacier',    name:'Panikhar',                      desc:'Base camp & logistics hub for western Himalaya campaigns'},
+    {lat:30.070293,lng:78.454829,cat:'landslide',  name:'Byasi',                         desc:'Landslide survey 2022'},
+    {lat:30.552886,lng:79.105826,cat:'landslide',  name:'Ukhimath',                      desc:'Landslide survey 2020 (M.Tech dissertation)'},
+    {lat:30.970882,lng:78.437709,cat:'architecture',name:'Kharsali — Mahasu Devta Temple',desc:'Endangered Wood Architecture Preservation (EWAP) 2026'},
+    {lat:30.970534,lng:77.927234,cat:'architecture',name:'EWAP Site 2',                  desc:'Endangered Wood Architecture Preservation (EWAP) 2026'},
+    {lat:30.758576,lng:76.806242,cat:'architecture',name:'Chandigarh High Court',         desc:'Heritage impact assessment 2024 — UNESCO World Heritage Site'},
+    {lat:30.343498,lng:77.869005,cat:'dumpsite',   name:'Dehradun Dumpsite',             desc:'Dumpsite garbage mass estimation survey'},
+    {lat:26.797232,lng:80.780222,cat:'dumpsite',   name:'Shivari, Uttar Pradesh',        desc:'Dumpsite survey'},
+    {lat:28.236929,lng:77.065657,cat:'dumpsite',   name:'Sohna Dumpsite',               desc:'Dumpsite survey'},
+    {lat:28.781870,lng:76.124526,cat:'dumpsite',   name:'Bhiwani Dumpsite',             desc:'Dumpsite survey'},
+    {lat:27.884337,lng:77.365453,cat:'dumpsite',   name:'Hodal Dumpsite',               desc:'Dumpsite survey'},
+    {lat:28.899931,lng:75.622193,cat:'dumpsite',   name:'Siwani Dumpsite',              desc:'Dumpsite survey'},
+    {lat:29.830156,lng:77.648854,cat:'dumpsite',   name:'Barar Dumpsite',               desc:'Dumpsite survey'},
+    {lat:28.979260,lng:76.019827,cat:'dumpsite',   name:'Bawani Khera Dumpsite',        desc:'Dumpsite survey'},
+  ];
+  var bounds=[];
+  sites.forEach(function(s){
+    L.marker([s.lat,s.lng],{icon:makeIcon(s.cat)}).addTo(map)
+      .bindPopup('<strong>'+s.name+'</strong><br><span style="font-size:.78rem;color:#3a7ca5;text-transform:capitalize;">'+s.cat+'</span><br><small>'+s.desc+'</small>')
+      .bindTooltip(s.name,{direction:'top',offset:[0,-8]});
+    bounds.push([s.lat,s.lng]);
+  });
+  map.fitBounds(bounds,{padding:[30,30]});
+
+  // ── LEGEND ──
+  var legend=L.control({position:'bottomright'});
+  legend.onAdd=function(){
+    var d=L.DomUtil.create('div');
+    d.style.cssText='background:#fff;padding:8px 10px;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.2);font-size:12px;line-height:1.8;';
+    d.innerHTML=Object.entries(cats).map(function(e){
+      return '<div><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:'+e[1].color+';vertical-align:middle;margin-right:5px;"></span>'+e[1].emoji+' '+e[0].charAt(0).toUpperCase()+e[0].slice(1)+'</div>';
+    }).join('');
+    return d;
+  };
+  legend.addTo(map);
+}
+/* ── TYPEWRITER ── */
+var tPhrases=['Glaciologist','Remote Sensing Researcher','Field Scientist','IIT Roorkee · PhD Researcher'];
+var tIdx=0,tChar=0,tDel=false;
+function typeLoop(){
+  var el=document.getElementById('typed-text');
+  if(!el)return;
+  var phrase=tPhrases[tIdx];
+  if(!tDel){
+    el.textContent=phrase.slice(0,++tChar);
+    if(tChar===phrase.length){tDel=true;setTimeout(typeLoop,1800);return;}
+  }else{
+    el.textContent=phrase.slice(0,--tChar);
+    if(tChar===0){tDel=false;tIdx=(tIdx+1)%tPhrases.length;setTimeout(typeLoop,400);return;}
+  }
+  setTimeout(typeLoop,tDel?55:90);
 }
 
-/* ══ SCROLL REVEAL ══ */
+/* ── SCROLL REVEAL ── */
 function initReveal(){
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
   },{threshold:.12});
-  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
 }
 
-/* ══ ACTIVE NAV HIGHLIGHT ══ */
+/* ── ACTIVE NAV ── */
 function initNavHighlight(){
-  const sections=document.querySelectorAll('section[id]');
-  const links=document.querySelectorAll('.nav-links a');
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
+  var sections=document.querySelectorAll('section[id]');
+  var links=document.querySelectorAll('.nav-links a');
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
       if(e.isIntersecting){
-        links.forEach(l=>l.classList.remove('active-nav'));
-        const active=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
-        if(active) active.classList.add('active-nav');
+        links.forEach(function(l){l.classList.remove('active-nav');});
+        var a=document.querySelector('.nav-links a[href="#'+e.target.id+'"]');
+        if(a)a.classList.add('active-nav');
       }
     });
   },{rootMargin:'-40% 0px -55% 0px'});
-  sections.forEach(s=>obs.observe(s));
+  sections.forEach(function(s){obs.observe(s);});
 }
 
-/* ══ QUOTES ══ */
-const topQ=['The glacier is a window into Earth\'s past and a warning about its future.','What we observe is not nature itself, but nature exposed to our method of questioning. — Heisenberg','Science is not only a disciple of reason but also one of romance and passion. — Stephen Hawking','Somewhere, something incredible is waiting to be known. — Sharon Begley','Look deep into nature, and then you will understand everything better. — Einstein','The good thing about science is that it\'s true whether or not you believe in it. — Neil deGrasse Tyson','An investment in knowledge pays the best interest. — Benjamin Franklin','Science is a way of thinking much more than it is a body of knowledge. — Carl Sagan'];
-const botQ=['Not all those who wander are lost. — J.R.R. Tolkien','The mountains are calling and I must go. — John Muir','In every walk with nature, one receives far more than he seeks. — John Muir','The Earth does not belong to us — we belong to the Earth.','To boldly go where no one has gone before.','The universe is under no obligation to make sense to you. — Neil deGrasse Tyson'];
+/* ── QUOTES ── */
+var topQ=['The glacier is a window into Earth\'s past and a warning about its future.','What we observe is not nature itself, but nature exposed to our method of questioning. — Heisenberg','Science is not only a disciple of reason but also one of romance and passion. — Stephen Hawking','Somewhere, something incredible is waiting to be known. — Sharon Begley','Look deep into nature, and then you will understand everything better. — Einstein','The good thing about science is that it\'s true whether or not you believe in it. — Neil deGrasse Tyson','An investment in knowledge pays the best interest. — Benjamin Franklin','Science is a way of thinking much more than it is a body of knowledge. — Carl Sagan'];
+var botQ=['Not all those who wander are lost. — J.R.R. Tolkien','The mountains are calling and I must go. — John Muir','In every walk with nature, one receives far more than he seeks. — John Muir','The Earth does not belong to us — we belong to the Earth.','To boldly go where no one has gone before.','The universe is under no obligation to make sense to you. — Neil deGrasse Tyson'];
 function pick(a){return a[Math.floor(Math.random()*a.length)];}
-function showTopQ(){const el=document.getElementById('quote-text');el.style.opacity=0;setTimeout(()=>{el.textContent=pick(topQ);el.style.opacity=1;},300);}
-showTopQ();setInterval(showTopQ,8000);
-const fq=document.getElementById('footer-quote');
-if(fq)fq.textContent='❝ '+pick(botQ)+' ❞';
+function showTopQ(){var el=document.getElementById('quote-text');el.style.opacity=0;setTimeout(function(){el.textContent=pick(topQ);el.style.opacity=1;},300);}
 
-/* ══ VISITOR COUNT ══ */
-async function initViewers(){
-  const el=document.getElementById('view-count');
-  try{let r=await window.storage.get('pawan_views');let c=r?parseInt(r.value)||0:0;c++;await window.storage.set('pawan_views',String(c));el.textContent=c.toLocaleString();}
-  catch(e){el.textContent=(Math.floor(Math.random()*400)+120).toLocaleString();}
-}
-initViewers();
 
-/* ══ HERO SLIDESHOW ══ */
-const heroPhotos=['photos/campaign1.png','photos/campaign2.png','photos/Campaign3.png','photos/campaign4.png','photos/campaign5.png','photos/campaign6.png','photos/field_1_1.jpg','photos/Field1_Group.png','photos/Field2_team.jpeg','photos/Field_4.jpeg','photos/Field_6_GNSS.jpeg'];
-let heroIdx=0, heroTimer=null;
 
-function buildHeroSlides(){
-  const hero = document.getElementById('hero');
-  const dotsEl = document.getElementById('hero-dots');
-  // Insert slides at position 0 inside hero (before all other children)
-  heroPhotos.forEach((src, i) => {
-    const slide = document.createElement('div');
-    slide.className = 'hero-slide';
-    slide.dataset.src = src;
-    // First slide gets shown immediately once image loads
-    if(i === 0){
-      slide.style.backgroundImage = `url('${src}')`;
-      slide.classList.add('active');
-    }
-    hero.insertBefore(slide, hero.firstChild);
-    const dot = document.createElement('div');
-    dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
-    dot.onclick = () => goToSlide(i);
-    dotsEl.appendChild(dot);
-  });
-}
-
-function goToSlide(idx){
-  const slides = document.querySelectorAll('.hero-slide');
-  const dots   = document.querySelectorAll('.hero-dot');
-  if(!slides.length) return;
-  slides[heroIdx].classList.remove('active');
-  dots[heroIdx].classList.remove('active');
-  heroIdx = (idx + slides.length) % slides.length;
-  const target = slides[heroIdx];
-  // Lazy-set backgroundImage only when first needed
-  if(!target.style.backgroundImage){
-    target.style.backgroundImage = `url('${target.dataset.src}')`;
-  }
-  target.classList.add('active');
-  dots[heroIdx].classList.add('active');
-  clearInterval(heroTimer);
-  heroTimer = setInterval(() => heroStep(1), 10000);
-}
-
-function heroStep(dir){ goToSlide(heroIdx + dir); }
-
-function initHero(){
-  buildHeroSlides();
-  heroTimer = setInterval(() => heroStep(1), 10000);
-  // Preload slides 1 and 2 in the background so first transitions are smooth
-  [1,2].forEach(i => { if(heroPhotos[i]){ const img=new Image(); img.src=heroPhotos[i]; }});
-  let tx = 0;
-  const hero = document.getElementById('hero');
-  hero.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive:true});
-  hero.addEventListener('touchend',   e => { const dx = e.changedTouches[0].clientX - tx; if(Math.abs(dx) > 40) heroStep(dx < 0 ? 1 : -1); }, {passive:true});
-}
-
-/* ══ PROFILE PHOTO ══ */
+/* ── PROFILE PHOTO ── */
 function setProfilePhoto(src){
   if(!src)return;
-  document.getElementById('avatar-wrap').innerHTML=`<img src="${src}" alt="Pawan Singh"/>`;
+  document.getElementById('avatar-wrap').innerHTML='<img src="'+src+'" alt="Pawan Singh"/>';
 }
-setProfilePhoto(''); // e.g. setProfilePhoto('photos/profile.jpg')
 
-/* ══ PROGRESSIVE IMAGE LOADING (blur-up) ══ */
-const photoData={
+/* ── GALLERY ── */
+var photoData={
   'grid-himalaya-2022':[{src:'photos/campaign1.png',caption:'Field campaign — glacier approach'},{src:'photos/campaign2.png',caption:'Setting up at base'},{src:'photos/Campaign3.png',caption:'On the glacier'},{src:'photos/campaign4.png',caption:'Moraine traverse'}],
   'grid-himalaya-2023':[{src:'photos/campaign5.png',caption:'High-altitude survey'},{src:'photos/campaign6.png',caption:'Camp at glacier margin'},{src:'photos/Field1_Group.png',caption:'Field team — group photo'},{src:'photos/Field2_team.jpeg',caption:'Team on the ice'}],
   'grid-himalaya-2024':[{src:'photos/field_1_1.jpg',caption:'Glacier surface survey'},{src:'photos/field4_1.jpeg',caption:'Equipment deployment'},{src:'photos/Field_4.jpeg',caption:'Scanning session on debris-covered ice'},{src:'photos/Field_6_GNSS.jpeg',caption:'GNSS measurements'}],
@@ -834,90 +1046,78 @@ const photoData={
   'grid-arch-chandigarh':[{src:null,caption:'UAV survey, Chandigarh'},{src:null,caption:'Line-of-sight analysis'},{src:null,caption:'3D model from drone imagery'},{src:null,caption:'Heritage documentation'}],
   'grid-arch-uttarkashi':[{src:null,caption:'Endangered wooden temple'},{src:null,caption:'LiDAR acquisition'},{src:null,caption:'Photogrammetric survey'},{src:null,caption:'Community interview'}],
 };
-
 function buildGrids(){
-  Object.entries(photoData).forEach(([id,photos])=>{
-    const el=document.getElementById(id);if(!el)return;
-    el.innerHTML=photos.map(p=>p.src
-      ?`<div class="photo-slot loading" data-src="${p.src}" data-cap="${p.caption}"><div class="photo-placeholder"><div class="ph-icon">📷</div></div></div>`
-      :`<div class="photo-slot"><div class="photo-placeholder"><div class="ph-icon">📷</div><div>${p.caption}</div></div></div>`
-    ).join('');
+  Object.entries(photoData).forEach(function([id,photos]){
+    var el=document.getElementById(id);if(!el)return;
+    el.innerHTML=photos.map(function(p){
+      return p.src
+        ?'<div class="photo-slot loading" data-src="'+p.src+'" data-cap="'+p.caption+'"><div class="photo-placeholder"><div class="ph-icon">📷</div></div></div>'
+        :'<div class="photo-slot"><div class="photo-placeholder"><div class="ph-icon">📷</div><div>'+p.caption+'</div></div></div>';
+    }).join('');
   });
 }
-
 function lazyLoadGallery(){
-  const slots=document.querySelectorAll('.photo-slot[data-src]');
-  if(!('IntersectionObserver' in window)){
-    slots.forEach(loadSlot);return;
-  }
-  const obs=new IntersectionObserver((entries,o)=>{
-    entries.forEach(e=>{if(e.isIntersecting){loadSlot(e.target);o.unobserve(e.target);}});
+  var slots=document.querySelectorAll('.photo-slot[data-src]');
+  var obs=new IntersectionObserver(function(entries,o){
+    entries.forEach(function(e){if(e.isIntersecting){loadSlot(e.target);o.unobserve(e.target);}});
   },{rootMargin:'300px'});
-  slots.forEach(s=>obs.observe(s));
+  slots.forEach(function(s){obs.observe(s);});
 }
-
 function loadSlot(slot){
-  const src=slot.dataset.src, cap=slot.dataset.cap;
-  // Step 1: load a tiny thumbnail first (same file — browser may cache a small version)
-  // We use a canvas trick to get a blurry placeholder fast
-  const img=new Image();
-  img.className='blur-up';
-  img.alt=cap;
-  img.onload=()=>{
+  var src=slot.dataset.src,cap=slot.dataset.cap;
+  var img=new Image();
+  img.onload=function(){
     slot.classList.remove('loading');
-    slot.innerHTML='';
-    slot.appendChild(img);
-    slot.innerHTML+=`<div class="photo-caption">${cap}</div>`;
-    slot.onclick=()=>openLightbox(src,cap);
-    // Step 2: force re-decode at full quality on idle
-    requestIdleCallback(()=>{img.classList.add('loaded');},{timeout:3000});
+    slot.innerHTML='<img src="'+src+'" alt="'+cap+'" loading="lazy"/><div class="photo-caption">'+cap+'</div>';
+    slot.onclick=function(){openLightbox(src,cap);};
   };
-  img.onerror=()=>slot.classList.remove('loading');
-  // Use loading=lazy so browser manages bandwidth itself
-  img.loading='lazy';
-  img.decoding='async';
+  img.onerror=function(){slot.classList.remove('loading');};
   img.src=src;
 }
 
-/* ══ EXPEDITION PAGE ══ */
-const tabDefs=[{id:'himalaya',label:'🏔 Himalayas'},{id:'landslide',label:'⛰ Landslide'},{id:'architecture',label:'🏛 Architecture'}];
-function buildTabs(){document.getElementById('expTabs').innerHTML=tabDefs.map(t=>`<button class="exp-tab" data-id="${t.id}" onclick="switchTab('${t.id}')">${t.label}</button>`).join('');}
-function switchTab(id){document.querySelectorAll('.exp-tab').forEach(t=>t.classList.toggle('active',t.dataset.id===id));document.querySelectorAll('.exp-section').forEach(s=>s.classList.toggle('active',s.id==='sec-'+id));}
+/* ── EXPEDITION PAGE ── */
+var tabDefs=[{id:'himalaya',label:'🏔 Himalayas'},{id:'landslide',label:'⛰ Landslide'},{id:'architecture',label:'🏛 Architecture'}];
+function buildTabs(){document.getElementById('expTabs').innerHTML=tabDefs.map(function(t){return '<button class="exp-tab" data-id="'+t.id+'" onclick="switchTab(\''+t.id+'\')">'+t.label+'</button>';}).join('');}
+function switchTab(id){document.querySelectorAll('.exp-tab').forEach(function(t){t.classList.toggle('active',t.dataset.id===id);});document.querySelectorAll('.exp-section').forEach(function(s){s.classList.toggle('active',s.id==='sec-'+id);});}
 
-/* ══ NAVIGATION (history API) ══ */
-function showPage(pageId,expId){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById(pageId).classList.add('active');
-  window.scrollTo(0,0);
-  if(pageId==='exp-page'){buildTabs();switchTab(expId||'himalaya');history.pushState({page:'exp',exp:expId||'himalaya'},'','#expeditions');}
-  else history.replaceState({page:'main'},'','#');
+/* ── NAVIGATION ── */
+function showExpedition(id){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.getElementById('exp-page').classList.add('active');
+  window.scrollTo(0,0);buildTabs();switchTab(id);
+  history.pushState({page:'exp',exp:id},'','#expeditions');
 }
-function showExpedition(id){showPage('exp-page',id);}
-function goHome(){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('main-page').classList.add('active');history.replaceState({page:'main'},'','#');}
-window.addEventListener('popstate',e=>{
-  if(e.state&&e.state.page==='exp'){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('exp-page').classList.add('active');buildTabs();switchTab(e.state.exp||'himalaya');}
-  else goHome();
+function goHome(){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.getElementById('main-page').classList.add('active');
+  history.replaceState({page:'main'},'','#');
+}
+window.addEventListener('popstate',function(e){
+  if(e.state&&e.state.page==='exp'){
+    document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+    document.getElementById('exp-page').classList.add('active');
+    buildTabs();switchTab(e.state.exp||'himalaya');
+  }else{goHome();}
 });
 history.replaceState({page:'main'},'','#');
 
-/* ══ LIGHTBOX ══ */
+/* ── LIGHTBOX ── */
 function openLightbox(src,cap){document.getElementById('lb-img').src=src;document.getElementById('lb-caption').textContent=cap;document.getElementById('lightbox').classList.add('open');}
 function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
 
-/* ══ MOBILE MENU ══ */
+/* ── MOBILE MENU ── */
 function toggleMenu(){document.getElementById('ham').classList.toggle('open');document.getElementById('mobileMenu').classList.toggle('open');}
 function closeMenu(){document.getElementById('ham').classList.remove('open');document.getElementById('mobileMenu').classList.remove('open');}
 
-/* ══ BACK TO TOP ══ */
-const backBtn=document.getElementById('back-top');
-window.addEventListener('scroll',()=>backBtn.classList.toggle('visible',window.scrollY>400),{passive:true});
+/* ── BACK TO TOP ── */
+window.addEventListener('scroll',function(){document.getElementById('back-top').classList.toggle('visible',window.scrollY>400);},{passive:true});
 
-/* ══ PROGRESSIVE BOOT ══ */
-const loaderBar=document.getElementById('loader-bar');
-const loader=document.getElementById('page-loader');
+/* ── BOOT ── */
+var loaderBar=document.getElementById('loader-bar');
+var loader=document.getElementById('page-loader');
 function setProgress(p){loaderBar.style.width=p+'%';}
-function dismissLoader(){setProgress(100);setTimeout(()=>{loader.classList.add('done');setTimeout(()=>loader.remove(),600);},300);}
-function preloadImg(src){return new Promise(r=>{const i=new Image();i.onload=i.onerror=r;i.src=src;});}
+function dismissLoader(){setProgress(100);setTimeout(function(){loader.classList.add('done');setTimeout(function(){loader.remove();},600);},300);}
+function preloadImg(src){return new Promise(function(r){var i=new Image();i.onload=i.onerror=r;i.src=src;});}
 
 async function bootSite(){
   setProgress(10);
@@ -925,27 +1125,30 @@ async function bootSite(){
   buildGrids();
   buildNews();
   setProgress(25);
-  if(heroPhotos.length) await preloadImg(heroPhotos[0]);
+  // preload first hero image before showing
+  await preloadImg(heroPhotos[0]);
   setProgress(50);
   initHero();
-  setProfilePhoto('');
+  setProfilePhoto(''); // setProfilePhoto('photos/profile.jpg')
   setProgress(65);
+  showTopQ();
+  setInterval(showTopQ, 8000);
+  var fq=document.getElementById('footer-quote');
+  if(fq) fq.textContent='❝ '+pick(botQ)+' ❞';
+
   dismissLoader();
-  // Non-critical — load after page is usable
-  requestIdleCallback(async()=>{
+  // non-critical deferred
+  requestIdleCallback(function(){
     initReveal();
     initNavHighlight();
     typeLoop();
-
-    // preload remaining hero photos quietly
-    for(let i=1;i<heroPhotos.length;i++) preloadImg(heroPhotos[i]);
-    // lazy-load gallery
+    for(var i=1;i<heroPhotos.length;i++) preloadImg(heroPhotos[i]);
     lazyLoadGallery();
-    // init map on-demand
-    watchMap();
-  },{timeout:1500});
+    initMap();
+  },{timeout:2000});
 }
-requestAnimationFrame(()=>requestAnimationFrame(bootSite));
+
+requestAnimationFrame(function(){requestAnimationFrame(bootSite);});
 </script>
 </body>
 </html>
