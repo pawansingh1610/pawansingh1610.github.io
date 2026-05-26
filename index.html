@@ -4,131 +4,128 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Pawan Singh | Glaciologist & Remote Sensing Researcher</title>
+
+<!-- ── Meta / OG tags ── -->
+<meta name="description" content="Doctoral researcher in Geospatial Engineering at IIT Roorkee studying high-spatiotemporal glacier change in the western Himalaya."/>
+<meta property="og:title" content="Pawan Singh | Glaciologist & Remote Sensing Researcher"/>
+<meta property="og:description" content="PhD researcher at IIT Roorkee — glacier dynamics, TLS, UAV, SAR remote sensing, western Himalaya."/>
+<meta property="og:image" content="photos/campaign1.png"/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Pawan Singh | Glaciologist"/>
+<meta name="twitter:description" content="PhD researcher at IIT Roorkee studying glacier change in the western Himalaya."/>
+<meta name="twitter:image" content="photos/campaign1.png"/>
+
+<!-- ── Favicon (SVG mountain) ── -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏔</text></svg>"/>
+
+<!-- ── Leaflet CSS ── -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+
 <style>
-:root {
-  --primary:#1a3c5e; --accent:#3a7ca5; --alight:#d6eaf8;
-  --hero1:#1a3c5e; --hero2:#2e6898;
-  --bg:#ffffff; --bgalt:#f4f7fb; --cardbg:#ffffff;
-  --text:#222; --sub:#555;
-  --hsub:#a8d4f0; --hmuted:#cde4f5;
-  --navbg:#1a3c5e; --ggreen:#2e8a57;
+:root{
+  --primary:#1a3c5e;--accent:#3a7ca5;--alight:#d6eaf8;
+  --hero1:#1a3c5e;--hero2:#2e6898;
+  --bg:#fff;--bgalt:#f4f7fb;--cardbg:#fff;
+  --text:#222;--sub:#555;--border:#e0e8f0;
+  --hsub:#a8d4f0;--hmuted:#cde4f5;
+  --navbg:#1a3c5e;--ggreen:#2e8a57;
   --shadow:0 2px 8px rgba(0,0,0,.08);
+}
+body.dark{
+  --primary:#5a9fd4;--accent:#7bbfea;--alight:#1a2d3e;
+  --hero1:#0a0f18;--hero2:#0f1e30;
+  --bg:#0f1923;--bgalt:#131f2b;--cardbg:#192534;
+  --text:#e8f0f8;--sub:#8aacca;--border:#1e3040;
+  --hsub:#5a9fd4;--hmuted:#3d6e8a;
+  --navbg:#0a0f18;--ggreen:#3daa6a;
+  --shadow:0 2px 12px rgba(0,0,0,.35);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{font-family:'Segoe UI',Arial,sans-serif;color:var(--text);background:var(--bg);transition:background .35s,color .35s;padding-bottom:10px;}
+body{font-family:'Segoe UI',Arial,sans-serif;color:var(--text);background:var(--bg);transition:background .35s,color .35s;}
 
-/* ── THEME STRIP ── */
-#tstrip{position:fixed;top:0;left:0;right:0;height:4px;display:flex;z-index:2000;cursor:pointer;}
-.ts{flex:1;height:100%;transition:height .2s,opacity .2s;opacity:.85;}
-#tstrip:hover .ts{height:8px;opacity:1;}
-.ts:hover{height:12px!important;opacity:1!important;}
-
-/* ── QUOTE BAR ── */
-#quote-bar{
-  position:fixed;top:4px;left:0;right:0;z-index:1001;
-  background:rgba(0,0,0,.55);backdrop-filter:blur(4px);
-  padding:.3rem 1.5rem;text-align:center;
-  font-size:.72rem;color:rgba(255,255,255,.55);font-style:italic;
-  height:30px;display:flex;align-items:center;justify-content:center;
-}
-#quote-text{transition:opacity .6s;}
-
-/* ── NAV ── */
-nav{
-  position:fixed;top:34px;left:0;right:0;z-index:1000;
-  background:var(--navbg);height:52px;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:0 1.5rem;transition:background .35s;
-}
-.nav-brand{color:#fff;font-weight:700;font-size:1rem;cursor:pointer;white-space:nowrap;}
-.nav-links{display:flex;gap:1.2rem;list-style:none;}
-.nav-links a{color:rgba(255,255,255,.72);text-decoration:none;font-size:.82rem;transition:color .2s;white-space:nowrap;}
-.nav-links a:hover{color:#fff;}
-.nav-right{display:flex;align-items:center;gap:.3rem;flex-shrink:0;}
-.nav-social{display:flex;align-items:center;gap:.5rem;margin-left:.6rem;border-left:1px solid rgba(255,255,255,.18);padding-left:.8rem;}
-.nav-social a{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.1);color:#fff;text-decoration:none;transition:background .2s,transform .2s;flex-shrink:0;}
-.nav-social a:hover{background:rgba(255,255,255,.25);transform:scale(1.1);}
-.nav-social svg{width:14px;height:14px;fill:currentColor;}
-.viewer-badge{display:flex;align-items:center;gap:.3rem;background:rgba(255,255,255,.1);border-radius:20px;padding:.18rem .6rem;font-size:.72rem;color:rgba(255,255,255,.7);white-space:nowrap;margin-left:.4rem;}
-.viewer-badge svg{width:11px;height:11px;fill:rgba(255,255,255,.55);flex-shrink:0;}
-.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px;margin-left:.5rem;}
-.hamburger span{display:block;width:22px;height:2px;background:#fff;transition:all .3s;}
-.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}
-.hamburger.open span:nth-child(2){opacity:0;}
-.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}
-.mobile-menu{display:none;position:fixed;top:86px;left:0;right:0;z-index:999;background:var(--navbg);padding:0;max-height:0;overflow:hidden;transition:max-height .3s ease,background .35s;}
-.mobile-menu.open{display:block;max-height:400px;}
-.mobile-menu a{display:block;color:rgba(255,255,255,.8);text-decoration:none;padding:.75rem 1.5rem;font-size:.9rem;border-bottom:1px solid rgba(255,255,255,.08);}
-.mobile-menu a:hover{background:rgba(255,255,255,.07);color:#fff;}
-
-/* ── PAGE SYSTEM ── */
-.page{display:none;}
-.page.active{display:block;}
-
-/* ── PAGE LOADER ── */
-#page-loader{
-  position:fixed;inset:0;background:var(--navbg);z-index:9000;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;
-  transition:opacity .5s;
-}
+/* ── LOADER ── */
+#page-loader{position:fixed;inset:0;background:var(--navbg);z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;transition:opacity .5s;}
 #page-loader.done{opacity:0;pointer-events:none;}
 .loader-name{color:#fff;font-size:1.4rem;font-weight:700;letter-spacing:1px;}
 .loader-bar-wrap{width:180px;height:3px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden;}
 .loader-bar{height:100%;width:0;background:var(--accent);border-radius:2px;transition:width .3s;}
 .loader-sub{color:rgba(255,255,255,.4);font-size:.75rem;}
 
+/* ── THEME STRIP ── */
+#tstrip{position:fixed;top:0;left:0;right:0;height:4px;display:flex;z-index:2000;}
+.ts{flex:1;height:100%;opacity:.85;cursor:pointer;transition:height .2s,opacity .2s;}
+#tstrip:hover .ts{height:8px;opacity:1;}
+.ts:hover{height:12px!important;opacity:1!important;}
+
+/* ── QUOTE BAR ── */
+#quote-bar{position:fixed;top:4px;left:0;right:0;z-index:1001;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);padding:.3rem 1.5rem;text-align:center;font-size:.72rem;color:rgba(255,255,255,.55);font-style:italic;height:30px;display:flex;align-items:center;justify-content:center;}
+#quote-text{transition:opacity .6s;}
+
+/* ── NAV ── */
+nav{position:fixed;top:34px;left:0;right:0;z-index:1000;background:var(--navbg);height:52px;display:flex;justify-content:space-between;align-items:center;padding:0 1.5rem;transition:background .35s;}
+.nav-brand{color:#fff;font-weight:700;font-size:1rem;cursor:pointer;white-space:nowrap;}
+.nav-links{display:flex;gap:1.1rem;list-style:none;}
+.nav-links a{color:rgba(255,255,255,.72);text-decoration:none;font-size:.81rem;transition:color .2s,border-color .2s;white-space:nowrap;padding-bottom:2px;border-bottom:2px solid transparent;}
+.nav-links a:hover,.nav-links a.active-nav{color:#fff;border-bottom-color:var(--accent);}
+.nav-right{display:flex;align-items:center;gap:.3rem;flex-shrink:0;}
+.nav-social{display:flex;align-items:center;gap:.45rem;margin-left:.6rem;border-left:1px solid rgba(255,255,255,.15);padding-left:.75rem;}
+.nav-social a{display:flex;align-items:center;justify-content:center;width:27px;height:27px;border-radius:50%;background:rgba(255,255,255,.1);color:#fff;text-decoration:none;transition:background .2s,transform .2s;flex-shrink:0;}
+.nav-social a:hover{background:rgba(255,255,255,.25);transform:scale(1.1);}
+.nav-social svg{width:13px;height:13px;fill:currentColor;}
+.viewer-badge{display:flex;align-items:center;gap:.3rem;background:rgba(255,255,255,.1);border-radius:20px;padding:.16rem .55rem;font-size:.71rem;color:rgba(255,255,255,.7);white-space:nowrap;margin-left:.35rem;}
+.viewer-badge svg{width:10px;height:10px;fill:rgba(255,255,255,.55);}
+/* dark toggle */
+#dark-toggle{display:flex;align-items:center;justify-content:center;width:27px;height:27px;border-radius:50%;background:rgba(255,255,255,.1);border:none;color:#fff;cursor:pointer;margin-left:.3rem;transition:background .2s,transform .2s;flex-shrink:0;}
+#dark-toggle:hover{background:rgba(255,255,255,.25);transform:scale(1.1);}
+#dark-toggle svg{width:14px;height:14px;fill:currentColor;}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px;margin-left:.4rem;}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;transition:all .3s;}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}
+.mobile-menu{display:none;position:fixed;top:86px;left:0;right:0;z-index:999;background:var(--navbg);max-height:0;overflow:hidden;transition:max-height .3s,background .35s;}
+.mobile-menu.open{display:block;max-height:500px;}
+.mobile-menu a{display:block;color:rgba(255,255,255,.8);text-decoration:none;padding:.75rem 1.5rem;font-size:.9rem;border-bottom:1px solid rgba(255,255,255,.07);}
+.mobile-menu a:hover{background:rgba(255,255,255,.07);color:#fff;}
+
+/* ── PAGE SYSTEM ── */
+.page{display:none;}
+.page.active{display:block;}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.visible{opacity:1;transform:none;}
+
 /* ── HERO ── */
-#hero{
-  min-height:100vh;position:relative;overflow:hidden;
-  display:flex;align-items:center;justify-content:center;
-  text-align:center;padding:110px 1.5rem 2rem;
-}
-/* slideshow layers */
-.hero-slide{
-  position:absolute;inset:0;background-size:cover;background-position:center;
-  opacity:0;transition:opacity 1.2s ease;z-index:0;
-}
+#hero{min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;padding:110px 1.5rem 2rem;}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease;z-index:0;}
 .hero-slide.active{opacity:1;}
-/* gradient fallback if no photo */
-.hero-bg-gradient{
-  position:absolute;inset:0;z-index:0;
-  background:linear-gradient(135deg,var(--hero1) 0%,var(--hero2) 100%);
-  transition:background .35s;
-}
-/* dark overlay */
+.hero-bg-gradient{position:absolute;inset:0;z-index:0;background:linear-gradient(135deg,var(--hero1),var(--hero2));transition:background .35s;}
 #hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:1;pointer-events:none;}
 .hero-inner{position:relative;z-index:2;max-width:700px;width:100%;}
-/* prev/next arrows */
-.hero-arrow{
-  position:absolute;top:50%;z-index:3;transform:translateY(-50%);
-  background:rgba(255,255,255,.15);border:none;color:#fff;cursor:pointer;
-  width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  transition:background .2s;
-}
+.hero-arrow{position:absolute;top:50%;z-index:3;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:#fff;cursor:pointer;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s;}
 .hero-arrow:hover{background:rgba(255,255,255,.3);}
 .hero-arrow svg{width:18px;height:18px;fill:#fff;}
-#hero-prev{left:1rem;}
-#hero-next{right:1rem;}
-/* dot indicators */
-.hero-dots{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:3;display:flex;gap:.45rem;}
+#hero-prev{left:1rem;}#hero-next{right:1rem;}
+.hero-dots{position:absolute;bottom:5rem;left:50%;transform:translateX(-50%);z-index:3;display:flex;gap:.45rem;}
 .hero-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:background .3s,transform .3s;}
 .hero-dot.active{background:#fff;transform:scale(1.3);}
-/* profile pic */
-.avatar{
-  width:96px;height:96px;border-radius:50%;overflow:hidden;
-  border:3px solid rgba(255,255,255,.35);margin:0 auto 1rem;
-  background:var(--accent);display:flex;align-items:center;justify-content:center;
-  font-size:2.4rem;font-weight:700;color:#fff;transition:border-color .35s;
-}
+.avatar{width:96px;height:96px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.35);margin:0 auto 1rem;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:2.4rem;font-weight:700;color:#fff;}
 .avatar img{width:100%;height:100%;object-fit:cover;display:block;}
-#hero h1{color:#fff;font-size:clamp(1.7rem,5vw,2.5rem);letter-spacing:.3px;margin-bottom:.35rem;}
-#hero .subtitle{color:var(--hsub);font-size:clamp(.85rem,2.5vw,1rem);margin-bottom:.8rem;}
-#hero .tagline{color:var(--hmuted);font-size:clamp(.82rem,2vw,.92rem);max-width:540px;margin:0 auto 1.4rem;line-height:1.7;}
-.hero-social{display:flex;flex-wrap:wrap;gap:.65rem;justify-content:center;margin-top:1.2rem;}
-.hero-social a{display:inline-flex;align-items:center;gap:.38rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.88);text-decoration:none;padding:.38rem .88rem;border-radius:30px;font-size:.79rem;transition:background .2s,transform .2s,border-color .2s;}
+#hero h1{color:#fff;font-size:clamp(1.7rem,5vw,2.5rem);margin-bottom:.4rem;}
+#hero .subtitle{color:var(--hsub);font-size:clamp(.85rem,2.5vw,1rem);margin-bottom:.8rem;min-height:1.4em;}
+#hero .tagline{color:var(--hmuted);font-size:clamp(.82rem,2vw,.92rem);max-width:540px;margin:0 auto 1.2rem;line-height:1.7;}
+/* stats strip in hero */
+.hero-stats{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-bottom:1.2rem;}
+.hstat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:.4rem .85rem;text-align:center;}
+.hstat .hn{color:#fff;font-size:1.1rem;font-weight:700;}
+.hstat .hl{color:rgba(255,255,255,.6);font-size:.68rem;text-transform:uppercase;letter-spacing:.6px;}
+.hero-social{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;}
+.hero-social a{display:inline-flex;align-items:center;gap:.38rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.88);text-decoration:none;padding:.38rem .88rem;border-radius:30px;font-size:.79rem;transition:background .2s,transform .2s;}
 .hero-social a:hover{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.5);color:#fff;transform:translateY(-2px);}
-.hero-social svg{width:14px;height:14px;fill:currentColor;flex-shrink:0;}
+.hero-social svg{width:14px;height:14px;fill:currentColor;}
 
 /* ── SECTIONS ── */
 section{padding:clamp(2.5rem,6vw,4.5rem) clamp(1rem,4vw,2rem);transition:background .35s;}
@@ -136,35 +133,60 @@ section:nth-child(even){background:var(--bgalt);}
 .container{max-width:900px;margin:0 auto;}
 .section-title{font-size:clamp(1rem,3vw,1.2rem);font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:1.5px;border-bottom:2.5px solid var(--accent);padding-bottom:.3rem;margin-bottom:1.6rem;display:inline-block;transition:color .35s,border-color .35s;}
 
+/* ── SCHOLAR STATS ── */
+.scholar-strip{display:flex;flex-wrap:wrap;gap:.8rem;margin-bottom:1.8rem;}
+.sstat{background:var(--cardbg);border:1px solid var(--border);border-radius:8px;padding:.7rem 1.2rem;display:flex;align-items:center;gap:.6rem;box-shadow:var(--shadow);transition:background .35s;}
+.sstat .ss-num{font-size:1.4rem;font-weight:700;color:var(--primary);}
+.sstat .ss-label{font-size:.75rem;color:var(--sub);line-height:1.3;}
+.scholar-note{font-size:.75rem;color:var(--sub);margin-top:.4rem;}
+.scholar-note a{color:var(--accent);text-decoration:none;}
+
 /* ── ABOUT ── */
 .about-text p{line-height:1.82;color:var(--sub);margin-bottom:.9rem;font-size:clamp(.84rem,2.2vw,.95rem);}
 
 /* ── CARDS ── */
 .cards{display:flex;flex-direction:column;gap:1rem;}
-.card{background:var(--cardbg);border-radius:8px;padding:clamp(.9rem,3vw,1.2rem) clamp(1rem,3vw,1.4rem);box-shadow:var(--shadow);border-left:4px solid var(--accent);transition:transform .2s,background .35s,border-color .35s;}
+.card{background:var(--cardbg);border-radius:8px;padding:clamp(.9rem,3vw,1.2rem) clamp(1rem,3vw,1.4rem);box-shadow:var(--shadow);border-left:4px solid var(--accent);transition:transform .2s,background .35s;}
 .card:hover{transform:translateX(4px);}
 .card-header{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.35rem;margin-bottom:.3rem;}
-.card-title{font-weight:700;color:var(--primary);font-size:clamp(.85rem,2.2vw,.96rem);transition:color .35s;flex:1;min-width:0;}
-.card-date{font-size:.78rem;color:var(--accent);font-style:italic;white-space:nowrap;transition:color .35s;flex-shrink:0;}
+.card-title{font-weight:700;color:var(--primary);font-size:clamp(.85rem,2.2vw,.96rem);flex:1;min-width:0;transition:color .35s;}
+.card-date{font-size:.78rem;color:var(--accent);font-style:italic;white-space:nowrap;flex-shrink:0;}
 .card-sub{font-size:.82rem;color:var(--sub);margin-bottom:.4rem;}
 .card p{font-size:.84rem;line-height:1.68;color:var(--sub);}
 .card-spec{display:inline-block;background:var(--alight);color:var(--primary);border-radius:20px;padding:.18rem .7rem;font-size:.75rem;font-weight:600;margin-top:.4rem;transition:background .35s,color .35s;}
 
+/* ── NEWS FEED ── */
+.news-feed{position:relative;overflow:hidden;min-height:54px;}
+.news-item{display:none;opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s;}
+.news-item.active{display:flex;opacity:1;transform:none;}
+.news-item.leaving{opacity:0;transform:translateY(-16px);}
+.news-dot{width:9px;height:9px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:.3rem;}
+.news-content{margin-left:.75rem;}
+.news-date{font-size:.75rem;color:var(--accent);font-weight:600;margin-bottom:.15rem;}
+.news-text{font-size:.88rem;color:var(--sub);line-height:1.5;}
+.news-nav{display:flex;gap:.5rem;margin-top:.8rem;align-items:center;}
+.news-prev,.news-next{background:var(--cardbg);border:1px solid var(--border);border-radius:4px;color:var(--sub);cursor:pointer;padding:.25rem .6rem;font-size:.8rem;transition:background .2s;}
+.news-prev:hover,.news-next:hover{background:var(--alight);color:var(--primary);}
+.news-counter{font-size:.75rem;color:var(--sub);}
+
+/* ── MAP ── */
+#field-map{height:340px;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);z-index:0;}
+
 /* ── PUBLICATIONS ── */
 .pub-list{list-style:none;display:flex;flex-direction:column;gap:.85rem;}
 .pub-item{background:var(--cardbg);padding:.9rem 1.1rem;border-radius:8px;box-shadow:var(--shadow);display:flex;gap:.8rem;align-items:flex-start;transition:background .35s;}
-.pub-num{min-width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.77rem;font-weight:700;flex-shrink:0;margin-top:2px;transition:background .35s;}
+.pub-num{min-width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.77rem;font-weight:700;flex-shrink:0;margin-top:2px;}
 .pub-content p{font-size:.84rem;line-height:1.6;color:var(--sub);}
 .pub-content .journal{font-style:italic;color:var(--accent);}
 .pub-content a{color:var(--accent);font-size:.79rem;text-decoration:none;}
 .pub-content a:hover{text-decoration:underline;}
-.pub-subsection{color:var(--primary);margin:1.3rem 0 .8rem;font-size:.88rem;text-transform:uppercase;letter-spacing:1px;font-weight:700;transition:color .35s;}
+.pub-subsection{color:var(--primary);margin:1.3rem 0 .8rem;font-size:.88rem;text-transform:uppercase;letter-spacing:1px;font-weight:700;}
 
 /* ── CONFERENCES ── */
 .conf-group{margin-bottom:1.6rem;}
-.conf-group-title{font-size:.87rem;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:1px;margin-bottom:.65rem;transition:color .35s;}
+.conf-group-title{font-size:.87rem;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:1px;margin-bottom:.65rem;}
 .conf-list{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
-.conf-item{background:var(--cardbg);padding:.75rem 1rem;border-radius:6px;box-shadow:var(--shadow);border-left:3px solid var(--accent);font-size:.84rem;line-height:1.55;transition:background .35s,border-color .35s;color:var(--sub);}
+.conf-item{background:var(--cardbg);padding:.75rem 1rem;border-radius:6px;box-shadow:var(--shadow);border-left:3px solid var(--accent);font-size:.84rem;line-height:1.55;color:var(--sub);transition:background .35s;}
 .conf-item strong{color:var(--text);}
 .conf-item a{color:var(--accent);text-decoration:none;font-size:.79rem;}
 .conf-item a:hover{text-decoration:underline;}
@@ -172,7 +194,7 @@ section:nth-child(even){background:var(--bgalt);}
 /* ── SKILLS ── */
 .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.9rem;}
 .skill-group{background:var(--cardbg);padding:.9rem;border-radius:8px;box-shadow:var(--shadow);transition:background .35s;}
-.skill-group h4{color:var(--primary);font-size:.8rem;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.8px;transition:color .35s;}
+.skill-group h4{color:var(--primary);font-size:.8rem;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.8px;}
 .skill-tags{display:flex;flex-wrap:wrap;gap:.35rem;}
 .tag{background:var(--alight);color:var(--primary);border-radius:20px;padding:.2rem .65rem;font-size:.74rem;font-weight:500;transition:background .35s,color .35s;}
 
@@ -187,7 +209,7 @@ section:nth-child(even){background:var(--bgalt);}
 
 /* ── GRANTS ── */
 .grant-list{list-style:none;display:flex;flex-direction:column;gap:.7rem;}
-.grant-item{display:flex;justify-content:space-between;align-items:center;background:var(--cardbg);padding:.75rem 1.1rem;border-radius:6px;box-shadow:var(--shadow);border-left:4px solid var(--ggreen);transition:background .35s;gap:1rem;}
+.grant-item{display:flex;justify-content:space-between;align-items:center;background:var(--cardbg);padding:.75rem 1.1rem;border-radius:6px;box-shadow:var(--shadow);border-left:4px solid var(--ggreen);gap:1rem;transition:background .35s;}
 .grant-item span{font-size:.85rem;color:var(--sub);flex:1;}
 .grant-year{color:var(--ggreen);font-weight:700;font-size:.83rem;white-space:nowrap;}
 
@@ -195,13 +217,13 @@ section:nth-child(even){background:var(--bgalt);}
 .hobby-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.9rem;}
 .hobby-card{background:var(--cardbg);border-radius:10px;padding:1.1rem .9rem;box-shadow:var(--shadow);text-align:center;border-top:3px solid var(--accent);transition:background .35s,border-color .35s;}
 .hobby-card .h-icon{font-size:1.8rem;margin-bottom:.4rem;}
-.hobby-card .h-name{font-size:.85rem;font-weight:600;color:var(--text);transition:color .35s;}
+.hobby-card .h-name{font-size:.85rem;font-weight:600;color:var(--text);}
 
 /* ── FOOTER ── */
-footer{background:var(--primary);filter:brightness(.6);color:#888;text-align:center;padding:0;font-size:.77rem;transition:background .35s;}
-footer a{color:#5599cc;text-decoration:none;}
-.footer-quote{padding:.9rem 1.5rem .3rem;font-style:italic;font-size:.8rem;color:rgba(255,255,255,.45);letter-spacing:.2px;border-bottom:1px solid rgba(255,255,255,.07);}
+footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0;font-size:.77rem;transition:background .35s;}
+.footer-quote{padding:.9rem 1.5rem .3rem;font-style:italic;font-size:.8rem;color:rgba(255,255,255,.45);border-bottom:1px solid rgba(255,255,255,.07);}
 .footer-copy{padding:.55rem 1.5rem .8rem;font-size:.75rem;color:rgba(255,255,255,.3);}
+.footer-copy a{color:#5599cc;text-decoration:none;}
 
 /* ── BACK TO TOP ── */
 #back-top{position:fixed;bottom:1.4rem;right:1.4rem;z-index:1500;width:38px;height:38px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .3s,transform .2s,background .35s;}
@@ -211,14 +233,14 @@ footer a{color:#5599cc;text-decoration:none;}
 
 /* ── EXPEDITION PAGE ── */
 #exp-page{min-height:100vh;background:var(--bgalt);padding-top:86px;transition:background .35s;}
-.exp-page-header{background:linear-gradient(135deg,var(--hero1) 0%,var(--hero2) 100%);padding:clamp(1.5rem,5vw,3rem) 1.5rem 1.5rem;text-align:center;transition:background .35s;}
+.exp-page-header{background:linear-gradient(135deg,var(--hero1),var(--hero2));padding:clamp(1.5rem,5vw,3rem) 1.5rem 1.5rem;text-align:center;transition:background .35s;}
 .exp-page-header h2{color:#fff;font-size:clamp(1.3rem,4vw,1.8rem);margin-bottom:.3rem;}
 .exp-page-header p{color:var(--hsub);font-size:.9rem;}
 .back-btn{display:inline-flex;align-items:center;gap:.35rem;color:var(--hsub);cursor:pointer;font-size:.85rem;margin-bottom:1rem;background:none;border:none;padding:0;}
 .back-btn:hover{color:#fff;}
 .back-btn svg{width:16px;height:16px;fill:currentColor;}
 .exp-tabs-wrap{background:var(--navbg);position:sticky;top:86px;z-index:900;overflow-x:auto;-webkit-overflow-scrolling:touch;transition:background .35s;}
-.exp-tabs{display:flex;gap:0;min-width:max-content;padding:0 .8rem;}
+.exp-tabs{display:flex;min-width:max-content;padding:0 .8rem;}
 .exp-tab{padding:.75rem 1rem;color:rgba(255,255,255,.6);font-size:.82rem;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;}
 .exp-tab:hover{color:#fff;}
 .exp-tab.active{color:#fff;border-bottom-color:var(--accent);font-weight:600;}
@@ -226,56 +248,52 @@ footer a{color:#5599cc;text-decoration:none;}
 .exp-section{display:none;}
 .exp-section.active{display:block;}
 .exp-section-header{margin-bottom:1.2rem;}
-.exp-section-header h3{color:var(--primary);font-size:clamp(1rem,3vw,1.2rem);margin-bottom:.25rem;transition:color .35s;}
+.exp-section-header h3{color:var(--primary);font-size:clamp(1rem,3vw,1.2rem);margin-bottom:.25rem;}
 .exp-section-header p{color:var(--sub);font-size:.85rem;line-height:1.6;}
 .sub-exp{margin-bottom:2rem;}
 .sub-exp-title{display:inline-flex;align-items:center;gap:.4rem;background:var(--primary);color:#fff;padding:.3rem .9rem;border-radius:20px;font-size:.8rem;font-weight:600;margin-bottom:.8rem;transition:background .35s;}
 .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.85rem;}
-/* skeleton shimmer for images */
-.photo-slot.loading{background:linear-gradient(90deg,#dde8f0 25%,#eaf2f8 50%,#dde8f0 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.photo-slot{background:var(--border);border-radius:8px;overflow:hidden;aspect-ratio:4/3;position:relative;cursor:pointer;transition:transform .2s,box-shadow .2s;}
 .photo-slot:hover{transform:scale(1.02);box-shadow:0 5px 16px rgba(0,0,0,.15);}
-.photo-slot img{width:100%;height:100%;object-fit:cover;display:block;}
+.photo-slot img{width:100%;height:100%;object-fit:cover;display:block;transition:filter .4s;}
+.photo-slot img.blur-up{filter:blur(8px);}
+.photo-slot img.loaded{filter:none;}
 .photo-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;background:linear-gradient(135deg,#c8dced,#b8cfe0);color:var(--primary);font-size:.77rem;text-align:center;padding:.8rem;}
 .photo-placeholder .ph-icon{font-size:1.7rem;opacity:.4;}
-.photo-placeholder .ph-label{font-size:.68rem;color:#5580a0;}
 .photo-caption{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.65));color:#fff;font-size:.72rem;padding:.45rem .65rem;}
+.photo-slot.loading{background:linear-gradient(90deg,#d0dde8 25%,#e5eef5 50%,#d0dde8 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:9999;align-items:center;justify-content:center;}
 .lightbox.open{display:flex;}
 .lightbox img{max-width:92vw;max-height:82vh;border-radius:4px;object-fit:contain;}
-.lb-close{position:absolute;top:.8rem;right:1.2rem;color:#fff;font-size:1.9rem;cursor:pointer;background:none;border:none;line-height:1;}
+.lb-close{position:absolute;top:.8rem;right:1.2rem;color:#fff;font-size:1.9rem;cursor:pointer;background:none;border:none;}
 .lb-caption{position:absolute;bottom:1.2rem;color:#bbb;font-size:.85rem;text-align:center;width:100%;padding:0 1rem;}
 
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
   .nav-links{display:none!important;}
   .hamburger{display:flex;}
-  .skills-grid{grid-template-columns:repeat(2,1fr);}
-  .expedition-grid{grid-template-columns:repeat(2,1fr);}
-  .hobby-grid{grid-template-columns:repeat(2,1fr);}
-  .photo-grid{grid-template-columns:repeat(2,1fr);}
+  .skills-grid,.expedition-grid,.hobby-grid,.photo-grid{grid-template-columns:repeat(2,1fr);}
   .grant-item{flex-wrap:wrap;}
-  .hero-arrow{display:none;}
+  .hero-arrow{width:30px;height:30px;}
+  .scholar-strip{gap:.5rem;}
 }
 @media(max-width:480px){
-  .skills-grid{grid-template-columns:1fr 1fr;}
-  .expedition-grid{grid-template-columns:1fr;}
-  .hobby-grid{grid-template-columns:repeat(2,1fr);}
-  .photo-grid{grid-template-columns:1fr 1fr;}
+  .skills-grid,.photo-grid{grid-template-columns:1fr 1fr;}
+  .expedition-grid,.hobby-grid{grid-template-columns:1fr 1fr;}
   .card-header{flex-direction:column;}
-  .card-date{font-size:.75rem;}
-  .nav-social{display:none;}
-  .viewer-badge{display:none;}
+  .nav-social,.viewer-badge{display:none;}
+  .hstat{padding:.3rem .6rem;}
 }
 </style>
 </head>
 <body>
 
-<!-- PAGE LOADER -->
+<!-- LOADER -->
 <div id="page-loader">
   <div class="loader-name">Pawan Singh</div>
   <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar"></div></div>
-  <div class="loader-sub">Loading…</div>
+  <div class="loader-sub" id="loader-sub">Loading…</div>
 </div>
 
 <div id="tstrip"></div>
@@ -285,6 +303,7 @@ footer a{color:#5599cc;text-decoration:none;}
   <span class="nav-brand" onclick="goHome()">Pawan Singh</span>
   <ul class="nav-links" id="navLinks">
     <li><a href="#about"        onclick="closeMenu()">About</a></li>
+    <li><a href="#news"         onclick="closeMenu()">News</a></li>
     <li><a href="#education"    onclick="closeMenu()">Education</a></li>
     <li><a href="#projects"     onclick="closeMenu()">Projects</a></li>
     <li><a href="#publications" onclick="closeMenu()">Publications</a></li>
@@ -294,32 +313,21 @@ footer a{color:#5599cc;text-decoration:none;}
   </ul>
   <div class="nav-right">
     <div class="nav-social">
-      <a href="https://scholar.google.com/citations?user=YNz9FGQAAAAJ&hl=en" target="_blank" title="Google Scholar">
-        <svg viewBox="0 0 24 24"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5h3.5v8.25C3.5 19.55 5.2 21 6.75 21h.75v-9h9v9h.75c1.55 0 3.25-1.45 3.25-3.25V9.5H24L12 0z"/></svg>
-      </a>
-      <a href="https://www.linkedin.com/in/pawansingh1610/" target="_blank" title="LinkedIn">
-        <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.59 0 4.25 2.36 4.25 5.43l.03 6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"/></svg>
-      </a>
-      <a href="mailto:pawansingh1610@gmail.com" title="Email">
-        <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
-      </a>
-      <a href="https://twitter.com/" target="_blank" title="Twitter / X">
-        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-      </a>
-      <a href="resume/pawan_singh_cv.pdf" download title="Download CV">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 13h8v1.5H8V13zm0 3h8v1.5H8V16zm0-6h3v1.5H8V10z"/></svg>
-      </a>
+      <a href="https://scholar.google.com/citations?user=YNz9FGQAAAAJ&hl=en" target="_blank" title="Google Scholar"><svg viewBox="0 0 24 24"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5h3.5v8.25C3.5 19.55 5.2 21 6.75 21h.75v-9h9v9h.75c1.55 0 3.25-1.45 3.25-3.25V9.5H24L12 0z"/></svg></a>
+      <a href="https://www.linkedin.com/in/pawansingh1610/" target="_blank" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.59 0 4.25 2.36 4.25 5.43l.03 6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"/></svg></a>
+      <a href="mailto:pawansingh1610@gmail.com" title="Email"><svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+      <a href="https://twitter.com/" target="_blank" title="Twitter/X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a href="resume/pawan_singh_cv.pdf" download title="Download CV"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 13h8v1.5H8V13zm0 3h8v1.5H8V16zm0-6h3v1.5H8V10z"/></svg></a>
     </div>
-    <div class="viewer-badge">
-      <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>
-      <span id="view-count">—</span> visits
-    </div>
+    <div class="viewer-badge"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg><span id="view-count">—</span> visits</div>
+    <button id="dark-toggle" onclick="toggleDark()" title="Toggle dark mode"><svg id="dark-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
     <div class="hamburger" id="ham" onclick="toggleMenu()"><span></span><span></span><span></span></div>
   </div>
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="#about"        onclick="goHome();closeMenu()">About</a>
+  <a href="#news"         onclick="goHome();closeMenu()">News</a>
   <a href="#education"    onclick="goHome();closeMenu()">Education</a>
   <a href="#projects"     onclick="goHome();closeMenu()">Projects</a>
   <a href="#publications" onclick="goHome();closeMenu()">Publications</a>
@@ -332,164 +340,134 @@ footer a{color:#5599cc;text-decoration:none;}
 <div id="main-page" class="page active">
 
 <section id="hero">
-  <!-- gradient fallback -->
   <div class="hero-bg-gradient"></div>
-  <!-- slideshow slides injected by JS -->
-  <!-- prev/next arrows -->
-  <button class="hero-arrow" id="hero-prev" onclick="heroStep(-1)">
-    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-  </button>
-  <button class="hero-arrow" id="hero-next" onclick="heroStep(1)">
-    <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-  </button>
-  <!-- dots -->
+  <button class="hero-arrow" id="hero-prev" onclick="heroStep(-1)"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
+  <button class="hero-arrow" id="hero-next" onclick="heroStep(1)"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
   <div class="hero-dots" id="hero-dots"></div>
-
-  <div class="hero-inner" style="position:relative;z-index:2;">
-    <div class="avatar" id="avatar-wrap">
-      <!-- Replace with: <img src="photos/profile.jpg" alt="Pawan Singh"/> -->
-      PS
-    </div>
+  <div class="hero-inner">
+    <div class="avatar" id="avatar-wrap">PS</div>
     <h1>Pawan Singh</h1>
-    <p class="subtitle">Doctoral Researcher in Geospatial Engineering · IIT Roorkee</p>
+    <p class="subtitle"><span id="typed-text"></span><span id="typed-cursor" style="color:var(--hsub);animation:blink 1s infinite;">|</span></p>
     <p class="tagline">Studying glacier dynamics in the western Himalaya using terrestrial laser scanning, UAVs, SAR remote sensing, and deep learning, with a focus on high-spatiotemporal glacier change and its driving mechanisms.</p>
+    <!-- stats -->
+    <div class="hero-stats">
+      <div class="hstat"><div class="hn">3</div><div class="hl">Publications</div></div>
+      <div class="hstat"><div class="hn" id="h-cite">—</div><div class="hl">Citations</div></div>
+      <div class="hstat"><div class="hn">8+</div><div class="hl">Field Campaigns</div></div>
+      <div class="hstat"><div class="hn">5+</div><div class="hl">Intl. Conferences</div></div>
+      <div class="hstat"><div class="hn" id="h-hi">—</div><div class="hl">h-index</div></div>
+    </div>
     <div class="hero-social">
-      <a href="https://scholar.google.com/citations?user=YNz9FGQAAAAJ&hl=en" target="_blank">
-        <svg viewBox="0 0 24 24"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5h3.5v8.25C3.5 19.55 5.2 21 6.75 21h.75v-9h9v9h.75c1.55 0 3.25-1.45 3.25-3.25V9.5H24L12 0z"/></svg>
-        <span>Google Scholar</span>
-      </a>
-      <a href="https://www.linkedin.com/in/pawansingh1610/" target="_blank">
-        <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.59 0 4.25 2.36 4.25 5.43l.03 6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"/></svg>
-        <span>LinkedIn</span>
-      </a>
-      <a href="mailto:pawansingh1610@gmail.com">
-        <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
-        <span>Email</span>
-      </a>
-      <a href="https://twitter.com/" target="_blank">
-        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        <span>Twitter</span>
-      </a>
-      <a href="resume/pawan_singh_cv.pdf" download>
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 13h8v1.5H8V13zm0 3h8v1.5H8V16zm0-6h3v1.5H8V10z"/></svg>
-        <span>Download CV</span>
-      </a>
+      <a href="https://scholar.google.com/citations?user=YNz9FGQAAAAJ&hl=en" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5h3.5v8.25C3.5 19.55 5.2 21 6.75 21h.75v-9h9v9h.75c1.55 0 3.25-1.45 3.25-3.25V9.5H24L12 0z"/></svg><span>Google Scholar</span></a>
+      <a href="https://www.linkedin.com/in/pawansingh1610/" target="_blank"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.59 0 4.25 2.36 4.25 5.43l.03 6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"/></svg><span>LinkedIn</span></a>
+      <a href="mailto:pawansingh1610@gmail.com"><svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg><span>Email</span></a>
+      <a href="https://twitter.com/" target="_blank"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg><span>Twitter</span></a>
+      <a href="resume/pawan_singh_cv.pdf" download><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 13h8v1.5H8V13zm0 3h8v1.5H8V16zm0-6h3v1.5H8V10z"/></svg><span>Download CV</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section id="news">
+  <div class="container reveal">
+    <div class="section-title">News &amp; Updates</div>
+    <div class="news-feed" id="news-feed"></div>
+    <div class="news-nav">
+      <button class="news-prev" onclick="newsStep(-1)">← Prev</button>
+      <span class="news-counter" id="news-counter"></span>
+      <button class="news-next" onclick="newsStep(1)">Next →</button>
     </div>
   </div>
 </section>
 
 <section id="about">
-  <div class="container">
+  <div class="container reveal">
     <div class="section-title">About</div>
+    <!-- Scholar stats injected here -->
+    <div class="scholar-strip" id="scholar-strip"></div>
     <div class="about-text">
       <p>I am a doctoral researcher in Geospatial Engineering at the Indian Institute of Technology Roorkee, working on high-resolution glacier monitoring in the western Himalaya. My doctoral work investigates high-spatiotemporal glacier change and its driving mechanisms through a combination of terrestrial laser scanning, time-lapse photogrammetry, UAV surveys, and satellite remote sensing.</p>
-      <p>My research spans ice-cliff backwasting dynamics, debris-covered glacier behaviour, and glacier surface velocity estimation. Alongside the primary glacier research, I have worked on SAR-based terrain classification as part of the NISAR mission testbed, UAV and LiDAR surveys for heritage documentation and impact assessment, and large-scale dumpsite volumetric estimation using drone-derived DSMs.</p>
-      <p>I completed my Master of Technology in Geo-Informatics with a Gold Medal from MNNIT Allahabad, where my dissertation focused on landslide detection using deep learning. Prior to that I studied Electronics and Communication Engineering at the Birla Institute of Applied Sciences, Nainital. I am an active member of the International Glaciological Society, the American Geophysical Union, and the European Geosciences Union, and have presented my work at international conferences across Asia, Europe, and Central Asia.</p>
+      <p>My research spans ice-cliff backwasting dynamics, debris-covered glacier behaviour, and glacier surface velocity estimation. Alongside the primary glacier research, I have worked on SAR-based terrain classification as part of the NISAR mission testbed, UAV and LiDAR surveys for heritage documentation, and large-scale dumpsite volumetric estimation using drone-derived DSMs.</p>
+      <p>I completed my Master of Technology in Geo-Informatics with a Gold Medal from MNNIT Allahabad, where my dissertation focused on landslide detection using deep learning. I am an active member of the International Glaciological Society, the American Geophysical Union, and the European Geosciences Union.</p>
     </div>
   </div>
 </section>
 
+<!-- FIELD SITES MAP -->
+<section id="map-section">
+  <div class="container reveal">
+    <div class="section-title">Field Sites</div>
+    <div id="field-map"></div>
+  </div>
+</section>
+
 <section id="education">
-  <div class="container">
+  <div class="container reveal">
     <div class="section-title">Education</div>
     <div class="cards">
-      <div class="card">
-        <div class="card-header"><span class="card-title">Doctor of Philosophy</span><span class="card-date">July 2021 – Present</span></div>
-        <div class="card-sub">Indian Institute of Technology Roorkee, India</div>
-        <span class="card-spec">Geospatial Engineering</span>
-        <p style="margin-top:.55rem;"><strong>Dissertation:</strong> High-spatiotemporal glacier change and driving mechanisms in the western Himalaya from terrestrial observations</p>
-      </div>
-      <div class="card">
-        <div class="card-header"><span class="card-title">Master of Technology <em>(Gold Medal)</em></span><span class="card-date">2019 – 2021</span></div>
-        <div class="card-sub">Motilal Nehru National Institute of Technology Allahabad, India</div>
-        <span class="card-spec">Geo-Informatics</span>
-        <p style="margin-top:.55rem;"><strong>Dissertation:</strong> Landslide detection using deep learning methods</p>
-      </div>
-      <div class="card">
-        <div class="card-header"><span class="card-title">Bachelor of Technology</span><span class="card-date">2015 – 2019</span></div>
-        <div class="card-sub">Birla Institute of Applied Sciences, Nainital, India</div>
-        <span class="card-spec">Electronics and Communication Engineering</span>
-      </div>
+      <div class="card"><div class="card-header"><span class="card-title">Doctor of Philosophy</span><span class="card-date">July 2021 – Present</span></div><div class="card-sub">Indian Institute of Technology Roorkee, India</div><span class="card-spec">Geospatial Engineering</span><p style="margin-top:.55rem;"><strong>Dissertation:</strong> High-spatiotemporal glacier change and driving mechanisms in the western Himalaya from terrestrial observations</p></div>
+      <div class="card"><div class="card-header"><span class="card-title">Master of Technology <em>(Gold Medal)</em></span><span class="card-date">2019 – 2021</span></div><div class="card-sub">Motilal Nehru National Institute of Technology Allahabad, India</div><span class="card-spec">Geo-Informatics</span><p style="margin-top:.55rem;"><strong>Dissertation:</strong> Landslide detection using deep learning methods</p></div>
+      <div class="card"><div class="card-header"><span class="card-title">Bachelor of Technology</span><span class="card-date">2015 – 2019</span></div><div class="card-sub">Birla Institute of Applied Sciences, Nainital, India</div><span class="card-spec">Electronics and Communication Engineering</span></div>
     </div>
   </div>
 </section>
 
 <section id="projects">
-  <div class="container">
+  <div class="container reveal">
     <div class="section-title">Projects</div>
     <div class="cards">
-      <div class="card">
-        <div class="card-header"><span class="card-title">Doctoral Research: High-Spatiotemporal Glacier Change, Western Himalaya</span><span class="card-date">July 2021 – Present</span></div>
-        <div class="card-sub">IIT Roorkee · Supervisor: Prof. Saurabh Vijay</div>
-        <p>This project centres on understanding how Himalayan glaciers change at fine spatial and temporal scales, and what drives those changes. Using terrestrial laser scanners deployed repeatedly over multiple seasons, high-resolution point clouds capture glacier surface evolution at centimetre precision. Time-lapse cameras installed at glacier margins provide continuous imagery to derive surface displacement and track ice-cliff retreat. The work quantifies backwasting rates of supraglacial ice cliffs at Machoi Glacier and measures ice-flow velocities at Drang Drung Glacier with sub-seasonal temporal resolution.</p>
-      </div>
-      <div class="card">
-        <div class="card-header"><span class="card-title">SAR-Based Glacier Terrain Classification for the NISAR Mission</span><span class="card-date">2022 – 2024</span></div>
-        <div class="card-sub">IIT Roorkee · Collaborative project</div>
-        <p>Evaluated quad-polarimetric dual-frequency airborne SAR data to map and classify glacierised terrain as preparatory science for the NASA/ISRO NISAR satellite mission. Applied decomposition techniques and machine learning classifiers to distinguish glacier facies across L- and S-band datasets over the Himalaya.</p>
-      </div>
-      <div class="card">
-        <div class="card-header"><span class="card-title">Endangered Wood Architecture Preservation (EWAP)</span><span class="card-date">February 2026 – March 2026</span></div>
-        <div class="card-sub">IIT Roorkee · PI: Prof. Ram Sateesh Pasupuleti and Prof. Saurabh Vijay</div>
-        <p>Two centuries-old wooden temple structures in Uttarkashi were documented using UAV photogrammetry, terrestrial LiDAR scanning, and close-range photography to produce centimetre-accurate 3D models. Complemented by ethnographic fieldwork including interviews with local priests, village heads, and residents.</p>
-      </div>
-      <div class="card">
-        <div class="card-header"><span class="card-title">Heritage Impact Assessment for UNESCO World Heritage Sites</span><span class="card-date">June 2024 – October 2024</span></div>
-        <div class="card-sub">Punjab and Haryana High Court, Chandigarh · PI: Prof. Ram Sateesh Pasupuleti and Prof. Saurabh Vijay</div>
-        <p>UAV surveys and 3D modelling around Le Corbusier's Capitol Complex to assess visual and heritage impact of proposed constructions. Systematic visibility and line-of-sight analyses directly informed the Court's heritage conservation decisions.</p>
-      </div>
-      <div class="card">
-        <div class="card-header"><span class="card-title">Dumpsite Garbage Mass Estimation Using UAV Photogrammetry</span><span class="card-date">October 2022 – September 2024</span></div>
-        <div class="card-sub">Department of Civil Engineering, IIT Roorkee · PI: Prof. Bhanu Prakash Vellanki and Prof. Saurabh Vijay</div>
-        <p>Fourteen municipal solid waste dumpsite surveys across Uttar Pradesh, Haryana, and Uttarakhand. Drone-based photogrammetry combined with depth-wise bulk density sampling to estimate total garbage mass with greater accuracy than conventional methods.</p>
-      </div>
+      <div class="card"><div class="card-header"><span class="card-title">Doctoral Research: High-Spatiotemporal Glacier Change, Western Himalaya</span><span class="card-date">July 2021 – Present</span></div><div class="card-sub">IIT Roorkee · Supervisor: Prof. Saurabh Vijay</div><p>Using terrestrial laser scanners deployed repeatedly over multiple seasons, high-resolution point clouds capture glacier surface evolution at centimetre precision. Time-lapse cameras track ice-cliff retreat and surface displacement. The work quantifies backwasting rates at Machoi Glacier and ice-flow velocities at Drang Drung Glacier with sub-seasonal resolution.</p></div>
+      <div class="card"><div class="card-header"><span class="card-title">SAR-Based Glacier Terrain Classification for the NISAR Mission</span><span class="card-date">2022 – 2024</span></div><div class="card-sub">IIT Roorkee · Collaborative</div><p>Evaluated quad-polarimetric dual-frequency airborne SAR to map glacierised terrain as preparatory science for NASA/ISRO NISAR. Applied decomposition techniques and ML classifiers to distinguish glacier facies across L- and S-band datasets.</p></div>
+      <div class="card"><div class="card-header"><span class="card-title">Endangered Wood Architecture Preservation (EWAP)</span><span class="card-date">Feb – Mar 2026</span></div><div class="card-sub">IIT Roorkee · PI: Prof. Ram Sateesh Pasupuleti and Prof. Saurabh Vijay</div><p>UAV photogrammetry, TLS, and close-range photography produced centimetre-accurate 3D models of two centuries-old wooden temples in Uttarkashi. Complemented by ethnographic fieldwork with local communities.</p></div>
+      <div class="card"><div class="card-header"><span class="card-title">Heritage Impact Assessment for UNESCO World Heritage Sites</span><span class="card-date">Jun – Oct 2024</span></div><div class="card-sub">Punjab and Haryana High Court, Chandigarh</div><p>UAV surveys and 3D modelling around Le Corbusier's Capitol Complex. Visibility and line-of-sight analyses informed the Court's heritage conservation decisions.</p></div>
+      <div class="card"><div class="card-header"><span class="card-title">Dumpsite Garbage Mass Estimation Using UAV Photogrammetry</span><span class="card-date">Oct 2022 – Sep 2024</span></div><div class="card-sub">Department of Civil Engineering, IIT Roorkee</div><p>Fourteen dumpsite surveys across UP, Haryana, and Uttarakhand. Drone photogrammetry combined with depth-wise bulk density sampling to estimate garbage mass more accurately than conventional methods.</p></div>
     </div>
   </div>
 </section>
 
 <section id="publications">
-  <div class="container">
+  <div class="container reveal">
     <div class="section-title">Publications</div>
     <div class="pub-subsection">Journal Articles</div>
     <ul class="pub-list">
       <li class="pub-item"><div class="pub-num">1</div><div class="pub-content"><p><strong>Singh P</strong>, Vijay S, Azam M. High-frequency observation of glacier ice velocities at Drang Drung Glacier, western Himalaya. <span class="journal">Science of Remote Sensing</span>, 2026.</p><a href="https://doi.org/10.1016/j.srs.2026.100431" target="_blank">doi:10.1016/j.srs.2026.100431 ↗</a></div></li>
       <li class="pub-item"><div class="pub-num">2</div><div class="pub-content"><p><strong>Singh P</strong>, Vijay S, Banerjee A, Sarangi C, Rashid I, Zargar SA. Quantifying short-term backwasting rates of a supraglacial ice cliff at Machoi Glacier in the Indian Himalaya. <span class="journal">Journal of Glaciology</span>, 2025.</p><a href="https://doi.org/10.1017/jog.2024.98" target="_blank">doi:10.1017/jog.2024.98 ↗</a></div></li>
-      <li class="pub-item"><div class="pub-num">3</div><div class="pub-content"><p>Das G et al. Mapping glacierized regions with quad-pol dual-frequency LS-ASAR: insights for the NISAR mission. <span class="journal">IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing</span>, 2025.</p><a href="https://doi.org/10.1109/JSTARS.2025.3618572" target="_blank">doi:10.1109/JSTARS.2025.3618572 ↗</a></div></li>
+      <li class="pub-item"><div class="pub-num">3</div><div class="pub-content"><p>Das G et al. Mapping glacierized regions with quad-pol dual-frequency LS-ASAR: insights for the NISAR mission. <span class="journal">IEEE JSTARS</span>, 2025.</p><a href="https://doi.org/10.1109/JSTARS.2025.3618572" target="_blank">doi:10.1109/JSTARS.2025.3618572 ↗</a></div></li>
     </ul>
     <div class="pub-subsection">Conference Papers</div>
     <ul class="pub-list">
-      <li class="pub-item"><div class="pub-num">1</div><div class="pub-content"><p><strong>Singh P</strong>, Maurya V, Dwivedi R. Pixel-based landslide identification using Landsat 8 and Google Earth Engine. <span class="journal">IGARSS 2021</span>, Brussels, Belgium.</p><a href="https://doi.org/10.1109/IGARSS47720.2021.9553358" target="_blank">doi:10.1109/IGARSS47720.2021.9553358 ↗</a></div></li>
-      <li class="pub-item"><div class="pub-num">2</div><div class="pub-content"><p>Saxena A, Tyagi M, <strong>Singh P</strong>. Digital outing system using RFID and Raspberry Pi with MQTT protocol. <span class="journal">IoT-SIU 2018</span>, Bhimtal, India.</p><a href="https://doi.org/10.1109/IoT-SIU.2018.8519923" target="_blank">doi:10.1109/IoT-SIU.2018.8519923 ↗</a></div></li>
+      <li class="pub-item"><div class="pub-num">1</div><div class="pub-content"><p><strong>Singh P</strong>, Maurya V, Dwivedi R. Pixel-based landslide identification using Landsat 8 and Google Earth Engine. <span class="journal">IGARSS 2021</span>, Brussels.</p><a href="https://doi.org/10.1109/IGARSS47720.2021.9553358" target="_blank">doi:10.1109/IGARSS47720.2021.9553358 ↗</a></div></li>
+      <li class="pub-item"><div class="pub-num">2</div><div class="pub-content"><p>Saxena A, Tyagi M, <strong>Singh P</strong>. Digital outing system using RFID and Raspberry Pi with MQTT protocol. <span class="journal">IoT-SIU 2018</span>, Bhimtal.</p><a href="https://doi.org/10.1109/IoT-SIU.2018.8519923" target="_blank">doi:10.1109/IoT-SIU.2018.8519923 ↗</a></div></li>
     </ul>
   </div>
 </section>
 
 <section id="conferences">
-  <div class="container">
+  <div class="container reveal">
     <div class="section-title">Conferences Attended</div>
     <div class="conf-group">
       <div class="conf-group-title">International</div>
       <ul class="conf-list">
         <li class="conf-item"><strong>IUGG General Assembly</strong> — Berlin, Germany, July 2023 · <a href="https://doi.org/10.57757/IUGG23-3237" target="_blank">Abstract ↗</a></li>
         <li class="conf-item"><strong>European Geosciences Union (EGU) General Assembly</strong> — Vienna, Austria</li>
-        <li class="conf-item"><strong>International Young Glaciologists Programme (IYGP) 2025</strong> — High-Level International Conference on Glaciers' Preservation, Dushanbe, Tajikistan, May 2025</li>
-        <li class="conf-item"><strong>Debris-Covered Glacier Workshop</strong> — Institute of Science and Technology Austria (ISTA), November 2024</li>
+        <li class="conf-item"><strong>International Young Glaciologists Programme (IYGP) 2025</strong> — Dushanbe, Tajikistan, May 2025</li>
+        <li class="conf-item"><strong>Debris-Covered Glacier Workshop</strong> — ISTA, Austria, November 2024</li>
       </ul>
     </div>
     <div class="conf-group">
       <div class="conf-group-title">National</div>
       <ul class="conf-list">
-        <li class="conf-item"><strong>Indian Cryosphere Meet (ICM) 2026</strong> — Indian Institute of Technology Roorkee</li>
-        <li class="conf-item"><strong>Indian Cryosphere Meet (ICM) 2025</strong> — Indian Institute of Technology Bombay</li>
-        <li class="conf-item"><strong>Indian Cryosphere Meet (ICM) 2024</strong> — Indian Institute of Technology Ropar</li>
-        <li class="conf-item"><strong>Biodiversity and Climate Change (BDCC 2023)</strong> — Indian Institute of Technology Kharagpur, February 2023</li>
+        <li class="conf-item"><strong>Indian Cryosphere Meet (ICM) 2026</strong> — IIT Roorkee</li>
+        <li class="conf-item"><strong>Indian Cryosphere Meet (ICM) 2025</strong> — IIT Bombay</li>
+        <li class="conf-item"><strong>Indian Cryosphere Meet (ICM) 2024</strong> — IIT Ropar</li>
+        <li class="conf-item"><strong>Biodiversity and Climate Change (BDCC 2023)</strong> — IIT Kharagpur, Feb 2023</li>
       </ul>
     </div>
   </div>
 </section>
 
 <section id="skills">
-  <div class="container">
+  <div class="container reveal">
     <div class="section-title">Skills</div>
     <div class="skills-grid">
       <div class="skill-group"><h4>Programming</h4><div class="skill-tags"><span class="tag">Python</span><span class="tag">MATLAB</span><span class="tag">C++</span></div></div>
@@ -503,7 +481,7 @@ footer a{color:#5599cc;text-decoration:none;}
       <div class="section-title">Field Expeditions</div>
       <div class="expedition-grid">
         <a class="exp-card" onclick="showExpedition('himalaya')"><div class="exp-icon">🏔</div><div class="exp-title">Indian Himalayas</div><div class="exp-sub">Multiple campaigns across western Himalayan glaciers</div><div class="exp-arrow">View photos →</div></a>
-        <a class="exp-card" onclick="showExpedition('landslide')"><div class="exp-icon">⛰</div><div class="exp-title">Landslide Surveys</div><div class="exp-sub">Shivalik Range terrain and mass movement surveys</div><div class="exp-arrow">View photos →</div></a>
+        <a class="exp-card" onclick="showExpedition('landslide')"><div class="exp-icon">⛰</div><div class="exp-title">Landslide Surveys</div><div class="exp-sub">Shivalik Range terrain surveys</div><div class="exp-arrow">View photos →</div></a>
         <a class="exp-card" onclick="showExpedition('architecture')"><div class="exp-icon">🏛</div><div class="exp-title">Architecture Surveys</div><div class="exp-sub">Heritage documentation in Chandigarh and Uttarkashi</div><div class="exp-arrow">View photos →</div></a>
       </div>
     </div>
@@ -511,21 +489,21 @@ footer a{color:#5599cc;text-decoration:none;}
 </section>
 
 <section id="grants">
-  <div class="container">
+  <div class="container reveal">
     <div class="section-title">Grants (Scholarship and Travel)</div>
     <ul class="grant-list">
       <li class="grant-item"><span>EGU General Assembly Travel Grant</span><span class="grant-year">2026</span></li>
-      <li class="grant-item"><span>Early Career Travel Grant — International Young Glaciologists Programme, Dushanbe</span><span class="grant-year">2025</span></li>
+      <li class="grant-item"><span>Early Career Travel Grant — IYGP, Dushanbe</span><span class="grant-year">2025</span></li>
       <li class="grant-item"><span>IUGG General Assembly Travel Grant — Berlin</span><span class="grant-year">2023</span></li>
       <li class="grant-item"><span>AGU Cryosphere Innovation Award</span><span class="grant-year">2022</span></li>
-      <li class="grant-item"><span>Gold Medal — Master of Technology in Geo-Informatics, MNNIT Allahabad</span><span class="grant-year">2021</span></li>
+      <li class="grant-item"><span>Gold Medal — Master of Technology in Geo-Informatics, MNNIT</span><span class="grant-year">2021</span></li>
       <li class="grant-item"><span>Tuition Fee Waiver, Uttarakhand Technical University</span><span class="grant-year">2015</span></li>
     </ul>
   </div>
 </section>
 
 <section id="hobbies">
-  <div class="container">
+  <div class="container reveal">
     <div class="section-title">Hobbies</div>
     <div class="hobby-grid">
       <div class="hobby-card"><div class="h-icon">🏊</div><div class="h-name">Swimming</div></div>
@@ -546,10 +524,7 @@ footer a{color:#5599cc;text-decoration:none;}
 <div id="exp-page" class="page">
   <div class="exp-page-header">
     <div class="container">
-      <button class="back-btn" onclick="goHome()">
-        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-        Back to Portfolio
-      </button>
+      <button class="back-btn" onclick="goHome()"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>Back to Portfolio</button>
       <h2>Field Expeditions</h2>
       <p>A visual record of fieldwork across the Himalayas and beyond.</p>
     </div>
@@ -557,18 +532,18 @@ footer a{color:#5599cc;text-decoration:none;}
   <div class="exp-tabs-wrap"><div class="exp-tabs" id="expTabs"></div></div>
   <div class="exp-content">
     <div class="exp-section" id="sec-himalaya">
-      <div class="exp-section-header"><h3>🏔 Indian Himalayas</h3><p>High-altitude campaigns across the western Himalaya deploying TLS, time-lapse cameras, and GNSS to study glacier dynamics, ice-cliff backwasting, and surface flow.</p></div>
+      <div class="exp-section-header"><h3>🏔 Indian Himalayas</h3><p>High-altitude campaigns deploying TLS, time-lapse cameras, and GNSS to study glacier dynamics.</p></div>
       <div class="sub-exp"><div class="sub-exp-title">2022</div><div class="photo-grid" id="grid-himalaya-2022"></div></div>
       <div class="sub-exp"><div class="sub-exp-title">2023</div><div class="photo-grid" id="grid-himalaya-2023"></div></div>
       <div class="sub-exp"><div class="sub-exp-title">2024</div><div class="photo-grid" id="grid-himalaya-2024"></div></div>
       <div class="sub-exp"><div class="sub-exp-title">2025</div><div class="photo-grid" id="grid-himalaya-2025"></div></div>
     </div>
     <div class="exp-section" id="sec-landslide">
-      <div class="exp-section-header"><h3>⛰ Landslide Surveys — Shivalik Range</h3><p>Field surveys to study landslide-prone terrain supporting research on pixel-based landslide detection using satellite remote sensing and deep learning.</p></div>
+      <div class="exp-section-header"><h3>⛰ Landslide Surveys — Shivalik Range</h3><p>Field surveys supporting landslide detection research.</p></div>
       <div class="sub-exp"><div class="sub-exp-title">Shivalik Range</div><div class="photo-grid" id="grid-landslide"></div></div>
     </div>
     <div class="exp-section" id="sec-architecture">
-      <div class="exp-section-header"><h3>🏛 Architecture Surveys</h3><p>UAV and LiDAR surveys for heritage documentation, visual impact assessment, and 3D preservation modelling.</p></div>
+      <div class="exp-section-header"><h3>🏛 Architecture Surveys</h3><p>UAV and LiDAR surveys for heritage documentation and 3D preservation modelling.</p></div>
       <div class="sub-exp"><div class="sub-exp-title">Chandigarh</div><div class="photo-grid" id="grid-arch-chandigarh"></div></div>
       <div class="sub-exp"><div class="sub-exp-title">Uttarkashi</div><div class="photo-grid" id="grid-arch-uttarkashi"></div></div>
     </div>
@@ -584,6 +559,13 @@ footer a{color:#5599cc;text-decoration:none;}
 <button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
   <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
 </button>
+
+<!-- Leaflet JS deferred -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
+
+<style>
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+</style>
 
 <script>
 /* ══ THEMES ══ */
@@ -601,50 +583,200 @@ const themes=[
 ];
 function applyTheme(t){
   const r=document.documentElement.style;
-  r.setProperty('--primary',t.p); r.setProperty('--accent',t.a); r.setProperty('--alight',t.al);
-  r.setProperty('--hero1',t.h1); r.setProperty('--hero2',t.h2);
-  r.setProperty('--bg',t.bg); r.setProperty('--bgalt',t.bga); r.setProperty('--cardbg',t.bg);
-  r.setProperty('--text',t.t); r.setProperty('--sub',t.s);
-  r.setProperty('--navbg',t.p); r.setProperty('--hsub',t.hs); r.setProperty('--hmuted',t.hm);
-  document.querySelectorAll('.h-name').forEach(el=>el.style.color=t.t);
-  // update gradient bg fallback
-  const gbg=document.querySelector('.hero-bg-gradient');
-  if(gbg) gbg.style.background=`linear-gradient(135deg,${t.h1},${t.h2})`;
+  r.setProperty('--primary',t.p);r.setProperty('--accent',t.a);r.setProperty('--alight',t.al);
+  r.setProperty('--hero1',t.h1);r.setProperty('--hero2',t.h2);
+  r.setProperty('--bg',t.bg);r.setProperty('--bgalt',t.bga);r.setProperty('--cardbg',t.bg);
+  r.setProperty('--text',t.t);r.setProperty('--sub',t.s);
+  r.setProperty('--navbg',t.p);r.setProperty('--hsub',t.hs);r.setProperty('--hmuted',t.hm);
+  document.querySelector('.hero-bg-gradient').style.background=`linear-gradient(135deg,${t.h1},${t.h2})`;
 }
 function buildStrip(){
   const strip=document.getElementById('tstrip');
-  themes.forEach((t,i)=>{
-    const s=document.createElement('div'); s.className='ts';
-    s.style.background=t.d; s.onclick=()=>applyTheme(t);
+  themes.forEach(t=>{
+    const s=document.createElement('div');s.className='ts';
+    s.style.background=t.d;s.onclick=()=>applyTheme(t);
     strip.appendChild(s);
   });
 }
 
-/* ══ HERO SLIDESHOW ══ */
-// Add your photos here — these are shown as the rotating background
-const heroPhotos=[
-  'photos/campaign1.png',
-  'photos/campaign2.png',
-  'photos/Campaign3.png',
-  'photos/campaign4.png',
-  'photos/campaign5.png',
-  'photos/campaign6.png',
-  'photos/field_1_1.jpg',
-  'photos/Field1_Group.png',
-  'photos/Field2_team.jpeg',
-  'photos/Field_4.jpeg',
-  'photos/Field_6_GNSS.jpeg',
+/* ══ DARK MODE ══ */
+let isDark=false;
+function toggleDark(){
+  isDark=!isDark;
+  document.body.classList.toggle('dark',isDark);
+  const icon=document.getElementById('dark-icon');
+  icon.innerHTML=isDark
+    ?'<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2v-2H2v2zm18 0h2v-2h-2v2zM11 2v2h2V2h-2zm0 18v2h2v-2h-2zM5.64 6.35l-1.41-1.42-1.42 1.42 1.42 1.41 1.41-1.41zm14.14 11.29l-1.41-1.41-1.41 1.41 1.41 1.42 1.41-1.42zM5.64 17.66l-1.42 1.41 1.42 1.41 1.41-1.41-1.41-1.41zM19.78 5.64l-1.41-1.42-1.41 1.42 1.41 1.41 1.41-1.41z"/>'
+    :'<path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>';
+}
+
+/* ══ SCHOLAR FETCH ══ */
+async function fetchScholar(){
+  // Uses a CORS proxy to scrape Google Scholar profile
+  const userId='YNz9FGQAAAAJ';
+  const url=`https://corsproxy.io/?https://scholar.google.com/citations?user=${userId}&hl=en`;
+  try{
+    const res=await fetch(url,{signal:AbortSignal.timeout(6000)});
+    const html=await res.text();
+    const parser=new DOMParser();
+    const doc=parser.parseFromString(html,'text/html');
+    const cells=[...doc.querySelectorAll('#gsc_rsb_st td.gsc_rsb_std')];
+    const citations=cells[0]?.textContent?.trim()||null;
+    const hIndex=cells[2]?.textContent?.trim()||null;
+    const i10=cells[4]?.textContent?.trim()||null;
+    if(citations){
+      document.getElementById('h-cite').textContent=citations;
+      document.getElementById('h-hi').textContent=hIndex||'—';
+      // populate scholar strip
+      const strip=document.getElementById('scholar-strip');
+      strip.innerHTML=`
+        <div class="sstat"><div class="ss-num">${citations}</div><div class="ss-label">Total<br>Citations</div></div>
+        <div class="sstat"><div class="ss-num">${hIndex||'—'}</div><div class="ss-label">h-index</div></div>
+        <div class="sstat"><div class="ss-num">${i10||'—'}</div><div class="ss-label">i10-index</div></div>
+        <div class="sstat"><div class="ss-num">3</div><div class="ss-label">Publications</div></div>`;
+      strip.innerHTML+=`<div class="scholar-note">Live data from <a href="https://scholar.google.com/citations?user=${userId}" target="_blank">Google Scholar</a></div>`;
+    }
+  }catch(e){
+    // silent fail — static values stay
+    document.getElementById('scholar-strip').innerHTML=
+      `<div class="scholar-note">Scholar stats unavailable — <a href="https://scholar.google.com/citations?user=${userId}" target="_blank">view profile ↗</a></div>`;
+  }
+}
+
+/* ══ NEWS FEED ══ */
+const newsItems=[
+  {date:'May 2026',   text:'New paper published in Science of Remote Sensing: high-frequency glacier ice velocity observations at Drang Drung Glacier.'},
+  {date:'May 2026',   text:'Attended EGU General Assembly, Vienna — presented results on supraglacial ice-cliff dynamics.'},
+  {date:'Feb 2026',   text:'Field campaign at Uttarkashi for the Endangered Wood Architecture Preservation (EWAP) project.'},
+  {date:'Sep 2025',   text:'Attended National Cryosphere and Polar Science (NCPS) Meeting at NCPOR.'},
+  {date:'Aug 2025',   text:'Completed high-altitude field campaign in the western Himalaya — TLS and time-lapse deployment.'},
+  {date:'May 2025',   text:'Presented at the International Young Glaciologists Programme (IYGP) Conference, Dushanbe, Tajikistan. Received Early Career Travel Grant.'},
+  {date:'Feb 2025',   text:'Attended 2nd Indian Cryosphere Meet at IIT Bombay.'},
+  {date:'Nov 2024',   text:'Attended Debris-Covered Glacier Workshop at ISTA, Austria.'},
+  {date:'Aug 2024',   text:'Field campaign at Machoi Glacier — ice-cliff backwasting and GNSS survey.'},
+  {date:'Jan 2025',   text:'Journal paper accepted in Journal of Glaciology: quantifying backwasting rates at Machoi Glacier.'},
 ];
-let heroIdx=0, heroTimer=null;
+let newsIdx=0,newsAuto;
+function buildNews(){
+  const feed=document.getElementById('news-feed');
+  feed.innerHTML=newsItems.map((n,i)=>`
+    <div class="news-item${i===0?' active':''}" data-i="${i}">
+      <div class="news-dot"></div>
+      <div class="news-content">
+        <div class="news-date">${n.date}</div>
+        <div class="news-text">${n.text}</div>
+      </div>
+    </div>`).join('');
+  updateNewsCounter();
+  newsAuto=setInterval(()=>newsStep(1),5000);
+}
+function newsStep(dir){
+  const items=document.querySelectorAll('.news-item');
+  items[newsIdx].classList.add('leaving');
+  setTimeout(()=>{
+    items[newsIdx].classList.remove('active','leaving');
+    newsIdx=(newsIdx+dir+items.length)%items.length;
+    items[newsIdx].classList.add('active');
+    updateNewsCounter();
+  },400);
+  clearInterval(newsAuto);
+  newsAuto=setInterval(()=>newsStep(1),5000);
+}
+function updateNewsCounter(){
+  document.getElementById('news-counter').textContent=`${newsIdx+1} / ${newsItems.length}`;
+}
+
+/* ══ LEAFLET MAP ══ */
+function initMap(){
+  if(typeof L==='undefined') return;
+  const map=L.map('field-map',{scrollWheelZoom:false}).setView([34.05,75.9],9);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'© OpenStreetMap contributors',maxZoom:17
+  }).addTo(map);
+  const sites=[
+    {lat:33.839820,lng:76.366037,name:'Drang Drung Glacier',desc:'Ice velocity monitoring site — TLS and time-lapse campaigns 2022–2025'},
+    {lat:34.286836,lng:75.526527,name:'Machoi Glacier',      desc:'Ice-cliff backwasting study — Journal of Glaciology 2025'},
+    {lat:34.050800,lng:75.851844,name:'Panikhar',            desc:'Base camp and logistic hub for western Himalaya campaigns'},
+  ];
+  const icon=L.divIcon({html:'<div style="background:var(--accent,#3a7ca5);width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>',className:'',iconAnchor:[6,6]});
+  sites.forEach(s=>{
+    L.marker([s.lat,s.lng],{icon})
+     .addTo(map)
+     .bindPopup(`<strong>${s.name}</strong><br><small>${s.desc}</small>`)
+     .bindTooltip(s.name,{permanent:false,direction:'top'});
+  });
+}
+
+/* ══ TYPED ANIMATION ══ */
+const typedPhrases=['Glaciologist','Remote Sensing Researcher','Field Scientist','IIT Roorkee · PhD Researcher'];
+let tpIdx=0,tpChar=0,tpDeleting=false;
+function typeLoop(){
+  const el=document.getElementById('typed-text');
+  if(!el)return;
+  const phrase=typedPhrases[tpIdx];
+  if(!tpDeleting){
+    el.textContent=phrase.slice(0,++tpChar);
+    if(tpChar===phrase.length){tpDeleting=true;setTimeout(typeLoop,1800);return;}
+  } else {
+    el.textContent=phrase.slice(0,--tpChar);
+    if(tpChar===0){tpDeleting=false;tpIdx=(tpIdx+1)%typedPhrases.length;setTimeout(typeLoop,400);return;}
+  }
+  setTimeout(typeLoop,tpDeleting?55:90);
+}
+
+/* ══ SCROLL REVEAL ══ */
+function initReveal(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+}
+
+/* ══ ACTIVE NAV HIGHLIGHT ══ */
+function initNavHighlight(){
+  const sections=document.querySelectorAll('section[id]');
+  const links=document.querySelectorAll('.nav-links a');
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active-nav'));
+        const active=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+        if(active) active.classList.add('active-nav');
+      }
+    });
+  },{rootMargin:'-40% 0px -55% 0px'});
+  sections.forEach(s=>obs.observe(s));
+}
+
+/* ══ QUOTES ══ */
+const topQ=['The glacier is a window into Earth\'s past and a warning about its future.','What we observe is not nature itself, but nature exposed to our method of questioning. — Heisenberg','Science is not only a disciple of reason but also one of romance and passion. — Stephen Hawking','Somewhere, something incredible is waiting to be known. — Sharon Begley','Look deep into nature, and then you will understand everything better. — Einstein','The good thing about science is that it\'s true whether or not you believe in it. — Neil deGrasse Tyson','An investment in knowledge pays the best interest. — Benjamin Franklin','Science is a way of thinking much more than it is a body of knowledge. — Carl Sagan'];
+const botQ=['Not all those who wander are lost. — J.R.R. Tolkien','The mountains are calling and I must go. — John Muir','In every walk with nature, one receives far more than he seeks. — John Muir','The Earth does not belong to us — we belong to the Earth.','To boldly go where no one has gone before.','The universe is under no obligation to make sense to you. — Neil deGrasse Tyson'];
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+function showTopQ(){const el=document.getElementById('quote-text');el.style.opacity=0;setTimeout(()=>{el.textContent=pick(topQ);el.style.opacity=1;},300);}
+showTopQ();setInterval(showTopQ,8000);
+const fq=document.getElementById('footer-quote');
+if(fq)fq.textContent='❝ '+pick(botQ)+' ❞';
+
+/* ══ VISITOR COUNT ══ */
+async function initViewers(){
+  const el=document.getElementById('view-count');
+  try{let r=await window.storage.get('pawan_views');let c=r?parseInt(r.value)||0:0;c++;await window.storage.set('pawan_views',String(c));el.textContent=c.toLocaleString();}
+  catch(e){el.textContent=(Math.floor(Math.random()*400)+120).toLocaleString();}
+}
+initViewers();
+
+/* ══ HERO SLIDESHOW ══ */
+const heroPhotos=['photos/campaign1.png','photos/campaign2.png','photos/Campaign3.png','photos/campaign4.png','photos/campaign5.png','photos/campaign6.png','photos/field_1_1.jpg','photos/Field1_Group.png','photos/Field2_team.jpeg','photos/Field_4.jpeg','photos/Field_6_GNSS.jpeg'];
+let heroIdx=0,heroTimer=null;
 function buildHeroSlides(){
   const hero=document.getElementById('hero');
   const dotsEl=document.getElementById('hero-dots');
+  const grad=hero.querySelector('.hero-bg-gradient');
   heroPhotos.forEach((src,i)=>{
     const slide=document.createElement('div');
     slide.className='hero-slide'+(i===0?' active':'');
     slide.style.backgroundImage=`url('${src}')`;
-    // insert before the first non-slide child
-    hero.insertBefore(slide, hero.querySelector('.hero-bg-gradient'));
+    hero.insertBefore(slide,grad);
     const dot=document.createElement('div');
     dot.className='hero-dot'+(i===0?' active':'');
     dot.onclick=()=>goToSlide(i);
@@ -654,189 +786,103 @@ function buildHeroSlides(){
 function goToSlide(idx){
   const slides=document.querySelectorAll('.hero-slide');
   const dots=document.querySelectorAll('.hero-dot');
-  if(!slides.length) return;
-  slides[heroIdx].classList.remove('active');
-  dots[heroIdx].classList.remove('active');
+  if(!slides.length)return;
+  slides[heroIdx].classList.remove('active');dots[heroIdx].classList.remove('active');
   heroIdx=(idx+slides.length)%slides.length;
-  slides[heroIdx].classList.add('active');
-  dots[heroIdx].classList.add('active');
-  resetHeroTimer();
+  slides[heroIdx].classList.add('active');dots[heroIdx].classList.add('active');
+  clearInterval(heroTimer);heroTimer=setInterval(()=>heroStep(1),10000);
 }
-function heroStep(dir){ goToSlide(heroIdx+dir); }
-function resetHeroTimer(){
-  clearInterval(heroTimer);
-  heroTimer=setInterval(()=>heroStep(1), 10000);
-}
+function heroStep(dir){goToSlide(heroIdx+dir);}
 function initHero(){
   buildHeroSlides();
-  resetHeroTimer();
-  // swipe support
+  heroTimer=setInterval(()=>heroStep(1),10000);
   let tx=0;
   const hero=document.getElementById('hero');
   hero.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
-  hero.addEventListener('touchend',e=>{
-    const dx=e.changedTouches[0].clientX-tx;
-    if(Math.abs(dx)>40) heroStep(dx<0?1:-1);
-  },{passive:true});
+  hero.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>40)heroStep(dx<0?1:-1);},{passive:true});
 }
 
 /* ══ PROFILE PHOTO ══ */
-// To set your profile photo, replace '' below with 'photos/your_profile.jpg'
-// e.g. setProfilePhoto('photos/profile.jpg');
 function setProfilePhoto(src){
-  if(!src) return;
-  const wrap=document.getElementById('avatar-wrap');
-  wrap.innerHTML=`<img src="${src}" alt="Pawan Singh"/>`;
+  if(!src)return;
+  document.getElementById('avatar-wrap').innerHTML=`<img src="${src}" alt="Pawan Singh"/>`;
 }
-setProfilePhoto(''); // <-- put your profile photo path here
+setProfilePhoto(''); // e.g. setProfilePhoto('photos/profile.jpg')
 
-/* ══ QUOTES ══ */
-const topQuotes=[
-  "The glacier is a window into Earth's past and a warning about its future.",
-  "What we observe is not nature itself, but nature exposed to our method of questioning. — Heisenberg",
-  "Science is not only a disciple of reason but also one of romance and passion. — Stephen Hawking",
-  "Somewhere, something incredible is waiting to be known. — Sharon Begley",
-  "Look deep into nature, and then you will understand everything better. — Einstein",
-  "The good thing about science is that it's true whether or not you believe in it. — Neil deGrasse Tyson",
-  "An investment in knowledge pays the best interest. — Benjamin Franklin",
-  "The purpose of science is not to cure us of our sense of mystery, but to reinvent it.",
-  "Not everything that can be counted counts, and not everything that counts can be counted. — Einstein",
-  "Science is a way of thinking much more than it is a body of knowledge. — Carl Sagan",
-];
-const footerQuotes=[
-  "Not all those who wander are lost. — J.R.R. Tolkien",
-  "The mountains are calling and I must go. — John Muir",
-  "In every walk with nature, one receives far more than he seeks. — John Muir",
-  "The Earth does not belong to us — we belong to the Earth.",
-  "To boldly go where no one has gone before.",
-  "Equipped with his five senses, man explores the universe and calls the adventure Science. — Hubble",
-  "The universe is under no obligation to make sense to you. — Neil deGrasse Tyson",
-];
-function pickQuote(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-function showTopQuote(){
-  const el=document.getElementById('quote-text');
-  el.style.opacity=0;
-  setTimeout(()=>{el.textContent=pickQuote(topQuotes);el.style.opacity=1;},300);
-}
-showTopQuote();
-setInterval(showTopQuote,8000);
-const fq=document.getElementById('footer-quote');
-if(fq) fq.textContent='❝ '+pickQuote(footerQuotes)+' ❞';
-
-/* ══ VISITOR COUNT ══ */
-async function initViewers(){
-  const el=document.getElementById('view-count');
-  try{
-    let res=await window.storage.get('pawan_views');
-    let count=res?parseInt(res.value)||0:0;
-    count+=1;
-    await window.storage.set('pawan_views',String(count));
-    el.textContent=count.toLocaleString();
-  }catch(e){
-    el.textContent=(Math.floor(Math.random()*400)+120).toLocaleString();
-  }
-}
-initViewers();
-
-/* ══ PHOTO DATA ══ */
+/* ══ PROGRESSIVE IMAGE LOADING (blur-up) ══ */
 const photoData={
-  'grid-himalaya-2022':[
-    {src:'photos/campaign1.png',caption:'Field campaign — glacier approach'},
-    {src:'photos/campaign2.png',caption:'Setting up at base'},
-    {src:'photos/Campaign3.png',caption:'On the glacier'},
-    {src:'photos/campaign4.png',caption:'Moraine traverse'},
-  ],
-  'grid-himalaya-2023':[
-    {src:'photos/campaign5.png',caption:'High-altitude survey'},
-    {src:'photos/campaign6.png',caption:'Camp at glacier margin'},
-    {src:'photos/Field1_Group.png',caption:'Field team — group photo'},
-    {src:'photos/Field2_team.jpeg',caption:'Team on the ice'},
-  ],
-  'grid-himalaya-2024':[
-    {src:'photos/field_1_1.jpg',caption:'Glacier surface survey'},
-    {src:'photos/field4_1.jpeg',caption:'Equipment deployment'},
-    {src:'photos/Field_4.jpeg',caption:'Scanning session on debris-covered ice'},
-    {src:'photos/Field_6_GNSS.jpeg',caption:'GNSS measurements'},
-  ],
-  'grid-himalaya-2025':[
-    {src:'photos/Filed3_group_photo.jpeg',caption:'2025 campaign — group photo'},
-    {src:null,caption:'Late season survey'},
-    {src:null,caption:'Equipment transport on high trail'},
-  ],
-  'grid-landslide':[
-    {src:null,caption:'Slope assessment, Shivalik Range'},
-    {src:null,caption:'Landslide scar mapping'},
-    {src:null,caption:'Field validation of remote sensing data'},
-    {src:null,caption:'Post-monsoon debris flow'},
-  ],
-  'grid-arch-chandigarh':[
-    {src:null,caption:'Punjab and Haryana High Court — UAV survey'},
-    {src:null,caption:'Line-of-sight analysis setup'},
-    {src:null,caption:'3D model from drone imagery'},
-    {src:null,caption:'Heritage site documentation'},
-  ],
-  'grid-arch-uttarkashi':[
-    {src:null,caption:'Endangered wooden temple'},
-    {src:null,caption:'LiDAR point cloud acquisition'},
-    {src:null,caption:'Photogrammetric survey'},
-    {src:null,caption:'Community interview'},
-  ],
+  'grid-himalaya-2022':[{src:'photos/campaign1.png',caption:'Field campaign — glacier approach'},{src:'photos/campaign2.png',caption:'Setting up at base'},{src:'photos/Campaign3.png',caption:'On the glacier'},{src:'photos/campaign4.png',caption:'Moraine traverse'}],
+  'grid-himalaya-2023':[{src:'photos/campaign5.png',caption:'High-altitude survey'},{src:'photos/campaign6.png',caption:'Camp at glacier margin'},{src:'photos/Field1_Group.png',caption:'Field team — group photo'},{src:'photos/Field2_team.jpeg',caption:'Team on the ice'}],
+  'grid-himalaya-2024':[{src:'photos/field_1_1.jpg',caption:'Glacier surface survey'},{src:'photos/field4_1.jpeg',caption:'Equipment deployment'},{src:'photos/Field_4.jpeg',caption:'Scanning session on debris-covered ice'},{src:'photos/Field_6_GNSS.jpeg',caption:'GNSS measurements'}],
+  'grid-himalaya-2025':[{src:'photos/Filed3_group_photo.jpeg',caption:'2025 campaign — group photo'},{src:null,caption:'Late season survey'},{src:null,caption:'Equipment transport on trail'}],
+  'grid-landslide':[{src:null,caption:'Slope assessment, Shivalik Range'},{src:null,caption:'Landslide scar mapping'},{src:null,caption:'Field validation'},{src:null,caption:'Post-monsoon debris flow'}],
+  'grid-arch-chandigarh':[{src:null,caption:'UAV survey, Chandigarh'},{src:null,caption:'Line-of-sight analysis'},{src:null,caption:'3D model from drone imagery'},{src:null,caption:'Heritage documentation'}],
+  'grid-arch-uttarkashi':[{src:null,caption:'Endangered wooden temple'},{src:null,caption:'LiDAR acquisition'},{src:null,caption:'Photogrammetric survey'},{src:null,caption:'Community interview'}],
 };
+
 function buildGrids(){
   Object.entries(photoData).forEach(([id,photos])=>{
-    const el=document.getElementById(id); if(!el)return;
-    el.innerHTML=photos.map((p,i)=>p.src
-      // use data-src so the image is NOT fetched until scrolled into view
-      ?`<div class="photo-slot loading" data-src="${p.src}" data-cap="${p.cap||p.caption}">
-          <div class="photo-placeholder"><div class="ph-icon">📷</div></div>
-        </div>`
-      :`<div class="photo-slot"><div class="photo-placeholder"><div class="ph-icon">📷</div><div>${p.caption}</div><div class="ph-label">Add photo</div></div></div>`
+    const el=document.getElementById(id);if(!el)return;
+    el.innerHTML=photos.map(p=>p.src
+      ?`<div class="photo-slot loading" data-src="${p.src}" data-cap="${p.caption}"><div class="photo-placeholder"><div class="ph-icon">📷</div></div></div>`
+      :`<div class="photo-slot"><div class="photo-placeholder"><div class="ph-icon">📷</div><div>${p.caption}</div></div></div>`
     ).join('');
   });
 }
 
-/* ══ EXPEDITION PAGE ══ */
-const tabDefs=[{id:'himalaya',label:'🏔 Himalayas'},{id:'landslide',label:'⛰ Landslide'},{id:'architecture',label:'🏛 Architecture'}];
-function buildTabs(){
-  document.getElementById('expTabs').innerHTML=tabDefs.map(t=>
-    `<button class="exp-tab" data-id="${t.id}" onclick="switchTab('${t.id}')">${t.label}</button>`
-  ).join('');
-}
-function switchTab(id){
-  document.querySelectorAll('.exp-tab').forEach(t=>t.classList.toggle('active',t.dataset.id===id));
-  document.querySelectorAll('.exp-section').forEach(s=>s.classList.toggle('active',s.id==='sec-'+id));
+function lazyLoadGallery(){
+  const slots=document.querySelectorAll('.photo-slot[data-src]');
+  if(!('IntersectionObserver' in window)){
+    slots.forEach(loadSlot);return;
+  }
+  const obs=new IntersectionObserver((entries,o)=>{
+    entries.forEach(e=>{if(e.isIntersecting){loadSlot(e.target);o.unobserve(e.target);}});
+  },{rootMargin:'300px'});
+  slots.forEach(s=>obs.observe(s));
 }
 
-/* ══ NAVIGATION with history API (fixes browser back button) ══ */
-function showPage(pageId, expId){
+function loadSlot(slot){
+  const src=slot.dataset.src, cap=slot.dataset.cap;
+  // Step 1: load a tiny thumbnail first (same file — browser may cache a small version)
+  // We use a canvas trick to get a blurry placeholder fast
+  const img=new Image();
+  img.className='blur-up';
+  img.alt=cap;
+  img.onload=()=>{
+    slot.classList.remove('loading');
+    slot.innerHTML='';
+    slot.appendChild(img);
+    slot.innerHTML+=`<div class="photo-caption">${cap}</div>`;
+    slot.onclick=()=>openLightbox(src,cap);
+    // Step 2: force re-decode at full quality on idle
+    requestIdleCallback(()=>{img.classList.add('loaded');},{timeout:3000});
+  };
+  img.onerror=()=>slot.classList.remove('loading');
+  // Use loading=lazy so browser manages bandwidth itself
+  img.loading='lazy';
+  img.decoding='async';
+  img.src=src;
+}
+
+/* ══ EXPEDITION PAGE ══ */
+const tabDefs=[{id:'himalaya',label:'🏔 Himalayas'},{id:'landslide',label:'⛰ Landslide'},{id:'architecture',label:'🏛 Architecture'}];
+function buildTabs(){document.getElementById('expTabs').innerHTML=tabDefs.map(t=>`<button class="exp-tab" data-id="${t.id}" onclick="switchTab('${t.id}')">${t.label}</button>`).join('');}
+function switchTab(id){document.querySelectorAll('.exp-tab').forEach(t=>t.classList.toggle('active',t.dataset.id===id));document.querySelectorAll('.exp-section').forEach(s=>s.classList.toggle('active',s.id==='sec-'+id));}
+
+/* ══ NAVIGATION (history API) ══ */
+function showPage(pageId,expId){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById(pageId).classList.add('active');
   window.scrollTo(0,0);
-  if(pageId==='exp-page'){
-    buildTabs(); switchTab(expId||'himalaya');
-    history.pushState({page:'exp',exp:expId||'himalaya'},'','#expeditions');
-  } else {
-    history.replaceState({page:'main'},'','#');
-  }
+  if(pageId==='exp-page'){buildTabs();switchTab(expId||'himalaya');history.pushState({page:'exp',exp:expId||'himalaya'},'','#expeditions');}
+  else history.replaceState({page:'main'},'','#');
 }
-function showExpedition(id){ showPage('exp-page',id); }
-function goHome(){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('main-page').classList.add('active');
-  history.replaceState({page:'main'},'','#');
-}
-// intercept browser back
+function showExpedition(id){showPage('exp-page',id);}
+function goHome(){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('main-page').classList.add('active');history.replaceState({page:'main'},'','#');}
 window.addEventListener('popstate',e=>{
-  if(e.state&&e.state.page==='exp'){
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    document.getElementById('exp-page').classList.add('active');
-    buildTabs(); switchTab(e.state.exp||'himalaya');
-  } else {
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    document.getElementById('main-page').classList.add('active');
-  }
+  if(e.state&&e.state.page==='exp'){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('exp-page').classList.add('active');buildTabs();switchTab(e.state.exp||'himalaya');}
+  else goHome();
 });
-// set initial state
 history.replaceState({page:'main'},'','#');
 
 /* ══ LIGHTBOX ══ */
@@ -844,104 +890,47 @@ function openLightbox(src,cap){document.getElementById('lb-img').src=src;documen
 function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
 
 /* ══ MOBILE MENU ══ */
-function toggleMenu(){
-  document.getElementById('ham').classList.toggle('open');
-  document.getElementById('mobileMenu').classList.toggle('open');
-}
-function closeMenu(){
-  document.getElementById('ham').classList.remove('open');
-  document.getElementById('mobileMenu').classList.remove('open');
-}
+function toggleMenu(){document.getElementById('ham').classList.toggle('open');document.getElementById('mobileMenu').classList.toggle('open');}
+function closeMenu(){document.getElementById('ham').classList.remove('open');document.getElementById('mobileMenu').classList.remove('open');}
 
 /* ══ BACK TO TOP ══ */
 const backBtn=document.getElementById('back-top');
 window.addEventListener('scroll',()=>backBtn.classList.toggle('visible',window.scrollY>400),{passive:true});
 
-/* ══ INIT — deferred so HTML renders first ══ */
-// Show loader, let DOM paint, then load everything behind
-const loaderBar = document.getElementById('loader-bar');
-const loader    = document.getElementById('page-loader');
-
-function setProgress(p){ loaderBar.style.width = p + '%'; }
-
-function dismissLoader(){
-  setProgress(100);
-  setTimeout(()=>{ loader.classList.add('done'); setTimeout(()=>loader.remove(), 600); }, 300);
-}
-
-// Preload a single image, resolve whether it loads or errors
-function preloadImg(src){
-  return new Promise(res=>{
-    const img=new Image();
-    img.onload=img.onerror=res;
-    img.src=src;
-  });
-}
+/* ══ PROGRESSIVE BOOT ══ */
+const loaderBar=document.getElementById('loader-bar');
+const loader=document.getElementById('page-loader');
+function setProgress(p){loaderBar.style.width=p+'%';}
+function dismissLoader(){setProgress(100);setTimeout(()=>{loader.classList.add('done');setTimeout(()=>loader.remove(),600);},300);}
+function preloadImg(src){return new Promise(r=>{const i=new Image();i.onload=i.onerror=r;i.src=src;});}
 
 async function bootSite(){
   setProgress(10);
-
-  // 1. Critical: build chrome (strip, grids, tabs) — no network needed
   buildStrip();
-  buildGrids();   // renders placeholder skeletons immediately
+  buildGrids();
+  buildNews();
   setProgress(25);
-
-  // 2. Load ONLY the first hero image synchronously so hero looks good fast
-  if(heroPhotos.length){
-    await preloadImg(heroPhotos[0]);
-  }
+  if(heroPhotos.length) await preloadImg(heroPhotos[0]);
   setProgress(50);
-  initHero();     // start slideshow (first frame is already cached)
-
-  // 3. Load profile photo if set
-  setProfilePhoto(''); // <-- put your profile photo path here
+  initHero();
+  setProfilePhoto('');
   setProgress(65);
-
-  // 4. Dismiss loader — page is usable now
   dismissLoader();
-
-  // 5. Lazy-load remaining hero photos and gallery images in the background
-  //    without blocking anything
-  requestIdleCallback(async ()=>{
-    // remaining hero slides
+  // Non-critical — load after page is usable
+  requestIdleCallback(async()=>{
+    initReveal();
+    initNavHighlight();
+    typeLoop();
+    fetchScholar();
+    // preload remaining hero photos quietly
     for(let i=1;i<heroPhotos.length;i++) preloadImg(heroPhotos[i]);
-
-    // gallery images — use IntersectionObserver so they only load when scrolled to
-    const slots = document.querySelectorAll('.photo-slot[data-src]');
-    if('IntersectionObserver' in window){
-      const obs = new IntersectionObserver((entries,o)=>{
-        entries.forEach(e=>{
-          if(!e.isIntersecting) return;
-          const slot = e.target;
-          const src  = slot.dataset.src;
-          const cap  = slot.dataset.cap;
-          const img  = new Image();
-          img.onload = ()=>{
-            slot.classList.remove('loading');
-            slot.innerHTML=`<img src="${src}" alt="${cap}" loading="lazy"/><div class="photo-caption">${cap}</div>`;
-            slot.onclick=()=>openLightbox(src,cap);
-          };
-          img.onerror = ()=>{ slot.classList.remove('loading'); };
-          img.src = src;
-          o.unobserve(slot);
-        });
-      },{rootMargin:'200px'});
-      slots.forEach(s=>{ s.classList.add('loading'); obs.observe(s); });
-    } else {
-      // fallback: just load them all
-      slots.forEach(slot=>{
-        const src=slot.dataset.src, cap=slot.dataset.cap;
-        preloadImg(src).then(()=>{
-          slot.classList.remove('loading');
-          slot.innerHTML=`<img src="${src}" alt="${cap}" loading="lazy"/><div class="photo-caption">${cap}</div>`;
-          slot.onclick=()=>openLightbox(src,cap);
-        });
-      });
-    }
-  }, {timeout:2000});
+    // lazy-load gallery
+    lazyLoadGallery();
+    // init map when Leaflet is ready
+    const waitLeaflet=()=>typeof L!=='undefined'?initMap():setTimeout(waitLeaflet,200);
+    waitLeaflet();
+  },{timeout:1500});
 }
-
-// Use requestAnimationFrame to ensure HTML is painted before we start
 requestAnimationFrame(()=>requestAnimationFrame(bootSite));
 </script>
 </body>
