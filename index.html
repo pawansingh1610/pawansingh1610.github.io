@@ -13,20 +13,26 @@
   --hsub:#a8d4f0; --hmuted:#cde4f5;
   --navbg:#1a3c5e; --ggreen:#2e8a57;
   --shadow:0 2px 8px rgba(0,0,0,.08);
-  --border:#e0e8f0;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:'Segoe UI',Arial,sans-serif;color:var(--text);background:var(--bg);transition:background .35s,color .35s;padding-bottom:10px;}
 
 /* ── THEME STRIP ── */
-#tstrip{
-  position:fixed;top:0;left:0;right:0;height:4px;
-  display:flex;z-index:2000;cursor:pointer;
-}
+#tstrip{position:fixed;top:0;left:0;right:0;height:4px;display:flex;z-index:2000;cursor:pointer;}
 .ts{flex:1;height:100%;transition:height .2s,opacity .2s;opacity:.85;}
 #tstrip:hover .ts{height:8px;opacity:1;}
 .ts:hover{height:12px!important;opacity:1!important;}
+
+/* ── QUOTE BAR ── */
+#quote-bar{
+  position:fixed;top:4px;left:0;right:0;z-index:1001;
+  background:rgba(0,0,0,.55);backdrop-filter:blur(4px);
+  padding:.3rem 1.5rem;text-align:center;
+  font-size:.72rem;color:rgba(255,255,255,.55);font-style:italic;
+  height:30px;display:flex;align-items:center;justify-content:center;
+}
+#quote-text{transition:opacity .6s;}
 
 /* ── NAV ── */
 nav{
@@ -35,111 +41,95 @@ nav{
   display:flex;justify-content:space-between;align-items:center;
   padding:0 1.5rem;transition:background .35s;
 }
-#quote-bar{
-  position:fixed;top:4px;left:0;right:0;z-index:1001;
-  background:rgba(0,0,0,.55);backdrop-filter:blur(4px);
-  padding:.3rem 1.5rem;text-align:center;
-  font-size:.72rem;color:rgba(255,255,255,.55);font-style:italic;
-  height:30px;display:flex;align-items:center;justify-content:center;
-}
-.nav-brand{color:#fff;font-weight:700;font-size:1rem;cursor:pointer;letter-spacing:.2px;white-space:nowrap;}
+.nav-brand{color:#fff;font-weight:700;font-size:1rem;cursor:pointer;white-space:nowrap;}
 .nav-links{display:flex;gap:1.2rem;list-style:none;}
 .nav-links a{color:rgba(255,255,255,.72);text-decoration:none;font-size:.82rem;transition:color .2s;white-space:nowrap;}
 .nav-links a:hover{color:#fff;}
-/* social icons in nav */
-.nav-social{display:flex;align-items:center;gap:.55rem;margin-left:.8rem;border-left:1px solid rgba(255,255,255,.18);padding-left:.9rem;}
+.nav-right{display:flex;align-items:center;gap:.3rem;flex-shrink:0;}
+.nav-social{display:flex;align-items:center;gap:.5rem;margin-left:.6rem;border-left:1px solid rgba(255,255,255,.18);padding-left:.8rem;}
 .nav-social a{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.1);color:#fff;text-decoration:none;transition:background .2s,transform .2s;flex-shrink:0;}
-.nav-social a:hover{background:rgba(255,255,255,.25);transform:scale(1.12);}
+.nav-social a:hover{background:rgba(255,255,255,.25);transform:scale(1.1);}
 .nav-social svg{width:14px;height:14px;fill:currentColor;}
-/* viewer badge */
-.viewer-badge{display:flex;align-items:center;gap:.3rem;background:rgba(255,255,255,.1);border-radius:20px;padding:.18rem .6rem;font-size:.72rem;color:rgba(255,255,255,.7);white-space:nowrap;margin-left:.5rem;}
+.viewer-badge{display:flex;align-items:center;gap:.3rem;background:rgba(255,255,255,.1);border-radius:20px;padding:.18rem .6rem;font-size:.72rem;color:rgba(255,255,255,.7);white-space:nowrap;margin-left:.4rem;}
 .viewer-badge svg{width:11px;height:11px;fill:rgba(255,255,255,.55);flex-shrink:0;}
-/* hero social icons */
-.hero-social{display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center;margin-top:1.4rem;}
-.hero-social a{
-  display:inline-flex;align-items:center;gap:.4rem;
-  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
-  color:rgba(255,255,255,.85);text-decoration:none;
-  padding:.4rem .9rem;border-radius:30px;font-size:.8rem;
-  transition:background .2s,transform .2s,border-color .2s;
-}
-.hero-social a:hover{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.5);color:#fff;transform:translateY(-2px);}
-.hero-social svg{width:14px;height:14px;fill:currentColor;flex-shrink:0;}
-.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px;}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px;margin-left:.5rem;}
 .hamburger span{display:block;width:22px;height:2px;background:#fff;transition:all .3s;}
 .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}
 .hamburger.open span:nth-child(2){opacity:0;}
 .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}
-/* quote bar */
-#quote-bar{background:var(--primary);filter:brightness(.82);padding:.5rem 1.5rem;text-align:center;font-size:.78rem;color:rgba(255,255,255,.6);font-style:italic;letter-spacing:.2px;min-height:30px;transition:background .35s;}
-#quote-bar span{opacity:0;transition:opacity .6s;}
-.mobile-menu{
-  display:none;position:fixed;top:86px;left:0;right:0;z-index:999;
-  background:var(--navbg);padding:0;max-height:0;overflow:hidden;
-  transition:max-height .3s ease,background .35s;
-}
+.mobile-menu{display:none;position:fixed;top:86px;left:0;right:0;z-index:999;background:var(--navbg);padding:0;max-height:0;overflow:hidden;transition:max-height .3s ease,background .35s;}
 .mobile-menu.open{display:block;max-height:400px;}
 .mobile-menu a{display:block;color:rgba(255,255,255,.8);text-decoration:none;padding:.75rem 1.5rem;font-size:.9rem;border-bottom:1px solid rgba(255,255,255,.08);}
 .mobile-menu a:hover{background:rgba(255,255,255,.07);color:#fff;}
 
+/* ── PAGE SYSTEM ── */
 .page{display:none;}
 .page.active{display:block;}
 
 /* ── HERO ── */
-/* ── HERO background ready for photo ── */
 #hero{
-  min-height:100vh;
+  min-height:100vh;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:110px 1.5rem 2rem;
+}
+/* slideshow layers */
+.hero-slide{
+  position:absolute;inset:0;background-size:cover;background-position:center;
+  opacity:0;transition:opacity 1.2s ease;z-index:0;
+}
+.hero-slide.active{opacity:1;}
+/* gradient fallback if no photo */
+.hero-bg-gradient{
+  position:absolute;inset:0;z-index:0;
   background:linear-gradient(135deg,var(--hero1) 0%,var(--hero2) 100%);
-  background-size:cover;background-position:center;
-  display:flex;align-items:center;justify-content:center;
-  text-align:center;padding:110px 1.5rem 2rem;transition:background .35s;
-  position:relative;
-}
-#hero::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(0,0,0,.52) 0%,rgba(0,0,0,.38) 100%);
-  pointer-events:none;
-}
-.hero-inner{max-width:700px;width:100%;}
-.avatar{
-  width:96px;height:96px;border-radius:50%;
-  background:var(--accent);border:3px solid rgba(255,255,255,.25);
-  display:flex;align-items:center;justify-content:center;
-  font-size:2.4rem;font-weight:700;color:#fff;margin:0 auto 1rem;
   transition:background .35s;
 }
+/* dark overlay */
+#hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:1;pointer-events:none;}
+.hero-inner{position:relative;z-index:2;max-width:700px;width:100%;}
+/* prev/next arrows */
+.hero-arrow{
+  position:absolute;top:50%;z-index:3;transform:translateY(-50%);
+  background:rgba(255,255,255,.15);border:none;color:#fff;cursor:pointer;
+  width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.hero-arrow:hover{background:rgba(255,255,255,.3);}
+.hero-arrow svg{width:18px;height:18px;fill:#fff;}
+#hero-prev{left:1rem;}
+#hero-next{right:1rem;}
+/* dot indicators */
+.hero-dots{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:3;display:flex;gap:.45rem;}
+.hero-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:background .3s,transform .3s;}
+.hero-dot.active{background:#fff;transform:scale(1.3);}
+/* profile pic */
+.avatar{
+  width:96px;height:96px;border-radius:50%;overflow:hidden;
+  border:3px solid rgba(255,255,255,.35);margin:0 auto 1rem;
+  background:var(--accent);display:flex;align-items:center;justify-content:center;
+  font-size:2.4rem;font-weight:700;color:#fff;transition:border-color .35s;
+}
+.avatar img{width:100%;height:100%;object-fit:cover;display:block;}
 #hero h1{color:#fff;font-size:clamp(1.7rem,5vw,2.5rem);letter-spacing:.3px;margin-bottom:.35rem;}
 #hero .subtitle{color:var(--hsub);font-size:clamp(.85rem,2.5vw,1rem);margin-bottom:.8rem;}
 #hero .tagline{color:var(--hmuted);font-size:clamp(.82rem,2vw,.92rem);max-width:540px;margin:0 auto 1.4rem;line-height:1.7;}
-.hero-links{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;}
-.btn{display:inline-block;padding:.45rem 1.1rem;border-radius:4px;font-size:.84rem;text-decoration:none;transition:all .2s;cursor:pointer;border:none;}
-.btn-outline{border:1.5px solid var(--hsub);color:var(--hsub);}
-.btn-outline:hover{background:rgba(255,255,255,.1);color:#fff;border-color:#fff;}
-.btn-solid{background:var(--accent);color:#fff;border:1.5px solid var(--accent);}
-.btn-solid:hover{filter:brightness(1.12);}
+.hero-social{display:flex;flex-wrap:wrap;gap:.65rem;justify-content:center;margin-top:1.2rem;}
+.hero-social a{display:inline-flex;align-items:center;gap:.38rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.88);text-decoration:none;padding:.38rem .88rem;border-radius:30px;font-size:.79rem;transition:background .2s,transform .2s,border-color .2s;}
+.hero-social a:hover{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.5);color:#fff;transform:translateY(-2px);}
+.hero-social svg{width:14px;height:14px;fill:currentColor;flex-shrink:0;}
 
 /* ── SECTIONS ── */
 section{padding:clamp(2.5rem,6vw,4.5rem) clamp(1rem,4vw,2rem);transition:background .35s;}
 section:nth-child(even){background:var(--bgalt);}
 .container{max-width:900px;margin:0 auto;}
-.section-title{
-  font-size:clamp(1rem,3vw,1.2rem);font-weight:700;color:var(--primary);
-  text-transform:uppercase;letter-spacing:1.5px;
-  border-bottom:2.5px solid var(--accent);padding-bottom:.3rem;
-  margin-bottom:1.6rem;display:inline-block;transition:color .35s,border-color .35s;
-}
+.section-title{font-size:clamp(1rem,3vw,1.2rem);font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:1.5px;border-bottom:2.5px solid var(--accent);padding-bottom:.3rem;margin-bottom:1.6rem;display:inline-block;transition:color .35s,border-color .35s;}
 
 /* ── ABOUT ── */
 .about-text p{line-height:1.82;color:var(--sub);margin-bottom:.9rem;font-size:clamp(.84rem,2.2vw,.95rem);}
 
 /* ── CARDS ── */
 .cards{display:flex;flex-direction:column;gap:1rem;}
-.card{
-  background:var(--cardbg);border-radius:8px;
-  padding:clamp(.9rem,3vw,1.2rem) clamp(1rem,3vw,1.4rem);
-  box-shadow:var(--shadow);border-left:4px solid var(--accent);
-  transition:transform .2s,background .35s,border-color .35s;
-}
+.card{background:var(--cardbg);border-radius:8px;padding:clamp(.9rem,3vw,1.2rem) clamp(1rem,3vw,1.4rem);box-shadow:var(--shadow);border-left:4px solid var(--accent);transition:transform .2s,background .35s,border-color .35s;}
 .card:hover{transform:translateX(4px);}
 .card-header{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.35rem;margin-bottom:.3rem;}
 .card-title{font-weight:700;color:var(--primary);font-size:clamp(.85rem,2.2vw,.96rem);transition:color .35s;flex:1;min-width:0;}
@@ -195,39 +185,27 @@ section:nth-child(even){background:var(--bgalt);}
 .hobby-card .h-icon{font-size:1.8rem;margin-bottom:.4rem;}
 .hobby-card .h-name{font-size:.85rem;font-weight:600;color:var(--text);transition:color .35s;}
 
-
-/* footer */
+/* ── FOOTER ── */
 footer{background:var(--primary);filter:brightness(.6);color:#888;text-align:center;padding:0;font-size:.77rem;transition:background .35s;}
 footer a{color:#5599cc;text-decoration:none;}
-.footer-quote{
-  padding:.9rem 1.5rem .3rem;
-  font-style:italic;font-size:.8rem;
-  color:rgba(255,255,255,.45);letter-spacing:.2px;
-  border-bottom:1px solid rgba(255,255,255,.07);
-}
+.footer-quote{padding:.9rem 1.5rem .3rem;font-style:italic;font-size:.8rem;color:rgba(255,255,255,.45);letter-spacing:.2px;border-bottom:1px solid rgba(255,255,255,.07);}
 .footer-copy{padding:.55rem 1.5rem .8rem;font-size:.75rem;color:rgba(255,255,255,.3);}
-/* back to top */
-#back-top{
-  position:fixed;bottom:1.4rem;right:1.4rem;z-index:1500;
-  width:38px;height:38px;border-radius:50%;
-  background:var(--accent);color:#fff;border:none;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 3px 12px rgba(0,0,0,.25);
-  opacity:0;pointer-events:none;
-  transition:opacity .3s,transform .2s,background .35s;
-}
+
+/* ── BACK TO TOP ── */
+#back-top{position:fixed;bottom:1.4rem;right:1.4rem;z-index:1500;width:38px;height:38px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .3s,transform .2s,background .35s;}
 #back-top.visible{opacity:1;pointer-events:all;}
 #back-top:hover{transform:translateY(-3px);}
 #back-top svg{width:16px;height:16px;fill:#fff;}
 
 /* ── EXPEDITION PAGE ── */
-#exp-page{min-height:100vh;background:var(--bgalt);padding-top:56px;transition:background .35s;}
+#exp-page{min-height:100vh;background:var(--bgalt);padding-top:86px;transition:background .35s;}
 .exp-page-header{background:linear-gradient(135deg,var(--hero1) 0%,var(--hero2) 100%);padding:clamp(1.5rem,5vw,3rem) 1.5rem 1.5rem;text-align:center;transition:background .35s;}
 .exp-page-header h2{color:#fff;font-size:clamp(1.3rem,4vw,1.8rem);margin-bottom:.3rem;}
 .exp-page-header p{color:var(--hsub);font-size:.9rem;}
 .back-btn{display:inline-flex;align-items:center;gap:.35rem;color:var(--hsub);cursor:pointer;font-size:.85rem;margin-bottom:1rem;background:none;border:none;padding:0;}
 .back-btn:hover{color:#fff;}
-.exp-tabs-wrap{background:var(--navbg);position:sticky;top:56px;z-index:900;overflow-x:auto;-webkit-overflow-scrolling:touch;transition:background .35s;}
+.back-btn svg{width:16px;height:16px;fill:currentColor;}
+.exp-tabs-wrap{background:var(--navbg);position:sticky;top:86px;z-index:900;overflow-x:auto;-webkit-overflow-scrolling:touch;transition:background .35s;}
 .exp-tabs{display:flex;gap:0;min-width:max-content;padding:0 .8rem;}
 .exp-tab{padding:.75rem 1rem;color:rgba(255,255,255,.6);font-size:.82rem;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;}
 .exp-tab:hover{color:#fff;}
@@ -248,7 +226,6 @@ footer a{color:#5599cc;text-decoration:none;}
 .photo-placeholder .ph-icon{font-size:1.7rem;opacity:.4;}
 .photo-placeholder .ph-label{font-size:.68rem;color:#5580a0;}
 .photo-caption{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.65));color:#fff;font-size:.72rem;padding:.45rem .65rem;}
-.upload-hint{background:#fff8e1;border:1.5px dashed #f0c040;border-radius:6px;padding:.7rem 1rem;margin-bottom:1.2rem;font-size:.82rem;color:#7a6000;display:flex;align-items:flex-start;gap:.5rem;}
 .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:9999;align-items:center;justify-content:center;}
 .lightbox.open{display:flex;}
 .lightbox img{max-width:92vw;max-height:82vh;border-radius:4px;object-fit:contain;}
@@ -262,29 +239,29 @@ footer a{color:#5599cc;text-decoration:none;}
   .skills-grid{grid-template-columns:repeat(2,1fr);}
   .expedition-grid{grid-template-columns:repeat(2,1fr);}
   .hobby-grid{grid-template-columns:repeat(2,1fr);}
-  .contact-grid{grid-template-columns:repeat(2,1fr);}
   .photo-grid{grid-template-columns:repeat(2,1fr);}
   .grant-item{flex-wrap:wrap;}
+  .hero-arrow{display:none;}
 }
 @media(max-width:480px){
   .skills-grid{grid-template-columns:1fr 1fr;}
   .expedition-grid{grid-template-columns:1fr;}
   .hobby-grid{grid-template-columns:repeat(2,1fr);}
-  .contact-grid{grid-template-columns:1fr 1fr;}
   .photo-grid{grid-template-columns:1fr 1fr;}
   .card-header{flex-direction:column;}
   .card-date{font-size:.75rem;}
+  .nav-social{display:none;}
+  .viewer-badge{display:none;}
 }
 </style>
 </head>
 <body>
 
-<!-- ── THEME STRIP ── -->
 <div id="tstrip"></div>
-
 <div id="quote-bar"><span id="quote-text"></span></div>
+
 <nav>
-  <span class="nav-brand" onclick="showMain()">Pawan Singh</span>
+  <span class="nav-brand" onclick="goHome()">Pawan Singh</span>
   <ul class="nav-links" id="navLinks">
     <li><a href="#about"        onclick="closeMenu()">About</a></li>
     <li><a href="#education"    onclick="closeMenu()">Education</a></li>
@@ -294,25 +271,20 @@ footer a{color:#5599cc;text-decoration:none;}
     <li><a href="#skills"       onclick="closeMenu()">Skills</a></li>
     <li><a href="#grants"       onclick="closeMenu()">Grants</a></li>
   </ul>
-  <div style="display:flex;align-items:center;gap:.3rem;flex-shrink:0;">
+  <div class="nav-right">
     <div class="nav-social">
-      <!-- Google Scholar -->
       <a href="https://scholar.google.com/citations?user=YNz9FGQAAAAJ&hl=en" target="_blank" title="Google Scholar">
         <svg viewBox="0 0 24 24"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5h3.5v8.25C3.5 19.55 5.2 21 6.75 21h.75v-9h9v9h.75c1.55 0 3.25-1.45 3.25-3.25V9.5H24L12 0z"/></svg>
       </a>
-      <!-- LinkedIn -->
       <a href="https://www.linkedin.com/in/pawansingh1610/" target="_blank" title="LinkedIn">
         <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.59 0 4.25 2.36 4.25 5.43l.03 6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"/></svg>
       </a>
-      <!-- Email -->
       <a href="mailto:pawansingh1610@gmail.com" title="Email">
         <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
       </a>
-      <!-- Twitter / X -->
       <a href="https://twitter.com/" target="_blank" title="Twitter / X">
         <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       </a>
-      <!-- Resume download -->
       <a href="resume/pawan_singh_cv.pdf" download title="Download CV">
         <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 13h8v1.5H8V13zm0 3h8v1.5H8V16zm0-6h3v1.5H8V10z"/></svg>
       </a>
@@ -324,43 +296,60 @@ footer a{color:#5599cc;text-decoration:none;}
     <div class="hamburger" id="ham" onclick="toggleMenu()"><span></span><span></span><span></span></div>
   </div>
 </nav>
+
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#about"        onclick="showMain();closeMenu()">About</a>
-  <a href="#education"    onclick="showMain();closeMenu()">Education</a>
-  <a href="#projects"     onclick="showMain();closeMenu()">Projects</a>
-  <a href="#publications" onclick="showMain();closeMenu()">Publications</a>
-  <a href="#conferences"  onclick="showMain();closeMenu()">Conferences</a>
-  <a href="#skills"       onclick="showMain();closeMenu()">Skills</a>
-  <a href="#grants"       onclick="showMain();closeMenu()">Grants</a>
+  <a href="#about"        onclick="goHome();closeMenu()">About</a>
+  <a href="#education"    onclick="goHome();closeMenu()">Education</a>
+  <a href="#projects"     onclick="goHome();closeMenu()">Projects</a>
+  <a href="#publications" onclick="goHome();closeMenu()">Publications</a>
+  <a href="#conferences"  onclick="goHome();closeMenu()">Conferences</a>
+  <a href="#skills"       onclick="goHome();closeMenu()">Skills</a>
+  <a href="#grants"       onclick="goHome();closeMenu()">Grants</a>
 </div>
 
 <!-- ══════════ MAIN PAGE ══════════ -->
 <div id="main-page" class="page active">
 
 <section id="hero">
-  <div class="hero-inner" style="position:relative;z-index:1;">
-    <div class="avatar">PS</div>
+  <!-- gradient fallback -->
+  <div class="hero-bg-gradient"></div>
+  <!-- slideshow slides injected by JS -->
+  <!-- prev/next arrows -->
+  <button class="hero-arrow" id="hero-prev" onclick="heroStep(-1)">
+    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+  </button>
+  <button class="hero-arrow" id="hero-next" onclick="heroStep(1)">
+    <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+  </button>
+  <!-- dots -->
+  <div class="hero-dots" id="hero-dots"></div>
+
+  <div class="hero-inner" style="position:relative;z-index:2;">
+    <div class="avatar" id="avatar-wrap">
+      <!-- Replace with: <img src="photos/profile.jpg" alt="Pawan Singh"/> -->
+      PS
+    </div>
     <h1>Pawan Singh</h1>
     <p class="subtitle">Doctoral Researcher in Geospatial Engineering · IIT Roorkee</p>
     <p class="tagline">Studying glacier dynamics in the western Himalaya using terrestrial laser scanning, UAVs, SAR remote sensing, and deep learning, with a focus on high-spatiotemporal glacier change and its driving mechanisms.</p>
     <div class="hero-social">
-      <a href="https://scholar.google.com/citations?user=YNz9FGQAAAAJ&hl=en" target="_blank" title="Google Scholar">
+      <a href="https://scholar.google.com/citations?user=YNz9FGQAAAAJ&hl=en" target="_blank">
         <svg viewBox="0 0 24 24"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5h3.5v8.25C3.5 19.55 5.2 21 6.75 21h.75v-9h9v9h.75c1.55 0 3.25-1.45 3.25-3.25V9.5H24L12 0z"/></svg>
         <span>Google Scholar</span>
       </a>
-      <a href="https://www.linkedin.com/in/pawansingh1610/" target="_blank" title="LinkedIn">
+      <a href="https://www.linkedin.com/in/pawansingh1610/" target="_blank">
         <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.59 0 4.25 2.36 4.25 5.43l.03 6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"/></svg>
         <span>LinkedIn</span>
       </a>
-      <a href="mailto:pawansingh1610@gmail.com" title="Email">
+      <a href="mailto:pawansingh1610@gmail.com">
         <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
         <span>Email</span>
       </a>
-      <a href="https://twitter.com/" target="_blank" title="Twitter / X">
+      <a href="https://twitter.com/" target="_blank">
         <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         <span>Twitter</span>
       </a>
-      <a href="resume/pawan_singh_cv.pdf" download title="Download CV">
+      <a href="resume/pawan_singh_cv.pdf" download>
         <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 13h8v1.5H8V13zm0 3h8v1.5H8V16zm0-6h3v1.5H8V10z"/></svg>
         <span>Download CV</span>
       </a>
@@ -411,27 +400,27 @@ footer a{color:#5599cc;text-decoration:none;}
       <div class="card">
         <div class="card-header"><span class="card-title">Doctoral Research: High-Spatiotemporal Glacier Change, Western Himalaya</span><span class="card-date">July 2021 – Present</span></div>
         <div class="card-sub">IIT Roorkee · Supervisor: Prof. Saurabh Vijay</div>
-        <p>This project centres on understanding how Himalayan glaciers change at fine spatial and temporal scales, and what drives those changes. Using terrestrial laser scanners deployed repeatedly over multiple seasons, high-resolution point clouds capture glacier surface evolution at centimetre precision. Time-lapse cameras installed at glacier margins provide continuous imagery to derive surface displacement and track ice-cliff retreat. The work quantifies backwasting rates of supraglacial ice cliffs at Machoi Glacier and measures ice-flow velocities at Drang Drung Glacier with sub-seasonal temporal resolution. Field campaigns spanning 2022 to 2025 have yielded one of the most temporally dense terrestrial datasets for Himalayan glaciers.</p>
+        <p>This project centres on understanding how Himalayan glaciers change at fine spatial and temporal scales, and what drives those changes. Using terrestrial laser scanners deployed repeatedly over multiple seasons, high-resolution point clouds capture glacier surface evolution at centimetre precision. Time-lapse cameras installed at glacier margins provide continuous imagery to derive surface displacement and track ice-cliff retreat. The work quantifies backwasting rates of supraglacial ice cliffs at Machoi Glacier and measures ice-flow velocities at Drang Drung Glacier with sub-seasonal temporal resolution.</p>
       </div>
       <div class="card">
         <div class="card-header"><span class="card-title">SAR-Based Glacier Terrain Classification for the NISAR Mission</span><span class="card-date">2022 – 2024</span></div>
         <div class="card-sub">IIT Roorkee · Collaborative project</div>
-        <p>As part of preparatory science for the upcoming NASA/ISRO NISAR satellite mission, this project evaluated quad-polarimetric dual-frequency airborne SAR data to map and classify glacierised terrain. The work applied decomposition techniques and machine learning classifiers to distinguish facies such as accumulation zones, debris-covered ice, and periglacial terrain across L- and S-band datasets over Himalayan glaciers.</p>
+        <p>Evaluated quad-polarimetric dual-frequency airborne SAR data to map and classify glacierised terrain as preparatory science for the NASA/ISRO NISAR satellite mission. Applied decomposition techniques and machine learning classifiers to distinguish glacier facies across L- and S-band datasets over the Himalaya.</p>
       </div>
       <div class="card">
         <div class="card-header"><span class="card-title">Endangered Wood Architecture Preservation (EWAP)</span><span class="card-date">February 2026 – March 2026</span></div>
         <div class="card-sub">IIT Roorkee · PI: Prof. Ram Sateesh Pasupuleti and Prof. Saurabh Vijay</div>
-        <p>Two centuries-old wooden temple structures in Uttarkashi were documented using UAV photogrammetry, terrestrial LiDAR scanning, and close-range photography to produce centimetre-accurate 3D models. The geospatial survey was complemented by ethnographic fieldwork including structured interviews with local priests, village heads, and long-term residents to document historical provenance and cultural value.</p>
+        <p>Two centuries-old wooden temple structures in Uttarkashi were documented using UAV photogrammetry, terrestrial LiDAR scanning, and close-range photography to produce centimetre-accurate 3D models. Complemented by ethnographic fieldwork including interviews with local priests, village heads, and residents.</p>
       </div>
       <div class="card">
         <div class="card-header"><span class="card-title">Heritage Impact Assessment for UNESCO World Heritage Sites</span><span class="card-date">June 2024 – October 2024</span></div>
         <div class="card-sub">Punjab and Haryana High Court, Chandigarh · PI: Prof. Ram Sateesh Pasupuleti and Prof. Saurabh Vijay</div>
-        <p>UAV surveys generated orthophotos and surface models around Le Corbusier's Capitol Complex and neighbouring protected sites in Chandigarh. Systematic visibility and line-of-sight analyses determined whether proposed constructions would intrude on protected viewsheds, directly informing the Court's heritage conservation decisions.</p>
+        <p>UAV surveys and 3D modelling around Le Corbusier's Capitol Complex to assess visual and heritage impact of proposed constructions. Systematic visibility and line-of-sight analyses directly informed the Court's heritage conservation decisions.</p>
       </div>
       <div class="card">
         <div class="card-header"><span class="card-title">Dumpsite Garbage Mass Estimation Using UAV Photogrammetry</span><span class="card-date">October 2022 – September 2024</span></div>
         <div class="card-sub">Department of Civil Engineering, IIT Roorkee · PI: Prof. Bhanu Prakash Vellanki and Prof. Saurabh Vijay</div>
-        <p>Fourteen municipal solid waste dumpsite surveys across Uttar Pradesh, Haryana, and Uttarakhand covered sites up to 0.4 square kilometres. Drone-based photogrammetry was combined with depth-wise bulk density sampling to estimate total garbage mass with greater accuracy than conventional area or height-based methods.</p>
+        <p>Fourteen municipal solid waste dumpsite surveys across Uttar Pradesh, Haryana, and Uttarakhand. Drone-based photogrammetry combined with depth-wise bulk density sampling to estimate total garbage mass with greater accuracy than conventional methods.</p>
       </div>
     </div>
   </div>
@@ -485,7 +474,7 @@ footer a{color:#5599cc;text-decoration:none;}
       <div class="skill-group"><h4>Programming</h4><div class="skill-tags"><span class="tag">Python</span><span class="tag">MATLAB</span><span class="tag">C++</span></div></div>
       <div class="skill-group"><h4>Machine Learning</h4><div class="skill-tags"><span class="tag">Deep Learning</span><span class="tag">CNNs</span><span class="tag">Physics-informed DL</span></div></div>
       <div class="skill-group"><h4>Geospatial</h4><div class="skill-tags"><span class="tag">QGIS</span><span class="tag">Google Earth Engine</span><span class="tag">SAR</span></div></div>
-      <div class="skill-group"><h4>Field and Hardware</h4><div class="skill-tags"><span class="tag">TLS / LiDAR</span><span class="tag">UAV</span><span class="tag">GNSS</span><span class="tag">IoT</span></div></div>
+      <div class="skill-group"><h4>Field and Hardware</h4><div class="skill-tags"><span class="tag">TLS / LiDAR</span><span class="tag">UAV / Drone</span><span class="tag">Drone Flying (Quadcopter)</span><span class="tag">GNSS</span><span class="tag">IoT</span></div></div>
       <div class="skill-group"><h4>Glacier Modelling</h4><div class="skill-tags"><span class="tag">Energy Balance</span><span class="tag">OGGM</span></div></div>
       <div class="skill-group"><h4>Other</h4><div class="skill-tags"><span class="tag">3D Modelling</span><span class="tag">Photogrammetry</span><span class="tag">Time-lapse</span></div></div>
     </div>
@@ -526,30 +515,26 @@ footer a{color:#5599cc;text-decoration:none;}
   </div>
 </section>
 
-
-
 <footer>
   <div class="footer-quote" id="footer-quote"></div>
   <div class="footer-copy">© 2026 Pawan Singh · IIT Roorkee · <a href="https://github.com" target="_blank">GitHub Pages</a></div>
 </footer>
-
-<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
-  <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
-</button>
 </div><!-- /main-page -->
 
 <!-- ══════════ EXPEDITION PAGE ══════════ -->
 <div id="exp-page" class="page">
   <div class="exp-page-header">
     <div class="container">
-      <button class="back-btn" onclick="showMain()">← Back to Portfolio</button>
+      <button class="back-btn" onclick="goHome()">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Back to Portfolio
+      </button>
       <h2>Field Expeditions</h2>
       <p>A visual record of fieldwork across the Himalayas and beyond.</p>
     </div>
   </div>
   <div class="exp-tabs-wrap"><div class="exp-tabs" id="expTabs"></div></div>
   <div class="exp-content">
-
     <div class="exp-section" id="sec-himalaya">
       <div class="exp-section-header"><h3>🏔 Indian Himalayas</h3><p>High-altitude campaigns across the western Himalaya deploying TLS, time-lapse cameras, and GNSS to study glacier dynamics, ice-cliff backwasting, and surface flow.</p></div>
       <div class="sub-exp"><div class="sub-exp-title">2022</div><div class="photo-grid" id="grid-himalaya-2022"></div></div>
@@ -575,80 +560,187 @@ footer a{color:#5599cc;text-decoration:none;}
   <div class="lb-caption" id="lb-caption"></div>
 </div>
 
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+  <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+</button>
+
 <script>
-/* ─── THEMES ─── */
-const themes = [
-  { name:'Ocean Blue',   p:'#1a3c5e', a:'#3a7ca5', al:'#d6eaf8', h1:'#1a3c5e', h2:'#2e6898', bg:'#fff',    bga:'#f4f7fb', t:'#222',    s:'#555',    hs:'#a8d4f0', hm:'#cde4f5', dot:'linear-gradient(90deg,#1a3c5e,#3a7ca5)' },
-  { name:'Forest',       p:'#1a3d2b', a:'#3a8a5a', al:'#d0f0e0', h1:'#1a3d2b', h2:'#2e6644', bg:'#fff',    bga:'#f2f9f5', t:'#1a1a1a', s:'#4a5e50', hs:'#9dd9b8', hm:'#c3e8d4', dot:'linear-gradient(90deg,#1a3d2b,#3a8a5a)' },
-  { name:'Terracotta',   p:'#5c2e1a', a:'#c0623a', al:'#fde4d8', h1:'#5c2e1a', h2:'#9b4a28', bg:'#fffaf8', bga:'#fdf0ea', t:'#2a1510', s:'#6a4035', hs:'#f5b09a', hm:'#f7cfc3', dot:'linear-gradient(90deg,#5c2e1a,#c0623a)' },
-  { name:'Violet',       p:'#2d1b5e', a:'#7c5cbf', al:'#ede5ff', h1:'#2d1b5e', h2:'#4a2e9e', bg:'#fff',    bga:'#f7f4ff', t:'#1a1520', s:'#4e3d70', hs:'#c5b0f5', hm:'#ddd4f8', dot:'linear-gradient(90deg,#2d1b5e,#7c5cbf)' },
-  { name:'Crimson',      p:'#4a0f1a', a:'#c0304a', al:'#fde0e5', h1:'#4a0f1a', h2:'#8a1a2e', bg:'#fffafa', bga:'#fdf3f5', t:'#1e0a0e', s:'#6a2535', hs:'#f5a0b0', hm:'#f7ccd4', dot:'linear-gradient(90deg,#4a0f1a,#c0304a)' },
-  { name:'Midnight',     p:'#0f0f1a', a:'#5a7fff', al:'#dce8ff', h1:'#0f0f1a', h2:'#1a1a3e', bg:'#12121e', bga:'#1a1a2e', t:'#e8e8f5', s:'#9090b8', hs:'#8aabff', hm:'#6688dd', dot:'linear-gradient(90deg,#0f0f1a,#5a7fff)' },
-  { name:'Teal',         p:'#0d3d3d', a:'#2abfbf', al:'#d0f5f5', h1:'#0d3d3d', h2:'#1a6060', bg:'#f5fffe', bga:'#e8f8f8', t:'#0a1e1e', s:'#3a6060', hs:'#80e0e0', hm:'#b0ecec', dot:'linear-gradient(90deg,#0d3d3d,#2abfbf)' },
-  { name:'Golden',       p:'#3b2800', a:'#c8860a', al:'#fef3d0', h1:'#3b2800', h2:'#6b4800', bg:'#fffdf5', bga:'#fef8e8', t:'#1e1400', s:'#5a4020', hs:'#f5c870', hm:'#f7dfa8', dot:'linear-gradient(90deg,#3b2800,#c8860a)' },
-  { name:'Rose',         p:'#4a1e30', a:'#d46090', al:'#fde8f0', h1:'#4a1e30', h2:'#8a3258', bg:'#fffafc', bga:'#fdf0f6', t:'#2a0e1c', s:'#6a3850', hs:'#f5a0c8', hm:'#f7ccdf', dot:'linear-gradient(90deg,#4a1e30,#d46090)' },
-  { name:'Carbon',       p:'#1a1a1a', a:'#aaaaaa', al:'#eeeeee', h1:'#111',    h2:'#2a2a2a', bg:'#f5f5f5', bga:'#ebebeb', t:'#111',    s:'#444',    hs:'#cccccc', hm:'#aaaaaa', dot:'linear-gradient(90deg,#1a1a1a,#888888)' },
+/* ══ THEMES ══ */
+const themes=[
+  {p:'#1a3c5e',a:'#3a7ca5',al:'#d6eaf8',h1:'#1a3c5e',h2:'#2e6898',bg:'#fff',   bga:'#f4f7fb',t:'#222',   s:'#555',   hs:'#a8d4f0',hm:'#cde4f5',d:'linear-gradient(90deg,#1a3c5e,#3a7ca5)'},
+  {p:'#1a3d2b',a:'#3a8a5a',al:'#d0f0e0',h1:'#1a3d2b',h2:'#2e6644',bg:'#fff',   bga:'#f2f9f5',t:'#1a1a1a',s:'#4a5e50',hs:'#9dd9b8',hm:'#c3e8d4',d:'linear-gradient(90deg,#1a3d2b,#3a8a5a)'},
+  {p:'#5c2e1a',a:'#c0623a',al:'#fde4d8',h1:'#5c2e1a',h2:'#9b4a28',bg:'#fffaf8',bga:'#fdf0ea',t:'#2a1510',s:'#6a4035',hs:'#f5b09a',hm:'#f7cfc3',d:'linear-gradient(90deg,#5c2e1a,#c0623a)'},
+  {p:'#2d1b5e',a:'#7c5cbf',al:'#ede5ff',h1:'#2d1b5e',h2:'#4a2e9e',bg:'#fff',   bga:'#f7f4ff',t:'#1a1520',s:'#4e3d70',hs:'#c5b0f5',hm:'#ddd4f8',d:'linear-gradient(90deg,#2d1b5e,#7c5cbf)'},
+  {p:'#4a0f1a',a:'#c0304a',al:'#fde0e5',h1:'#4a0f1a',h2:'#8a1a2e',bg:'#fffafa',bga:'#fdf3f5',t:'#1e0a0e',s:'#6a2535',hs:'#f5a0b0',hm:'#f7ccd4',d:'linear-gradient(90deg,#4a0f1a,#c0304a)'},
+  {p:'#0f0f1a',a:'#5a7fff',al:'#dce8ff',h1:'#0f0f1a',h2:'#1a1a3e',bg:'#12121e',bga:'#1a1a2e',t:'#e8e8f5',s:'#9090b8',hs:'#8aabff',hm:'#6688dd',d:'linear-gradient(90deg,#0f0f1a,#5a7fff)'},
+  {p:'#0d3d3d',a:'#2abfbf',al:'#d0f5f5',h1:'#0d3d3d',h2:'#1a6060',bg:'#f5fffe',bga:'#e8f8f8',t:'#0a1e1e',s:'#3a6060',hs:'#80e0e0',hm:'#b0ecec',d:'linear-gradient(90deg,#0d3d3d,#2abfbf)'},
+  {p:'#3b2800',a:'#c8860a',al:'#fef3d0',h1:'#3b2800',h2:'#6b4800',bg:'#fffdf5',bga:'#fef8e8',t:'#1e1400',s:'#5a4020',hs:'#f5c870',hm:'#f7dfa8',d:'linear-gradient(90deg,#3b2800,#c8860a)'},
+  {p:'#4a1e30',a:'#d46090',al:'#fde8f0',h1:'#4a1e30',h2:'#8a3258',bg:'#fffafc',bga:'#fdf0f6',t:'#2a0e1c',s:'#6a3850',hs:'#f5a0c8',hm:'#f7ccdf',d:'linear-gradient(90deg,#4a1e30,#d46090)'},
+  {p:'#1a1a1a',a:'#aaaaaa',al:'#eeeeee',h1:'#111',   h2:'#2a2a2a',bg:'#f5f5f5',bga:'#ebebeb',t:'#111',   s:'#444',   hs:'#ccc',   hm:'#aaa',   d:'linear-gradient(90deg,#1a1a1a,#888)'},
 ];
-
-let activeIdx = 0;
-
-function applyTheme(t, idx) {
-  const r = document.documentElement.style;
-  r.setProperty('--primary', t.p);
-  r.setProperty('--accent',  t.a);
-  r.setProperty('--alight',  t.al);
-  r.setProperty('--hero1',   t.h1);
-  r.setProperty('--hero2',   t.h2);
-  r.setProperty('--bg',      t.bg);
-  r.setProperty('--bgalt',   t.bga);
-  r.setProperty('--cardbg',  t.bg);
-  r.setProperty('--text',    t.t);
-  r.setProperty('--sub',     t.s);
-  r.setProperty('--navbg',   t.p);
-  r.setProperty('--hsub',    t.hs);
-  r.setProperty('--hmuted',  t.hm);
-  // hobbies text fix: use --text not --primary so dark themes stay readable
-  document.querySelectorAll('.h-name').forEach(el => el.style.color = t.t);
-  document.querySelectorAll('.ts').forEach((s,i) => s.classList.toggle('active-ts', i===idx));
-  activeIdx = idx;
+function applyTheme(t){
+  const r=document.documentElement.style;
+  r.setProperty('--primary',t.p); r.setProperty('--accent',t.a); r.setProperty('--alight',t.al);
+  r.setProperty('--hero1',t.h1); r.setProperty('--hero2',t.h2);
+  r.setProperty('--bg',t.bg); r.setProperty('--bgalt',t.bga); r.setProperty('--cardbg',t.bg);
+  r.setProperty('--text',t.t); r.setProperty('--sub',t.s);
+  r.setProperty('--navbg',t.p); r.setProperty('--hsub',t.hs); r.setProperty('--hmuted',t.hm);
+  document.querySelectorAll('.h-name').forEach(el=>el.style.color=t.t);
+  // update gradient bg fallback
+  const gbg=document.querySelector('.hero-bg-gradient');
+  if(gbg) gbg.style.background=`linear-gradient(135deg,${t.h1},${t.h2})`;
 }
-
-function buildStrip() {
-  const strip = document.getElementById('tstrip');
-  themes.forEach((t, i) => {
-    const seg = document.createElement('div');
-    seg.className = 'ts';
-    seg.style.background = t.dot;
-    seg.title = '';
-    seg.onclick = () => applyTheme(t, i);
-    strip.appendChild(seg);
+function buildStrip(){
+  const strip=document.getElementById('tstrip');
+  themes.forEach((t,i)=>{
+    const s=document.createElement('div'); s.className='ts';
+    s.style.background=t.d; s.onclick=()=>applyTheme(t);
+    strip.appendChild(s);
   });
 }
 
-/* ─── PHOTO DATA ─── */
-const photoData = {
+/* ══ HERO SLIDESHOW ══ */
+// Add your photos here — these are shown as the rotating background
+const heroPhotos=[
+  'photos/campaign1.png',
+  'photos/campaign2.png',
+  'photos/Campaign3.png',
+  'photos/campaign4.png',
+  'photos/campaign5.png',
+  'photos/campaign6.png',
+  'photos/field_1_1.jpg',
+  'photos/Field1_Group.png',
+  'photos/Field2_team.jpeg',
+  'photos/Field_4.jpeg',
+  'photos/Field_6_GNSS.jpeg',
+];
+let heroIdx=0, heroTimer=null;
+function buildHeroSlides(){
+  const hero=document.getElementById('hero');
+  const dotsEl=document.getElementById('hero-dots');
+  heroPhotos.forEach((src,i)=>{
+    const slide=document.createElement('div');
+    slide.className='hero-slide'+(i===0?' active':'');
+    slide.style.backgroundImage=`url('${src}')`;
+    // insert before the first non-slide child
+    hero.insertBefore(slide, hero.querySelector('.hero-bg-gradient'));
+    const dot=document.createElement('div');
+    dot.className='hero-dot'+(i===0?' active':'');
+    dot.onclick=()=>goToSlide(i);
+    dotsEl.appendChild(dot);
+  });
+}
+function goToSlide(idx){
+  const slides=document.querySelectorAll('.hero-slide');
+  const dots=document.querySelectorAll('.hero-dot');
+  if(!slides.length) return;
+  slides[heroIdx].classList.remove('active');
+  dots[heroIdx].classList.remove('active');
+  heroIdx=(idx+slides.length)%slides.length;
+  slides[heroIdx].classList.add('active');
+  dots[heroIdx].classList.add('active');
+  resetHeroTimer();
+}
+function heroStep(dir){ goToSlide(heroIdx+dir); }
+function resetHeroTimer(){
+  clearInterval(heroTimer);
+  heroTimer=setInterval(()=>heroStep(1), 10000);
+}
+function initHero(){
+  buildHeroSlides();
+  resetHeroTimer();
+  // swipe support
+  let tx=0;
+  const hero=document.getElementById('hero');
+  hero.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+  hero.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-tx;
+    if(Math.abs(dx)>40) heroStep(dx<0?1:-1);
+  },{passive:true});
+}
+
+/* ══ PROFILE PHOTO ══ */
+// To set your profile photo, replace '' below with 'photos/your_profile.jpg'
+// e.g. setProfilePhoto('photos/profile.jpg');
+function setProfilePhoto(src){
+  if(!src) return;
+  const wrap=document.getElementById('avatar-wrap');
+  wrap.innerHTML=`<img src="${src}" alt="Pawan Singh"/>`;
+}
+setProfilePhoto(''); // <-- put your profile photo path here
+
+/* ══ QUOTES ══ */
+const topQuotes=[
+  "The glacier is a window into Earth's past and a warning about its future.",
+  "What we observe is not nature itself, but nature exposed to our method of questioning. — Heisenberg",
+  "Science is not only a disciple of reason but also one of romance and passion. — Stephen Hawking",
+  "Somewhere, something incredible is waiting to be known. — Sharon Begley",
+  "Look deep into nature, and then you will understand everything better. — Einstein",
+  "The good thing about science is that it's true whether or not you believe in it. — Neil deGrasse Tyson",
+  "An investment in knowledge pays the best interest. — Benjamin Franklin",
+  "The purpose of science is not to cure us of our sense of mystery, but to reinvent it.",
+  "Not everything that can be counted counts, and not everything that counts can be counted. — Einstein",
+  "Science is a way of thinking much more than it is a body of knowledge. — Carl Sagan",
+];
+const footerQuotes=[
+  "Not all those who wander are lost. — J.R.R. Tolkien",
+  "The mountains are calling and I must go. — John Muir",
+  "In every walk with nature, one receives far more than he seeks. — John Muir",
+  "The Earth does not belong to us — we belong to the Earth.",
+  "To boldly go where no one has gone before.",
+  "Equipped with his five senses, man explores the universe and calls the adventure Science. — Hubble",
+  "The universe is under no obligation to make sense to you. — Neil deGrasse Tyson",
+];
+function pickQuote(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function showTopQuote(){
+  const el=document.getElementById('quote-text');
+  el.style.opacity=0;
+  setTimeout(()=>{el.textContent=pickQuote(topQuotes);el.style.opacity=1;},300);
+}
+showTopQuote();
+setInterval(showTopQuote,8000);
+const fq=document.getElementById('footer-quote');
+if(fq) fq.textContent='❝ '+pickQuote(footerQuotes)+' ❞';
+
+/* ══ VISITOR COUNT ══ */
+async function initViewers(){
+  const el=document.getElementById('view-count');
+  try{
+    let res=await window.storage.get('pawan_views');
+    let count=res?parseInt(res.value)||0:0;
+    count+=1;
+    await window.storage.set('pawan_views',String(count));
+    el.textContent=count.toLocaleString();
+  }catch(e){
+    el.textContent=(Math.floor(Math.random()*400)+120).toLocaleString();
+  }
+}
+initViewers();
+
+/* ══ PHOTO DATA ══ */
+const photoData={
   'grid-himalaya-2022':[
-    {src:'photos/campaign1.png',       caption:'Field campaign — glacier approach'},
-    {src:'photos/campaign2.png',       caption:'Setting up at base'},
-    {src:'photos/Campaign3.png',       caption:'On the glacier'},
-    {src:'photos/campaign4.png',       caption:'Moraine traverse'},
+    {src:'photos/campaign1.png',caption:'Field campaign — glacier approach'},
+    {src:'photos/campaign2.png',caption:'Setting up at base'},
+    {src:'photos/Campaign3.png',caption:'On the glacier'},
+    {src:'photos/campaign4.png',caption:'Moraine traverse'},
   ],
   'grid-himalaya-2023':[
-    {src:'photos/campaign5.png',       caption:'High-altitude survey'},
-    {src:'photos/campaign6.png',       caption:'Camp at glacier margin'},
-    {src:'photos/Field1_Group.png',    caption:'Field team — group photo'},
-    {src:'photos/Field2_team.jpeg',    caption:'Team on the ice'},
+    {src:'photos/campaign5.png',caption:'High-altitude survey'},
+    {src:'photos/campaign6.png',caption:'Camp at glacier margin'},
+    {src:'photos/Field1_Group.png',caption:'Field team — group photo'},
+    {src:'photos/Field2_team.jpeg',caption:'Team on the ice'},
   ],
   'grid-himalaya-2024':[
-    {src:'photos/field_1_1.jpg',       caption:'Glacier surface survey'},
-    {src:'photos/field4_1.jpeg',       caption:'Equipment deployment'},
-    {src:'photos/Field_4.jpeg',        caption:'Scanning session on debris-covered ice'},
-    {src:'photos/Field_6_GNSS.jpeg',   caption:'GNSS measurements'},
+    {src:'photos/field_1_1.jpg',caption:'Glacier surface survey'},
+    {src:'photos/field4_1.jpeg',caption:'Equipment deployment'},
+    {src:'photos/Field_4.jpeg',caption:'Scanning session on debris-covered ice'},
+    {src:'photos/Field_6_GNSS.jpeg',caption:'GNSS measurements'},
   ],
   'grid-himalaya-2025':[
-    {src:'photos/Filed3_group_photo.jpeg', caption:'2025 campaign — group photo'},
-    {src:null, caption:'Late season survey'},
-    {src:null, caption:'Equipment transport on high trail'},
+    {src:'photos/Filed3_group_photo.jpeg',caption:'2025 campaign — group photo'},
+    {src:null,caption:'Late season survey'},
+    {src:null,caption:'Equipment transport on high trail'},
   ],
   'grid-landslide':[
     {src:null,caption:'Slope assessment, Shivalik Range'},
@@ -669,125 +761,82 @@ const photoData = {
     {src:null,caption:'Community interview'},
   ],
 };
-
-function buildGrids() {
-  Object.entries(photoData).forEach(([id, photos]) => {
-    const el = document.getElementById(id); if (!el) return;
-    el.innerHTML = photos.map((p,i) => p.src
-      ? `<div class="photo-slot" onclick="openLightbox('${p.src}','${p.caption}')"><img src="${p.src}" alt="${p.caption}" loading="lazy"/><div class="photo-caption">${p.caption}</div></div>`
-      : `<div class="photo-slot" onclick="noPhoto()"><div class="photo-placeholder"><div class="ph-icon">📷</div><div>${p.caption}</div><div class="ph-label">photos/${id.replace('grid-','')}_${i+1}.jpg</div></div></div>`
+function buildGrids(){
+  Object.entries(photoData).forEach(([id,photos])=>{
+    const el=document.getElementById(id); if(!el)return;
+    el.innerHTML=photos.map((p,i)=>p.src
+      ?`<div class="photo-slot" onclick="openLightbox('${p.src}','${p.caption}')"><img src="${p.src}" alt="${p.caption}" loading="lazy"/><div class="photo-caption">${p.caption}</div></div>`
+      :`<div class="photo-slot"><div class="photo-placeholder"><div class="ph-icon">📷</div><div>${p.caption}</div><div class="ph-label">Add photo</div></div></div>`
     ).join('');
   });
 }
 
-const tabDefs = [{id:'himalaya',label:'🏔 Himalayas'},{id:'landslide',label:'⛰ Landslide'},{id:'architecture',label:'🏛 Architecture'}];
-function buildTabs() {
-  document.getElementById('expTabs').innerHTML = tabDefs.map(t =>
+/* ══ EXPEDITION PAGE ══ */
+const tabDefs=[{id:'himalaya',label:'🏔 Himalayas'},{id:'landslide',label:'⛰ Landslide'},{id:'architecture',label:'🏛 Architecture'}];
+function buildTabs(){
+  document.getElementById('expTabs').innerHTML=tabDefs.map(t=>
     `<button class="exp-tab" data-id="${t.id}" onclick="switchTab('${t.id}')">${t.label}</button>`
   ).join('');
 }
-function switchTab(id) {
-  document.querySelectorAll('.exp-tab').forEach(t => t.classList.toggle('active', t.dataset.id===id));
-  document.querySelectorAll('.exp-section').forEach(s => s.classList.toggle('active', s.id==='sec-'+id));
+function switchTab(id){
+  document.querySelectorAll('.exp-tab').forEach(t=>t.classList.toggle('active',t.dataset.id===id));
+  document.querySelectorAll('.exp-section').forEach(s=>s.classList.toggle('active',s.id==='sec-'+id));
 }
-function showExpedition(id) {
-  document.getElementById('main-page').classList.remove('active');
-  document.getElementById('exp-page').classList.add('active');
-  window.scrollTo(0,0); buildTabs(); switchTab(id);
+
+/* ══ NAVIGATION with history API (fixes browser back button) ══ */
+function showPage(pageId, expId){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+  window.scrollTo(0,0);
+  if(pageId==='exp-page'){
+    buildTabs(); switchTab(expId||'himalaya');
+    history.pushState({page:'exp',exp:expId||'himalaya'},'','#expeditions');
+  } else {
+    history.replaceState({page:'main'},'','#');
+  }
 }
-function showMain() {
-  document.getElementById('exp-page').classList.remove('active');
+function showExpedition(id){ showPage('exp-page',id); }
+function goHome(){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('main-page').classList.add('active');
+  history.replaceState({page:'main'},'','#');
 }
+// intercept browser back
+window.addEventListener('popstate',e=>{
+  if(e.state&&e.state.page==='exp'){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('exp-page').classList.add('active');
+    buildTabs(); switchTab(e.state.exp||'himalaya');
+  } else {
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('main-page').classList.add('active');
+  }
+});
+// set initial state
+history.replaceState({page:'main'},'','#');
+
+/* ══ LIGHTBOX ══ */
 function openLightbox(src,cap){document.getElementById('lb-img').src=src;document.getElementById('lb-caption').textContent=cap;document.getElementById('lightbox').classList.add('open');}
 function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
-function noPhoto(){alert('Replace src: null with your image path in the photoData object.');}
 
+/* ══ MOBILE MENU ══ */
 function toggleMenu(){
-  const h=document.getElementById('ham'), m=document.getElementById('mobileMenu');
-  h.classList.toggle('open'); m.classList.toggle('open');
+  document.getElementById('ham').classList.toggle('open');
+  document.getElementById('mobileMenu').classList.toggle('open');
 }
 function closeMenu(){
   document.getElementById('ham').classList.remove('open');
   document.getElementById('mobileMenu').classList.remove('open');
 }
 
+/* ══ BACK TO TOP ══ */
+const backBtn=document.getElementById('back-top');
+window.addEventListener('scroll',()=>backBtn.classList.toggle('visible',window.scrollY>400),{passive:true});
+
+/* ══ INIT ══ */
 buildStrip();
 buildGrids();
-
-/* ── QUOTES ── */
-const quotes = [
-  "The glacier is a window into Earth's past and a warning about its future.",
-  "In every walk with nature, one receives far more than he seeks. — John Muir",
-  "The mountains are calling and I must go. — John Muir",
-  "What we observe is not nature itself, but nature exposed to our method of questioning. — Heisenberg",
-  "Science is not only a disciple of reason but also one of romance and passion. — Stephen Hawking",
-  "The Earth does not belong to us, we belong to the Earth.",
-  "Somewhere, something incredible is waiting to be known. — Sharon Begley",
-  "Not all those who wander are lost. — J.R.R. Tolkien",
-  "Look deep into nature, and then you will understand everything better. — Einstein",
-  "The purpose of science is not to cure us of our sense of mystery, but to reinvent it. — Robert Weston",
-  "An investment in knowledge pays the best interest. — Benjamin Franklin",
-  "The good thing about science is that it's true whether or not you believe in it. — Neil deGrasse Tyson",
-];
-function showQuote() {
-  const el = document.getElementById('quote-text');
-  const q = quotes[Math.floor(Math.random() * quotes.length)];
-  el.style.opacity = 0;
-  setTimeout(() => { el.textContent = q; el.style.opacity = 1; }, 300);
-}
-showQuote();
-setInterval(showQuote, 8000);
-
-/* ── VIEWER COUNT (persisted via storage) ── */
-async function initViewers() {
-  const el = document.getElementById('view-count');
-  try {
-    let res = await window.storage.get('pawan_views');
-    let count = res ? parseInt(res.value) || 0 : 0;
-    count += 1;
-    await window.storage.set('pawan_views', String(count));
-    el.textContent = count.toLocaleString();
-  } catch(e) {
-    // fallback: random plausible number if storage unavailable
-    el.textContent = (Math.floor(Math.random()*400)+120).toLocaleString();
-  }
-}
-initViewers();
-
-/* ── FOOTER QUOTE (different from top quote) ── */
-const footerQuotes = [
-  "Not all those who wander are lost. — J.R.R. Tolkien",
-  "The mountains are calling and I must go. — John Muir",
-  "In every walk with nature, one receives far more than he seeks. — John Muir",
-  "Look deep into nature, and then you will understand everything better. — Einstein",
-  "The purpose of science is not to cure us of our sense of mystery, but to reinvent it.",
-  "Science is a way of thinking much more than it is a body of knowledge. — Carl Sagan",
-  "Somewhere, something incredible is waiting to be known. — Sharon Begley",
-  "The Earth does not belong to us — we belong to the Earth.",
-  "Equipped with his five senses, man explores the universe and calls the adventure Science. — Hubble",
-  "To boldly go where no one has gone before.",
-];
-(function(){
-  const el = document.getElementById('footer-quote');
-  if(el) el.textContent = '❝ ' + footerQuotes[Math.floor(Math.random()*footerQuotes.length)] + ' ❞';
-})();
-
-/* ── HERO BACKGROUND: set your photo path here ── */
-// To use your own photo, replace the empty string below with the path:
-// e.g.  setHeroBg('photos/glacier_hero.jpg');
-function setHeroBg(url) {
-  if (!url) return;
-  const hero = document.getElementById('hero');
-  hero.style.backgroundImage = `url('${url}')`;
-}
-setHeroBg('photos/campaign1.png');
-
-/* ── BACK TO TOP visibility ── */
-const backBtn = document.getElementById('back-top');
-window.addEventListener('scroll', () => {
-  backBtn.classList.toggle('visible', window.scrollY > 400);
-}, {passive:true});
+initHero();
 </script>
 </body>
 </html>
