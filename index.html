@@ -19,8 +19,7 @@
 <!-- ── Favicon (SVG mountain) ── -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏔</text></svg>"/>
 
-<!-- ── Leaflet CSS ── -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<!-- Leaflet loaded on-demand only when map section is visible -->
 
 <style>
 :root{
@@ -99,7 +98,7 @@ nav{position:fixed;top:34px;left:0;right:0;z-index:1000;background:var(--navbg);
 .reveal.visible{opacity:1;transform:none;}
 
 /* ── HERO ── */
-#hero{min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;padding:110px 1.5rem 2rem;}
+#hero{min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;padding:110px 1.5rem 5rem;}
 .hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease;z-index:0;}
 .hero-slide.active{opacity:1;}
 .hero-bg-gradient{position:absolute;inset:0;z-index:0;background:linear-gradient(135deg,var(--hero1),var(--hero2));transition:background .35s;}
@@ -170,7 +169,9 @@ section:nth-child(even){background:var(--bgalt);}
 .news-counter{font-size:.75rem;color:var(--sub);}
 
 /* ── MAP ── */
-#field-map{height:340px;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);z-index:0;}
+#field-map{height:340px;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:var(--bgalt);display:flex;align-items:center;justify-content:center;color:var(--sub);font-size:.85rem;}
+#field-map.ready{display:block;}
+.leaflet-container{height:100%!important;border-radius:10px;}
 
 /* ── PUBLICATIONS ── */
 .pub-list{list-style:none;display:flex;flex-direction:column;gap:.85rem;}
@@ -352,10 +353,10 @@ footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0
     <!-- stats -->
     <div class="hero-stats">
       <div class="hstat"><div class="hn">3</div><div class="hl">Publications</div></div>
-      <div class="hstat"><div class="hn" id="h-cite">—</div><div class="hl">Citations</div></div>
+      <div class="hstat"><div class="hn">3</div><div class="hl">Journal Papers</div></div>
       <div class="hstat"><div class="hn">8+</div><div class="hl">Field Campaigns</div></div>
       <div class="hstat"><div class="hn">5+</div><div class="hl">Intl. Conferences</div></div>
-      <div class="hstat"><div class="hn" id="h-hi">—</div><div class="hl">h-index</div></div>
+
     </div>
     <div class="hero-social">
       <a href="https://scholar.google.com/citations?user=YNz9FGQAAAAJ&hl=en" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5h3.5v8.25C3.5 19.55 5.2 21 6.75 21h.75v-9h9v9h.75c1.55 0 3.25-1.45 3.25-3.25V9.5H24L12 0z"/></svg><span>Google Scholar</span></a>
@@ -383,8 +384,6 @@ footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0
 <section id="about">
   <div class="container reveal">
     <div class="section-title">About</div>
-    <!-- Scholar stats injected here -->
-    <div class="scholar-strip" id="scholar-strip"></div>
     <div class="about-text">
       <p>I am a doctoral researcher in Geospatial Engineering at the Indian Institute of Technology Roorkee, working on high-resolution glacier monitoring in the western Himalaya. My doctoral work investigates high-spatiotemporal glacier change and its driving mechanisms through a combination of terrestrial laser scanning, time-lapse photogrammetry, UAV surveys, and satellite remote sensing.</p>
       <p>My research spans ice-cliff backwasting dynamics, debris-covered glacier behaviour, and glacier surface velocity estimation. Alongside the primary glacier research, I have worked on SAR-based terrain classification as part of the NISAR mission testbed, UAV and LiDAR surveys for heritage documentation, and large-scale dumpsite volumetric estimation using drone-derived DSMs.</p>
@@ -560,8 +559,7 @@ footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0
   <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
 </button>
 
-<!-- Leaflet JS deferred -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
+
 
 <style>
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
@@ -610,38 +608,7 @@ function toggleDark(){
     :'<path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>';
 }
 
-/* ══ SCHOLAR FETCH ══ */
-async function fetchScholar(){
-  // Uses a CORS proxy to scrape Google Scholar profile
-  const userId='YNz9FGQAAAAJ';
-  const url=`https://corsproxy.io/?https://scholar.google.com/citations?user=${userId}&hl=en`;
-  try{
-    const res=await fetch(url,{signal:AbortSignal.timeout(6000)});
-    const html=await res.text();
-    const parser=new DOMParser();
-    const doc=parser.parseFromString(html,'text/html');
-    const cells=[...doc.querySelectorAll('#gsc_rsb_st td.gsc_rsb_std')];
-    const citations=cells[0]?.textContent?.trim()||null;
-    const hIndex=cells[2]?.textContent?.trim()||null;
-    const i10=cells[4]?.textContent?.trim()||null;
-    if(citations){
-      document.getElementById('h-cite').textContent=citations;
-      document.getElementById('h-hi').textContent=hIndex||'—';
-      // populate scholar strip
-      const strip=document.getElementById('scholar-strip');
-      strip.innerHTML=`
-        <div class="sstat"><div class="ss-num">${citations}</div><div class="ss-label">Total<br>Citations</div></div>
-        <div class="sstat"><div class="ss-num">${hIndex||'—'}</div><div class="ss-label">h-index</div></div>
-        <div class="sstat"><div class="ss-num">${i10||'—'}</div><div class="ss-label">i10-index</div></div>
-        <div class="sstat"><div class="ss-num">3</div><div class="ss-label">Publications</div></div>`;
-      strip.innerHTML+=`<div class="scholar-note">Live data from <a href="https://scholar.google.com/citations?user=${userId}" target="_blank">Google Scholar</a></div>`;
-    }
-  }catch(e){
-    // silent fail — static values stay
-    document.getElementById('scholar-strip').innerHTML=
-      `<div class="scholar-note">Scholar stats unavailable — <a href="https://scholar.google.com/citations?user=${userId}" target="_blank">view profile ↗</a></div>`;
-  }
-}
+
 
 /* ══ NEWS FEED ══ */
 const newsItems=[
@@ -686,25 +653,54 @@ function updateNewsCounter(){
   document.getElementById('news-counter').textContent=`${newsIdx+1} / ${newsItems.length}`;
 }
 
-/* ══ LEAFLET MAP ══ */
+/* ══ LEAFLET MAP — load on demand when section scrolls into view ══ */
+let mapLoaded = false;
 function initMap(){
-  if(typeof L==='undefined') return;
-  const map=L.map('field-map',{scrollWheelZoom:false}).setView([34.05,75.9],9);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:'© OpenStreetMap contributors',maxZoom:17
+  if(mapLoaded || typeof L === 'undefined') return;
+  mapLoaded = true;
+  const el = document.getElementById('field-map');
+  el.classList.add('ready');
+  el.innerHTML = '';
+  const map = L.map(el, {scrollWheelZoom: false}).setView([34.05, 75.9], 9);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://openstreetmap.org">OpenStreetMap</a>',
+    maxZoom: 17
   }).addTo(map);
-  const sites=[
-    {lat:33.839820,lng:76.366037,name:'Drang Drung Glacier',desc:'Ice velocity monitoring site — TLS and time-lapse campaigns 2022–2025'},
-    {lat:34.286836,lng:75.526527,name:'Machoi Glacier',      desc:'Ice-cliff backwasting study — Journal of Glaciology 2025'},
-    {lat:34.050800,lng:75.851844,name:'Panikhar',            desc:'Base camp and logistic hub for western Himalaya campaigns'},
+  const sites = [
+    {lat:33.839820, lng:76.366037, name:'Drang Drung Glacier', desc:'Ice velocity monitoring — TLS & time-lapse 2022–2025'},
+    {lat:34.286836, lng:75.526527, name:'Machoi Glacier',      desc:'Ice-cliff backwasting study — Journal of Glaciology 2025'},
+    {lat:34.050800, lng:75.851844, name:'Panikhar',            desc:'Base camp & logistics hub for western Himalaya campaigns'},
   ];
-  const icon=L.divIcon({html:'<div style="background:var(--accent,#3a7ca5);width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>',className:'',iconAnchor:[6,6]});
-  sites.forEach(s=>{
-    L.marker([s.lat,s.lng],{icon})
+  sites.forEach(s => {
+    L.circleMarker([s.lat, s.lng], {radius:9, fillColor:'#3a7ca5', color:'#fff', weight:2, fillOpacity:.9})
      .addTo(map)
-     .bindPopup(`<strong>${s.name}</strong><br><small>${s.desc}</small>`)
-     .bindTooltip(s.name,{permanent:false,direction:'top'});
+     .bindPopup(`<strong>${s.name}</strong><br><small>${s.desc}</small>`);
   });
+}
+
+function loadLeaflet(){
+  if(typeof L !== 'undefined'){ initMap(); return; }
+  // Inject CSS
+  const css = document.createElement('link');
+  css.rel = 'stylesheet';
+  css.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';
+  document.head.appendChild(css);
+  // Inject JS
+  const js = document.createElement('script');
+  js.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+  js.onload = initMap;
+  document.head.appendChild(js);
+}
+
+// Only load Leaflet when the map section scrolls into view
+function watchMap(){
+  const mapEl = document.getElementById('field-map');
+  mapEl.textContent = 'Loading map…';
+  if(!('IntersectionObserver' in window)){ loadLeaflet(); return; }
+  const obs = new IntersectionObserver(entries => {
+    if(entries[0].isIntersecting){ loadLeaflet(); obs.disconnect(); }
+  }, {rootMargin: '200px'});
+  obs.observe(mapEl);
 }
 
 /* ══ TYPED ANIMATION ══ */
@@ -767,39 +763,58 @@ initViewers();
 
 /* ══ HERO SLIDESHOW ══ */
 const heroPhotos=['photos/campaign1.png','photos/campaign2.png','photos/Campaign3.png','photos/campaign4.png','photos/campaign5.png','photos/campaign6.png','photos/field_1_1.jpg','photos/Field1_Group.png','photos/Field2_team.jpeg','photos/Field_4.jpeg','photos/Field_6_GNSS.jpeg'];
-let heroIdx=0,heroTimer=null;
+let heroIdx=0, heroTimer=null;
+
 function buildHeroSlides(){
-  const hero=document.getElementById('hero');
-  const dotsEl=document.getElementById('hero-dots');
-  const grad=hero.querySelector('.hero-bg-gradient');
-  heroPhotos.forEach((src,i)=>{
-    const slide=document.createElement('div');
-    slide.className='hero-slide'+(i===0?' active':'');
-    slide.style.backgroundImage=`url('${src}')`;
-    hero.insertBefore(slide,grad);
-    const dot=document.createElement('div');
-    dot.className='hero-dot'+(i===0?' active':'');
-    dot.onclick=()=>goToSlide(i);
+  const hero = document.getElementById('hero');
+  const dotsEl = document.getElementById('hero-dots');
+  // Insert slides at position 0 inside hero (before all other children)
+  heroPhotos.forEach((src, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'hero-slide';
+    slide.dataset.src = src;
+    // First slide gets shown immediately once image loads
+    if(i === 0){
+      slide.style.backgroundImage = `url('${src}')`;
+      slide.classList.add('active');
+    }
+    hero.insertBefore(slide, hero.firstChild);
+    const dot = document.createElement('div');
+    dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
     dotsEl.appendChild(dot);
   });
 }
+
 function goToSlide(idx){
-  const slides=document.querySelectorAll('.hero-slide');
-  const dots=document.querySelectorAll('.hero-dot');
-  if(!slides.length)return;
-  slides[heroIdx].classList.remove('active');dots[heroIdx].classList.remove('active');
-  heroIdx=(idx+slides.length)%slides.length;
-  slides[heroIdx].classList.add('active');dots[heroIdx].classList.add('active');
-  clearInterval(heroTimer);heroTimer=setInterval(()=>heroStep(1),10000);
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots   = document.querySelectorAll('.hero-dot');
+  if(!slides.length) return;
+  slides[heroIdx].classList.remove('active');
+  dots[heroIdx].classList.remove('active');
+  heroIdx = (idx + slides.length) % slides.length;
+  const target = slides[heroIdx];
+  // Lazy-set backgroundImage only when first needed
+  if(!target.style.backgroundImage){
+    target.style.backgroundImage = `url('${target.dataset.src}')`;
+  }
+  target.classList.add('active');
+  dots[heroIdx].classList.add('active');
+  clearInterval(heroTimer);
+  heroTimer = setInterval(() => heroStep(1), 10000);
 }
-function heroStep(dir){goToSlide(heroIdx+dir);}
+
+function heroStep(dir){ goToSlide(heroIdx + dir); }
+
 function initHero(){
   buildHeroSlides();
-  heroTimer=setInterval(()=>heroStep(1),10000);
-  let tx=0;
-  const hero=document.getElementById('hero');
-  hero.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
-  hero.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>40)heroStep(dx<0?1:-1);},{passive:true});
+  heroTimer = setInterval(() => heroStep(1), 10000);
+  // Preload slides 1 and 2 in the background so first transitions are smooth
+  [1,2].forEach(i => { if(heroPhotos[i]){ const img=new Image(); img.src=heroPhotos[i]; }});
+  let tx = 0;
+  const hero = document.getElementById('hero');
+  hero.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive:true});
+  hero.addEventListener('touchend',   e => { const dx = e.changedTouches[0].clientX - tx; if(Math.abs(dx) > 40) heroStep(dx < 0 ? 1 : -1); }, {passive:true});
 }
 
 /* ══ PROFILE PHOTO ══ */
@@ -921,14 +936,13 @@ async function bootSite(){
     initReveal();
     initNavHighlight();
     typeLoop();
-    fetchScholar();
+
     // preload remaining hero photos quietly
     for(let i=1;i<heroPhotos.length;i++) preloadImg(heroPhotos[i]);
     // lazy-load gallery
     lazyLoadGallery();
-    // init map when Leaflet is ready
-    const waitLeaflet=()=>typeof L!=='undefined'?initMap():setTimeout(waitLeaflet,200);
-    waitLeaflet();
+    // init map on-demand
+    watchMap();
   },{timeout:1500});
 }
 requestAnimationFrame(()=>requestAnimationFrame(bootSite));
