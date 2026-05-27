@@ -255,11 +255,18 @@ footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0
 .photo-caption{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.65));color:#fff;font-size:.72rem;padding:.45rem .65rem;}
 .photo-slot.loading{background:linear-gradient(90deg,#d0dde8 25%,#e5eef5 50%,#d0dde8 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:9999;align-items:center;justify-content:center;}
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:9999;align-items:center;justify-content:center;flex-direction:column;}
 .lightbox.open{display:flex;}
-.lightbox img{max-width:92vw;max-height:82vh;border-radius:4px;object-fit:contain;}
-.lb-close{position:absolute;top:.8rem;right:1.2rem;color:#fff;font-size:1.9rem;cursor:pointer;background:none;border:none;}
-.lb-caption{position:absolute;bottom:1.2rem;color:#bbb;font-size:.85rem;text-align:center;width:100%;padding:0 1rem;}
+.lightbox img{max-width:82vw;max-height:78vh;border-radius:4px;object-fit:contain;transition:opacity .25s;}
+.lightbox img.fading{opacity:0;}
+.lb-close{position:absolute;top:.8rem;right:1.2rem;color:#fff;font-size:1.9rem;cursor:pointer;background:none;border:none;line-height:1;z-index:2;}
+.lb-caption{margin-top:.7rem;color:#bbb;font-size:.85rem;text-align:center;width:100%;padding:0 1rem;}
+.lb-counter{color:rgba(255,255,255,.4);font-size:.75rem;margin-top:.3rem;}
+.lb-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.12);border:none;color:#fff;cursor:pointer;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:2;}
+.lb-arrow:hover{background:rgba(255,255,255,.28);}
+.lb-arrow svg{width:22px;height:22px;fill:#fff;}
+#lb-prev{left:1rem;}
+#lb-next{right:1rem;}
 
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
@@ -538,10 +545,17 @@ footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0
   </div>
 </div>
 
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+<div class="lightbox" id="lightbox">
   <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <button class="lb-arrow" id="lb-prev" onclick="lbStep(-1)">
+    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+  </button>
+  <button class="lb-arrow" id="lb-next" onclick="lbStep(1)">
+    <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+  </button>
   <img id="lb-img" src="" alt=""/>
   <div class="lb-caption" id="lb-caption"></div>
+  <div class="lb-counter" id="lb-counter"></div>
 </div>
 
 <button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
@@ -910,12 +924,13 @@ function lazyLoadGallery(){
   slots.forEach(function(s){obs.observe(s);});
 }
 function loadSlot(slot){
-  var src=slot.dataset.src,cap=slot.dataset.cap;
+  var src=slot.dataset.src, cap=slot.dataset.cap;
+  var gridId=slot.closest('.photo-grid') ? slot.closest('.photo-grid').id : null;
   var img=new Image();
   img.onload=function(){
     slot.classList.remove('loading');
     slot.innerHTML='<img src="'+src+'" alt="'+cap+'" loading="lazy"/><div class="photo-caption">'+cap+'</div>';
-    slot.onclick=function(){openLightbox(src,cap);};
+    slot.onclick=function(){ openLightbox(src, cap, gridId); };
   };
   img.onerror=function(){slot.classList.remove('loading');};
   img.src=src;
@@ -947,9 +962,70 @@ window.addEventListener('popstate',function(e){
 });
 history.replaceState({page:'main'},'','#');
 
-/* ── LIGHTBOX ── */
-function openLightbox(src,cap){document.getElementById('lb-img').src=src;document.getElementById('lb-caption').textContent=cap;document.getElementById('lightbox').classList.add('open');}
-function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
+/* ── LIGHTBOX with gallery navigation ── */
+var lbImages = [];   // [{src, cap}] for current grid
+var lbIdx = 0;
+
+function openLightbox(src, cap, gridId) {
+  // collect all loaded images from the same grid
+  var grid = gridId ? document.getElementById(gridId) : null;
+  if (grid) {
+    lbImages = [];
+    grid.querySelectorAll('.photo-slot[data-src]').forEach(function(slot) {
+      if (slot.dataset.src) lbImages.push({src: slot.dataset.src, cap: slot.dataset.cap || ''});
+    });
+    // also include already-rendered img slots
+    grid.querySelectorAll('.photo-slot img').forEach(function(img) {
+      var cap2 = img.nextElementSibling ? img.nextElementSibling.textContent : '';
+      if (!lbImages.find(function(x){return x.src===img.src;}))
+        lbImages.push({src: img.src, cap: cap2});
+    });
+  }
+  // fallback: just this one image
+  if (!lbImages.length) lbImages = [{src: src, cap: cap}];
+  lbIdx = lbImages.findIndex(function(x){ return x.src === src; });
+  if (lbIdx < 0) lbIdx = 0;
+  document.getElementById('lightbox').classList.add('open');
+  lbShow(lbIdx);
+}
+
+function lbShow(idx) {
+  var item = lbImages[idx];
+  var img  = document.getElementById('lb-img');
+  img.classList.add('fading');
+  setTimeout(function(){
+    img.src = item.src;
+    img.onload = function(){ img.classList.remove('fading'); };
+    document.getElementById('lb-caption').textContent = item.cap;
+    document.getElementById('lb-counter').textContent = (idx+1) + ' / ' + lbImages.length;
+    // hide arrows if only one image
+    document.getElementById('lb-prev').style.display = lbImages.length > 1 ? '' : 'none';
+    document.getElementById('lb-next').style.display = lbImages.length > 1 ? '' : 'none';
+  }, 200);
+  lbIdx = idx;
+}
+
+function lbStep(dir) {
+  lbShow((lbIdx + dir + lbImages.length) % lbImages.length);
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  lbImages = [];
+}
+
+// keyboard navigation
+document.addEventListener('keydown', function(e) {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'ArrowRight') lbStep(1);
+  if (e.key === 'ArrowLeft')  lbStep(-1);
+  if (e.key === 'Escape')     closeLightbox();
+});
+
+// close on backdrop click (not on arrows/image)
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
 
 /* ── MOBILE MENU ── */
 function toggleMenu(){document.getElementById('ham').classList.toggle('open');document.getElementById('mobileMenu').classList.toggle('open');}
