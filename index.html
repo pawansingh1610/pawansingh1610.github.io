@@ -766,18 +766,50 @@ function initMap(){
   var el=document.getElementById('field-map');
   if(!el||!window.L)return;
 
-  // fit all sites automatically
-  var map=L.map(el,{scrollWheelZoom:false});
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:'© <a href="https://openstreetmap.org">OpenStreetMap</a>',maxZoom:17
-  }).addTo(map);
+  // ── Basemap layers ──
+  var basemaps={
+    'OpenStreetMap': L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+      attribution:'© <a href="https://openstreetmap.org">OpenStreetMap</a>',maxZoom:19
+    }),
+    'Google Maps': L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+      attribution:'© Google',maxZoom:20
+    }),
+    'Google Satellite': L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+      attribution:'© Google',maxZoom:20
+    }),
+    'Google Hybrid': L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',{
+      attribution:'© Google',maxZoom:20
+    }),
+    'Google Terrain': L.tileLayer('https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
+      attribution:'© Google',maxZoom:20
+    }),
+  };
+
+  var map=L.map(el,{scrollWheelZoom:false,layers:[basemaps['OpenStreetMap']]});
+
+  // ── Custom dropdown basemap switcher ──
+  var select=document.createElement('select');
+  select.className='map-basemap-ctrl';
+  Object.keys(basemaps).forEach(function(name){
+    var opt=document.createElement('option');
+    opt.value=name; opt.textContent=name;
+    select.appendChild(opt);
+  });
+  var currentBase=basemaps['OpenStreetMap'];
+  select.addEventListener('change',function(){
+    map.removeLayer(currentBase);
+    currentBase=basemaps[select.value];
+    map.addLayer(currentBase);
+    currentBase.bringToBack();
+  });
+  el.appendChild(select);
 
   // colour + emoji per category
   var cats={
-    glacier:  {color:'#3a7ca5', emoji:'🏔'},
-    landslide:{color:'#c0623a', emoji:'⛰'},
-    architecture:{color:'#7c5cbf', emoji:'🏛'},
-    dumpsite: {color:'#2e8a57', emoji:'🗑'},
+    glacier:     {color:'#3a7ca5',emoji:'🏔'},
+    landslide:   {color:'#c0623a',emoji:'⛰'},
+    architecture:{color:'#7c5cbf',emoji:'🏛'},
+    dumpsite:    {color:'#2e8a57',emoji:'🗑'},
   };
 
   function makeIcon(cat){
@@ -790,42 +822,32 @@ function initMap(){
   }
 
   var sites=[
-    // ── GLACIERS ──
-    {lat:33.839820,lng:76.366037,cat:'glacier',    name:'Drang Drung Glacier',  desc:'Ice velocity monitoring — TLS & time-lapse 2022–2025'},
-    {lat:34.286836,lng:75.526527,cat:'glacier',    name:'Machoi Glacier',       desc:'Ice-cliff backwasting study — Journal of Glaciology 2025'},
-    {lat:34.050800,lng:75.851844,cat:'glacier',    name:'Panikhar',             desc:'Base camp & logistics hub for western Himalaya campaigns'},
-    // ── LANDSLIDES ──
-    {lat:30.070293,lng:78.454829,cat:'landslide',  name:'Byasi',                desc:'Landslide survey 2022'},
-    {lat:30.552886,lng:79.105826,cat:'landslide',  name:'Ukhimath',             desc:'Landslide survey 2020 (M.Tech dissertation)'},
-    // ── ARCHITECTURE (EWAP & HERITAGE) ──
-    {lat:30.970882,lng:78.437709,cat:'architecture',name:'Kharsali — Mahasu Devta Temple', desc:'Endangered Wood Architecture Preservation (EWAP) 2026'},
-    {lat:30.970534,lng:77.927234,cat:'architecture',name:'EWAP Site 2',         desc:'Endangered Wood Architecture Preservation (EWAP) 2026'},
-    {lat:30.758576,lng:76.806242,cat:'architecture',name:'Chandigarh High Court',desc:'Heritage impact assessment 2024 — UNESCO World Heritage Site'},
-    // ── DUMPSITES ──
-    {lat:30.343498,lng:77.869005,cat:'dumpsite',   name:'Dehradun Dumpsite',    desc:'Dumpsite garbage mass estimation survey'},
-    {lat:26.797232,lng:80.780222,cat:'dumpsite',   name:'Shivari, Uttar Pradesh',desc:'Dumpsite survey'},
-    {lat:28.236929,lng:77.065657,cat:'dumpsite',   name:'Sohna Dumpsite',       desc:'Dumpsite survey'},
-    {lat:28.781870,lng:76.124526,cat:'dumpsite',   name:'Bhiwani Dumpsite',     desc:'Dumpsite survey'},
-    {lat:27.884337,lng:77.365453,cat:'dumpsite',   name:'Hodal Dumpsite',       desc:'Dumpsite survey'},
-    {lat:28.899931,lng:75.622193,cat:'dumpsite',   name:'Siwani Dumpsite',      desc:'Dumpsite survey'},
-    {lat:29.830156,lng:77.648854,cat:'dumpsite',   name:'Barar Dumpsite',       desc:'Dumpsite survey'},
-    {lat:28.979260,lng:76.019827,cat:'dumpsite',   name:'Bawani Khera Dumpsite',desc:'Dumpsite survey'},
+    {lat:33.839820,lng:76.366037,cat:'glacier',    name:'Drang Drung Glacier',        desc:'Ice velocity monitoring — TLS & time-lapse 2022–2025'},
+    {lat:34.286836,lng:75.526527,cat:'glacier',    name:'Machoi Glacier',             desc:'Ice-cliff backwasting study — Journal of Glaciology 2025'},
+    {lat:34.050800,lng:75.851844,cat:'glacier',    name:'Panikhar',                   desc:'Base camp & logistics hub for western Himalaya campaigns'},
+    {lat:30.070293,lng:78.454829,cat:'landslide',  name:'Byasi',                      desc:'Landslide survey 2022'},
+    {lat:30.552886,lng:79.105826,cat:'landslide',  name:'Ukhimath',                   desc:'Landslide survey 2020 (M.Tech dissertation)'},
+    {lat:30.970882,lng:78.437709,cat:'architecture',name:'Kharsali — Mahasu Devta Temple',desc:'Endangered Wood Architecture Preservation (EWAP) 2026'},
+    {lat:30.970534,lng:77.927234,cat:'architecture',name:'EWAP Site 2',               desc:'Endangered Wood Architecture Preservation (EWAP) 2026'},
+    {lat:30.758576,lng:76.806242,cat:'architecture',name:'Chandigarh High Court',     desc:'Heritage impact assessment 2024 — UNESCO World Heritage Site'},
+    {lat:30.343498,lng:77.869005,cat:'dumpsite',   name:'Dehradun Dumpsite',          desc:'Dumpsite garbage mass estimation survey'},
+    {lat:26.797232,lng:80.780222,cat:'dumpsite',   name:'Shivari, Uttar Pradesh',     desc:'Dumpsite survey'},
+    {lat:28.236929,lng:77.065657,cat:'dumpsite',   name:'Sohna Dumpsite',             desc:'Dumpsite survey'},
+    {lat:28.781870,lng:76.124526,cat:'dumpsite',   name:'Bhiwani Dumpsite',           desc:'Dumpsite survey'},
+    {lat:27.884337,lng:77.365453,cat:'dumpsite',   name:'Hodal Dumpsite',             desc:'Dumpsite survey'},
+    {lat:28.899931,lng:75.622193,cat:'dumpsite',   name:'Siwani Dumpsite',            desc:'Dumpsite survey'},
+    {lat:29.830156,lng:77.648854,cat:'dumpsite',   name:'Barar Dumpsite',             desc:'Dumpsite survey'},
+    {lat:28.979260,lng:76.019827,cat:'dumpsite',   name:'Bawani Khera Dumpsite',      desc:'Dumpsite survey'},
   ];
 
   var bounds=[];
   sites.forEach(function(s){
-    var marker=L.marker([s.lat,s.lng],{icon:makeIcon(s.cat)})
-      .addTo(map)
-      .bindPopup(
-        '<strong>'+s.name+'</strong><br>'
-        +'<span style="font-size:.78rem;color:#3a7ca5;text-transform:capitalize;">'+s.cat+'</span><br>'
-        +'<small>'+s.desc+'</small>'
-      )
-      .bindTooltip(s.name,{direction:'top',offset:[0,-8]});
+    L.marker([s.lat,s.lng],{icon:makeIcon(s.cat)})
+     .addTo(map)
+     .bindPopup('<strong>'+s.name+'</strong><br><span style="font-size:.78rem;color:#3a7ca5;text-transform:capitalize;">'+s.cat+'</span><br><small>'+s.desc+'</small>')
+     .bindTooltip(s.name,{direction:'top',offset:[0,-8]});
     bounds.push([s.lat,s.lng]);
   });
-
-  // auto-fit all markers with padding
   map.fitBounds(bounds,{padding:[30,30]});
 
   // legend
