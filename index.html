@@ -333,7 +333,8 @@ footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0
   <a href="#education"    onclick="goHome();closeMenu()">Education</a>
   <a href="#projects"     onclick="goHome();closeMenu()">Projects</a>
   <a href="#publications" onclick="goHome();closeMenu()">Publications</a>
-  <a href="#conferences"  onclick="goHome();closeMenu()">Conferences</a>
+  <li><a href="#conferences">Conferences</a></li>
+  <li><a href="#seminars">Seminars</a></li>
   <a href="#skills"       onclick="goHome();closeMenu()">Skills</a>
   <a href="#grants"       onclick="goHome();closeMenu()">Grants</a>
   <a href="#leadership" onclick="goHome();closeMenu()">Leadership</a>
@@ -443,7 +444,7 @@ footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0
 
 <section id="conferences">
   <div class="container reveal">
-    <div class="section-title">Conferences Attended</div>
+    <h2 class="section-title">Conferences &amp; Workshops Attended</h2>
     <div class="conf-group">
       <div class="conf-group-title">International</div>
       <ul class="conf-list">
@@ -456,6 +457,7 @@ footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0
     <div class="conf-group">
       <div class="conf-group-title">National</div>
       <ul class="conf-list">
+        <li>HIMTRAIN 2026 — Himalayan Glacier Monitoring and Training Workshop, IIT Indore &amp; ICIMOD, Chhota Shigri Glacier, September–October 2026</li>
         <li class="conf-item"><strong>3rd Indian Cryosphere Meet (ICM) 2026</strong> — IIT Roorkee</li>
         <li class="conf-item"><strong>National Cryosphere and Polar Science (NCPS) Meeting</strong> — NCPOR, September 2025</li>
         <li class="conf-item"><strong>2nd Indian Cryosphere Meet (ICM) 2025</strong> — IIT Bombay</li>
@@ -465,7 +467,19 @@ footer{background:var(--navbg);filter:brightness(.6);text-align:center;padding:0
     </div>
   </div>
 </section>
-
+     <!-- SEMINARS -->
+      <section id="seminars" class="reveal">
+        <h2 class="section-title">Seminars &amp; Lectures Given</h2>
+        <ul class="pub-list" style="margin-top:1rem;">
+          <li class="pub-item">
+            <div class="pub-num">1</div>
+            <div class="pub-content">
+              <p><strong>Pawan Singh</strong>. Short-Term Dynamics in the Himalaya Using Terrestrial Time-Lapse Imaging. <span class="journal">IGS Seminar Series</span>, International Glaciological Society, 1 October 2026.</p>
+              <a href="https://www.youtube.com/watch?v=eGs5l85ckuA&t=1755s" target="_blank">Watch recording ↗</a>
+            </div>
+          </li>
+        </ul>
+      </section>
 <section id="skills">
   <div class="container reveal">
     <div class="section-title">Skills</div>
@@ -743,7 +757,7 @@ function toggleDark(){
 
 /* ── NEWS ── */
 const newsItems=[
-  {date:'October 2026',text:'Talk delivered at HIMTRAIN 2026: "Short-Term Dynamics in the Himalaya Using Terrestrial Time-Lapse Imaging." <a href="https://www.youtube.com/watch?v=eGs5l85ckuA&t=1755s" target="_blank" style="color:var(--accent);">Watch on YouTube ↗</a>'},
+  {date:'October 2026',text:'Invited talk in the International Glaciological Society (IGS) Seminar Series: "Short-Term Dynamics in the Himalaya Using Terrestrial Time-Lapse Imaging." <a href="https://www.youtube.com/watch?v=eGs5l85ckuA&t=1755s" target="_blank" style="color:var(--accent);">Watch on YouTube ↗</a>'},
   {date:'September–October 2026',text:'Attended HIMTRAIN 2026 — Himalayan Glacier Monitoring and Training, a catchment-scale cryosphere monitoring workshop organized by IIT Indore and ICIMOD at the Chhota Shigri Glacier Catchment, western Himalaya (20 September – 5 October 2026).'},
   {date:'September 2026',text:'Field campaign at Tso Kar and Padum: installed OGRE GNSS sensors on rock glaciers in Ladakh / Trans-Himalaya to monitor instability and long-term movement.'},
   {date:'August 2026',text:'Joined the Indian Institute of Technology Bombay as a Postdoctoral Fellow, working on rock glacier monitoring in the Trans-Himalaya using SAR and GPS.'},
